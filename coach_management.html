@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>培训机构管理系统 - 教练管理</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+        }
+        .coach-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            background-color: #ffffff;
+        }
+        
+        .coach-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1a365d;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+        
+        .coach-level-badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.35rem 1rem;
+            border-radius: 9999px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            background-color: #ebf8ff;
+            color: #2b6cb0;
+            border: 1px solid #bee3f8;
+        }
+        
+        .coach-card p {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #2d3748;
+        }
+        
+        .coach-card p i {
+            width: 1.5rem;
+            color: #4a5568;
+            margin-right: 1rem;
+            font-size: 1rem;
+        }
+        
+        .info-group {
+            padding-top: 1.25rem;
+            margin-top: 1.25rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .flex.flex-wrap.gap-1 span {
+            font-size: 0.85rem;
+            padding: 0.35rem 1rem;
+            border-radius: 8px;
+            background-color: #f0f9ff;
+            color: #2563eb;
+            margin-right: 0.75rem;
+            margin-bottom: 0.75rem;
+            display: inline-block;
+            border: 1px solid #bfdbfe;
+            transition: all 0.2s ease;
+        }
+        
+        .flex.flex-wrap.gap-1 span:hover {
+            background-color: #e0f2fe;
+            border-color: #93c5fd;
+        }
+        
+        .edit-btn, .delete-btn {
+            padding: 0.625rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            background-color: transparent;
+        }
+        
+        .edit-btn {
+            color: #2563eb;
+        }
+        
+        .delete-btn {
+            color: #dc2626;
+        }
+        
+        .edit-btn:hover {
+            background-color: #dbeafe;
+            color: #2563eb;
+        }
+        
+        .delete-btn:hover {
+            background-color: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .coach-card h3 {
+            font-weight: 600;
+            color: #1e3a8a;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        /* 优化卡片头部布局 */
+        .flex.justify-between.items-start.mb-3 {
+            margin-bottom: 0.5rem; /* 减小下边距 */
+        }
+        
+        /* 优化卡片内容区域 */
+        .space-y-2 {
+            margin-bottom: 0.5rem; /* 减小底部间距 */
+        }
+        
+        /* 添加信息分组样式 */
+        .coach-card .info-group {
+            border-top: 1px dashed #edf2f7;
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* 优化卡片悬停效果 */
+        .coach-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        .coach-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, #3b82f6, #60a5fa);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 16px 16px 0 0;
+        }
+        .coach-card:hover::before {
+            opacity: 1;
+        }
+        
+        .coach-info-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .coach-info-row p {
+            margin: 0;
+            flex-shrink: 0;
+        }
+        
+        .coach-info-section {
+            background-color: #f9fafb;
+            margin: -1rem;
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.75rem; /* 减小内边距 */
+            border-radius: 0 0 16px 16px;
+            border-top: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        
+        .coach-info-section h4 {
+            font-size: 0.7rem; /* 减小标题字体 */
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 0.25rem; /* 减小下边距 */
+            letter-spacing: 0.02em;
+        }
+        
+        .coach-level-badge {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.4rem; /* 减小内边距 */
+            border-radius: 10px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            margin-left: 0.5rem; /* 增加与标题的间距 */
+        }
+        
+        /* 根据教练类别设置不同的标签颜色 */
+        .coach-level-junior {
+            background-color: #e6fffa;
+            color: #0d9488;
+            border: 1px solid #99f6e4;
+        }
+        
+        .coach-level-senior {
+            background-color: #eff6ff;
+            color: #3b82f6;
+            border: 1px solid #bfdbfe;
+        }
+        
+        .coach-level-expert {
+            background-color: #fef3c7;
+            color: #d97706;
+            border: 1px solid #fde68a;
+        }
+        
+        /* 优化专长课程标签样式 */
+        .flex-wrap span {
+            font-size: 0.65rem; /* 减小字体大小 */
+            padding: 0.15rem 0.4rem; /* 减小内边距 */
+            margin-bottom: 0.25rem;
+            display: inline-block;
+        }
+        
+        .coach-action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            margin-top: 0.25rem; /* 减小上边距 */
+        }
+        
+        .coach-action-buttons button {
+            padding: 0.2rem 0.4rem; /* 减小内边距 */
+            border-radius: 0.25rem;
+            transition: all 0.2s ease;
+            background-color: transparent;
+        }
+        
+        /* 优化卡片内文字样式 */
+        .coach-card p {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            line-height: 1.25;
+        }
+        .coach-card p i {
+            width: 16px;
+            color: #6b7280;
+            margin-right: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .coach-action-buttons button:hover {
+            background-color: #e5e7eb;
+        }
+        .coach-action-buttons .edit-btn {
+            color: #3b82f6;
+        }
+        .coach-action-buttons .delete-btn {
+            color: #ef4444;
+        }
+        
+        /* 错误提示样式 */
+        .error-message {
+            color: #e53e3e;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+        
+        /* 筛选结果信息样式 */
+        #filterResultInfo {
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+            font-size: 0.875rem;
+            color: #4a5568;
+        }
+        
+        /* 消息提示样式 */
+        #toast {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #10B981;
+            color: white;
+            border-radius: 0.375rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(1rem);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        #toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 响应式布局优化 */
+        @media (max-width: 768px) {
+            .flex.justify-between.mb-6 {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .flex.space-x-4 {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .flex.space-x-4 > * {
+                margin-left: 0 !important;
+            }
+            
+            .grid.grid-cols-2.gap-4 {
+                grid-template-columns: 1fr;
+            }
+            
+            input[type="text"], select {
+                width: 100%;
+            }
+            
+            .coach-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6 max-w-6xl">
+        <h1 class="text-2xl font-bold mb-6">教练管理</h1>
+
+        <!-- 搜索和添加按钮 -->
+        <div class="flex justify-between mb-6">
+            <div class="flex space-x-4">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <i class="fas fa-search text-gray-400"></i>
+                    </div>
+                    <input
+                        type="text"
+                        class="pl-10 pr-4 py-2 border rounded-md w-64"
+                        placeholder="搜索教练..."
+                        id="searchInput"
+                    >
+                </div>
+                <select id="institutionFilter" class="border rounded-md px-4 py-2">
+                    <option value="">全部机构</option>
+                    <option value="inst1">健身中心 A</option>
+                    <option value="inst2">健身中心 B</option>
+                </select>
+                <select id="courseFilter" class="border rounded-md px-4 py-2">
+                    <option value="">全部课程</option>
+                    <option value="yoga_basic">基础瑜伽</option>
+                    <option value="yoga_advanced">高级瑜伽</option>
+                    <option value="fitness">健身课程</option>
+                    <option value="hiit">高强度间歇训练</option>
+                    <option value="dance">舞蹈课程</option>
+                    <option value="pilates">普拉提</option>
+                </select>
+            </div>
+            <button
+                id="addCoachButton"
+                class="flex items-center bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
+            >
+                <i class="fas fa-plus-circle mr-2"></i>
+                添加新教练
+            </button>
+        </div>
+
+        <!-- 筛选结果信息 -->
+        <div id="filterResultInfo" class="text-sm text-gray-600 mb-4">共找到 3 名教练</div>
+
+        <!-- 教练列表 -->
+        <div id="coachList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- 教练卡片由JavaScript动态生成 -->
+        </div>
+
+        <!-- 添加教练模态框 -->
+        <div id="addCoachModal" class="modal">
+            <div class="modal-content">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold">添加教练</h2>
+                    <button class="close-modal text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="addCoachForm">
+                    <div class="mb-4">
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
+                        <input type="text" id="name" name="name" class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="level" class="block text-sm font-medium text-gray-700 mb-1">教练等级</label>
+                        <select id="level" name="level" class="w-full px-3 py-2 border rounded-md">
+                            <option value="junior">初级教练</option>
+                            <option value="senior">资深教练</option>
+                            <option value="expert">专家教练</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="institution" class="block text-sm font-medium text-gray-700 mb-1">所属机构</label>
+                        <select id="institution" name="institution" class="w-full px-3 py-2 border rounded-md">
+                            <option value="inst1">健身中心 A</option>
+                            <option value="inst2">健身中心 B</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">联系电话</label>
+                        <input type="text" id="phone" name="phone" class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">电子邮箱</label>
+                        <input type="email" id="email" name="email" class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="yearsExperience" class="block text-sm font-medium text-gray-700 mb-1">教学经验（年）</label>
+                        <input type="number" id="yearsExperience" name="yearsExperience" min="0" class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                    
+                    <div class="mb-4 courses-container">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">专长课程</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="yoga_basic" name="courses" value="yoga_basic" class="mr-2">
+                                <label for="yoga_basic">基础瑜伽</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="yoga_advanced" name="courses" value="yoga_advanced" class="mr-2">
+                                <label for="yoga_advanced">高级瑜伽</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="fitness" name="courses" value="fitness" class="mr-2">
+                                <label for="fitness">健身课程</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="hiit" name="courses" value="hiit" class="mr-2">
+                                <label for="hiit">高强度间歇训练</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="dance" name="courses" value="dance" class="mr-2">
+                                <label for="dance">舞蹈课程</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="pilates" name="courses" value="pilates" class="mr-2">
+                                <label for="pilates">普拉提</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="certifications" class="block text-sm font-medium text-gray-700 mb-1">持有证书（每行一个）</label>
+                        <textarea id="certifications" name="certifications" rows="3" class="w-full px-3 py-2 border rounded-md"></textarea>
+                    </div>
+                    
+                    <div class="flex justify-end">
+                        <button type="button" class="close-modal px-4 py-2 border rounded-md mr-2 hover:bg-gray-100">取消</button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">添加</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 编辑教练模态框 -->
+        <div id="editCoachModal" class="modal">
+            <div class="modal-content">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold">编辑教练</h2>
+                    <button class="close-modal text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="editCoachForm">
+                    <input type="hidden" id="editCoachId" name="coachId">
+                    
+                    <div class="mb-4">
+                        <label for="editName" class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
+                        <input type="text" id="editName" name="name" class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="editLevel" class="block text-sm font-medium text-gray-700 mb-1">教练等级</label>
+                        <select id="editLevel" name="level" class="w-full px-3 py-2 border rounded-md">
+                            <option value="junior">初级教练</option>
+                            <option value="senior">资深教练</option>
+                            <option value="expert">专家教练</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="editInstitution" class="block text-sm font-medium text-gray-700 mb-1">所属机构</label>
+                        <select id="editInstitution" name="institution" class="w-full px-3 py-2 border rounded-md">
+                            <option value="inst1">健身中心 A</option>
+                            <option value="inst2">健身中心 B</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="editPhone" class="block text-sm font-medium text-gray-700 mb-1">联系电话</label>
+                        <input type="text" id="editPhone" name="phone" class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="editEmail" class="block text-sm font-medium text-gray-700 mb-1">电子邮箱</label>
+                        <input type="email" id="editEmail" name="email" class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="editYearsExperience" class="block text-sm font-medium text-gray-700 mb-1">教学经验（年）</label>
+                        <input type="number" id="editYearsExperience" name="yearsExperience" min="0" class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                    
+                    <div class="mb-4 courses-container">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">专长课程</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="editYogaBasic" name="courses" value="yoga_basic" class="mr-2">
+                                <label for="editYogaBasic">基础瑜伽</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="editYogaAdvanced" name="courses" value="yoga_advanced" class="mr-2">
+                                <label for="editYogaAdvanced">高级瑜伽</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="editFitness" name="courses" value="fitness" class="mr-2">
+                                <label for="editFitness">健身课程</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="editHiit" name="courses" value="hiit" class="mr-2">
+                                <label for="editHiit">高强度间歇训练</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="editDance" name="courses" value="dance" class="mr-2">
+                                <label for="editDance">舞蹈课程</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="editPilates" name="courses" value="pilates" class="mr-2">
+                                <label for="editPilates">普拉提</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="editCertifications" class="block text-sm font-medium text-gray-700 mb-1">持有证书（每行一个）</label>
+                        <textarea id="editCertifications" name="certifications" rows="3" class="w-full px-3 py-2 border rounded-md"></textarea>
+                    </div>
+                    
+                    <div class="flex justify-end">
+                        <button type="button" class="close-modal px-4 py-2 border rounded-md mr-2 hover:bg-gray-100">取消</button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 页面底部 -->
+        <footer class="text-center py-4 text-gray-500 text-sm mt-8">
+            <p>© 2025 教练管理系统 - 保留所有权利</p>
+        </footer>
+    </div>
+
+    <!-- 引入JavaScript -->
+    <script>
+// 教练数据示例
+const coachData = [
+    {
+        id: "coach1",
+        name: "张教练",
+        level: "senior",
+        levelText: "资深教练",
+        institution: "inst1",
+        institutionName: "健身中心 A",
+        phone: "13800138001",
+        email: "zhang@example.com",
+        certifications: ["国家健身教练认证", "瑜伽教练资格证"],
+        courses: ["yoga_basic", "yoga_advanced"],
+        coursesText: ["基础瑜伽", "高级瑜伽"],
+        yearsExperience: 5
+    },
+    {
+        id: "coach2",
+        name: "李教练",
+        level: "expert",
+        levelText: "专家教练",
+        institution: "inst1",
+        institutionName: "健身中心 A",
+        phone: "13900139001",
+        email: "li@example.com",
+        certifications: ["国际健身教练认证", "CrossFit L2 教练"],
+        courses: ["fitness", "hiit"],
+        coursesText: ["健身课程", "高强度间歇训练"],
+        yearsExperience: 8
+    },
+    {
+        id: "coach3",
+        name: "王教练",
+        level: "junior",
+        levelText: "初级教练",
+        institution: "inst2",
+        institutionName: "健身中心 B",
+        phone: "13700137001",
+        email: "wang@example.com",
+        certifications: ["舞蹈教练证书", "普拉提初级证书"],
+        courses: ["dance", "pilates"],
+        coursesText: ["舞蹈课程", "普拉提"],
+        yearsExperience: 2
+    }
+];
+
+// DOM加载完成后执行
+document.addEventListener('DOMContentLoaded', function() {
+    // 初始化教练列表
+    renderCoachList(coachData);
+    
+    // 绑定搜索事件
+    document.getElementById('searchInput').addEventListener('input', filterCoaches);
+    
+    // 绑定筛选事件
+    document.getElementById('institutionFilter').addEventListener('change', filterCoaches);
+    document.getElementById('courseFilter').addEventListener('change', filterCoaches);
+    
+    // 绑定添加教练按钮事件
+    document.getElementById('addCoachButton').addEventListener('click', function() {
+        openModal('addCoachModal');
+    });
+    
+    // 绑定关闭模态框事件
+    document.querySelectorAll('.close-modal').forEach(button => {
+        button.addEventListener('click', function() {
+            closeAllModals();
+        });
+    });
+    
+    // 绑定添加教练表单提交事件
+    document.getElementById('addCoachForm').addEventListener('submit', handleAddCoach);
+    
+    // 绑定编辑教练表单提交事件
+    document.getElementById('editCoachForm').addEventListener('submit', handleEditCoach);
+    
+    // 点击模态框外部关闭模态框
+    window.addEventListener('click', function(event) {
+        if (event.target.classList.contains('modal')) {
+            closeAllModals();
+        }
+    });
+});
+
+// 渲染教练列表
+function renderCoachList(coaches) {
+    const coachListElement = document.getElementById('coachList');
+    coachListElement.innerHTML = '';
+    
+    if (coaches.length === 0) {
+        coachListElement.innerHTML = '<div class="col-span-full text-center py-8 text-gray-500">没有找到匹配的教练</div>';
+        return;
+    }
+    
+    coaches.forEach(coach => {
+        const coachCard = createCoachCard(coach);
+        coachListElement.appendChild(coachCard);
+    });
+    
+    // 更新筛选结果信息
+    updateFilterResultInfo(coaches.length);
+}
+
+// 创建教练卡片
+function createCoachCard(coach) {
+    const coachCard = document.createElement('div');
+    coachCard.className = 'bg-white p-5 cursor-pointer coach-card';
+    coachCard.dataset.coachId = coach.id;
+    coachCard.dataset.institution = coach.institution;
+    coachCard.dataset.courses = coach.courses.join(',');
+    
+    coachCard.innerHTML = `
+        <div class="flex justify-between items-start mb-3">
+            <div>
+                <h3 class="text-lg font-semibold">${coach.name} 
+                    <span class="coach-level-badge coach-level-${coach.level}">${coach.levelText}</span>
+                </h3>
+            </div>
+            <div class="coach-action-buttons">
+                <button class="edit-btn" onclick="openEditModal('${coach.id}')">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="delete-btn" onclick="confirmDeleteCoach('${coach.id}')">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="space-y-2">
+            <p><i class="fas fa-building"></i> ${coach.institutionName}</p>
+            <p><i class="fas fa-phone"></i> ${coach.phone}</p>
+            <p><i class="fas fa-envelope"></i> ${coach.email}</p>
+            <p><i class="fas fa-clock"></i> ${coach.yearsExperience} 年教学经验</p>
+        </div>
+        
+        <div class="info-group">
+            <p class="text-sm font-medium text-gray-600 mb-2">持有证书：</p>
+            <div class="flex flex-wrap gap-1 mb-3">
+                ${coach.certifications.map(cert => `<span>${cert}</span>`).join('')}
+            </div>
+        </div>
+        
+        <div class="info-group">
+            <p class="text-sm font-medium text-gray-600 mb-2">专长课程：</p>
+            <div class="flex flex-wrap gap-1">
+                ${coach.coursesText.map(course => `<span>${course}</span>`).join('')}
+            </div>
+        </div>
+    `;
+    
+    return coachCard;
+}
+
+// 筛选教练
+function filterCoaches() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const institutionFilter = document.getElementById('institutionFilter').value;
+    const courseFilter = document.getElementById('courseFilter').value;
+    
+    const filteredCoaches = coachData.filter(coach => {
+        // 搜索名称、邮箱和电话
+        const matchesSearch = coach.name.toLowerCase().includes(searchTerm) || 
+                              coach.email.toLowerCase().includes(searchTerm) || 
+                              coach.phone.includes(searchTerm);
+        
+        // 机构筛选
+        const matchesInstitution = institutionFilter === '' || coach.institution === institutionFilter;
+        
+        // 课程筛选
+        const matchesCourse = courseFilter === '' || coach.courses.includes(courseFilter);
+        
+        return matchesSearch && matchesInstitution && matchesCourse;
+    });
+    
+    renderCoachList(filteredCoaches);
+}
+
+// 更新筛选结果信息
+function updateFilterResultInfo(count) {
+    const filterResultInfo = document.getElementById('filterResultInfo');
+    if (filterResultInfo) {
+        filterResultInfo.textContent = `共找到 ${count} 名教练`;
+    }
+}
+
+// 打开模态框
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'block';
+}
+
+// 关闭所有模态框
+function closeAllModals() {
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.style.display = 'none';
+    });
+    
+    // 重置表单
+    document.getElementById('addCoachForm').reset();
+    document.getElementById('editCoachForm').reset();
+    
+    // 清除错误信息
+    clearFormErrors('addCoachForm');
+    clearFormErrors('editCoachForm');
+}
+
+// 清除表单错误信息
+function clearFormErrors(formId) {
+    document.querySelectorAll(`#${formId} .error-message`).forEach(error => {
+        error.textContent = '';
+    });
+}
+
+// 打开编辑模态框
+function openEditModal(coachId) {
+    // 获取教练数据
+    const coach = coachData.find(c => c.id === coachId);
+    if (!coach) return;
+    
+    // 填充表单
+    const form = document.getElementById('editCoachForm');
+    form.elements['coachId'].value = coach.id;
+    form.elements['name'].value = coach.name;
+    form.elements['level'].value = coach.level;
+    form.elements['institution'].value = coach.institution;
+    form.elements['phone'].value = coach.phone;
+    form.elements['email'].value = coach.email;
+    form.elements['yearsExperience'].value = coach.yearsExperience;
+    
+    // 处理多选课程
+    document.querySelectorAll('#editCoachForm [name="courses"]').forEach(checkbox => {
+        checkbox.checked = coach.courses.includes(checkbox.value);
+    });
+    
+    // 处理证书
+    document.getElementById('editCertifications').value = coach.certifications.join('\n');
+    
+    // 打开模态框
+    openModal('editCoachModal');
+}
+
+// 处理添加教练
+function handleAddCoach(e) {
+    e.preventDefault();
+    
+    // 表单验证
+    if (!validateCoachForm('addCoachForm')) return;
+    
+    // 获取表单数据
+    const form = e.target;
+    const newCoach = {
+        id: 'coach' + (coachData.length + 1),
+        name: form.elements['name'].value,
+        level: form.elements['level'].value,
+        levelText: getLevelText(form.elements['level'].value),
+        institution: form.elements['institution'].value,
+        institutionName: getInstitutionName(form.elements['institution'].value),
+        phone: form.elements['phone'].value,
+        email: form.elements['email'].value,
+        yearsExperience: parseInt(form.elements['yearsExperience'].value),
+        courses: getSelectedCourses(form),
+        coursesText: getSelectedCoursesText(getSelectedCourses(form)),
+        certifications: form.elements['certifications'].value.split('\n').filter(cert => cert.trim() !== '')
+    };
+    
+    // 添加新教练
+    coachData.push(newCoach);
+    
+    // 重新渲染列表
+    renderCoachList(coachData);
+    
+    // 关闭模态框
+    closeAllModals();
+    
+    // 显示成功消息
+    showToast('添加教练成功');
+}
+
+// 处理编辑教练
+function handleEditCoach(e) {
+    e.preventDefault();
+    
+    // 表单验证
+    if (!validateCoachForm('editCoachForm')) return;
+    
+    // 获取表单数据
+    const form = e.target;
+    const coachId = form.elements['coachId'].value;
+    
+    // 查找教练索引
+    const coachIndex = coachData.findIndex(c => c.id === coachId);
+    if (coachIndex === -1) return;
+    
+    // 更新教练数据
+    const updatedCoach = {
+        ...coachData[coachIndex],
+        name: form.elements['name'].value,
+        level: form.elements['level'].value,
+        levelText: getLevelText(form.elements['level'].value),
+        institution: form.elements['institution'].value,
+        institutionName: getInstitutionName(form.elements['institution'].value),
+        phone: form.elements['phone'].value,
+        email: form.elements['email'].value,
+        yearsExperience: parseInt(form.elements['yearsExperience'].value),
+        courses: getSelectedCourses(form),
+        coursesText: getSelectedCoursesText(getSelectedCourses(form)),
+        certifications: form.elements['certifications'].value.split('\n').filter(cert => cert.trim() !== '')
+    };
+    
+    // 更新数据
+    coachData[coachIndex] = updatedCoach;
+    
+    // 重新渲染列表
+    renderCoachList(coachData);
+    
+    // 关闭模态框
+    closeAllModals();
+    
+    // 显示成功消息
+    showToast('更新教练信息成功');
+}
+
+// 确认删除教练
+function confirmDeleteCoach(coachId) {
+    if (confirm('确定要删除这位教练吗？')) {
+        deleteCoach(coachId);
+    }
+}
+
+// 删除教练
+function deleteCoach(coachId) {
+    // 查找教练索引
+    const coachIndex = coachData.findIndex(c => c.id === coachId);
+    if (coachIndex === -1) return;
+    
+    // 删除教练
+    coachData.splice(coachIndex, 1);
+    
+    // 重新渲染列表
+    renderCoachList(coachData);
+    
+    // 显示成功消息
+    showToast('删除教练成功');
+}
+
+// 获取选中的课程
+function getSelectedCourses(form) {
+    const checkboxes = form.querySelectorAll('[name="courses"]');
+    const selectedCourses = [];
+    
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            selectedCourses.push(checkbox.value);
+        }
+    });
+    
+    return selectedCourses;
+}
+
+// 获取选中课程的文本
+function getSelectedCoursesText(courses) {
+    const courseMap = {
+        'yoga_basic': '基础瑜伽',
+        'yoga_advanced': '高级瑜伽',
+        'fitness': '健身课程',
+        'hiit': '高强度间歇训练',
+        'dance': '舞蹈课程',
+        'pilates': '普拉提'
+    };
+    
+    return courses.map(course => courseMap[course] || course);
+}
+
+// 获取等级文本
+function getLevelText(level) {
+    const levelMap = {
+        'junior': '初级教练',
+        'senior': '资深教练',
+        'expert': '专家教练'
+    };
+    
+    return levelMap[level] || '教练';
+}
+
+// 获取机构名称
+function getInstitutionName(institution) {
+    const institutionMap = {
+        'inst1': '健身中心 A',
+        'inst2': '健身中心 B'
+    };
+    
+    return institutionMap[institution] || institution;
+}
+
+// 表单验证
+function validateCoachForm(formId) {
+    const form = document.getElementById(formId);
+    let isValid = true;
+    
+    // 验证姓名
+    const nameInput = form.elements['name'];
+    if (!nameInput.value.trim()) {
+        showError(nameInput, '请输入教练姓名');
+        isValid = false;
+    } else {
+        clearError(nameInput);
+    }
+    
+    // 验证电话
+    const phoneInput = form.elements['phone'];
+    if (!phoneInput.value.trim()) {
+        showError(phoneInput, '请输入联系电话');
+        isValid = false;
+    } else if (!/^1[3-9]\d{9}$/.test(phoneInput.value)) {
+        showError(phoneInput, '请输入有效的手机号码');
+        isValid = false;
+    } else {
+        clearError(phoneInput);
+    }
+    
+    // 验证邮箱
+    const emailInput = form.elements['email'];
+    if (!emailInput.value.trim()) {
+        showError(emailInput, '请输入电子邮箱');
+        isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+        showError(emailInput, '请输入有效的电子邮箱');
+        isValid = false;
+    } else {
+        clearError(emailInput);
+    }
+    
+    // 验证经验年限
+    const experienceInput = form.elements['yearsExperience'];
+    if (!experienceInput.value.trim()) {
+        showError(experienceInput, '请输入教学经验年限');
+        isValid = false;
+    } else if (parseInt(experienceInput.value) < 0) {
+        showError(experienceInput, '教学经验年限不能为负数');
+        isValid = false;
+    } else {
+        clearError(experienceInput);
+    }
+    
+    // 验证课程选择
+    const coursesChecked = form.querySelectorAll('[name="courses"]:checked').length > 0;
+    const coursesContainer = form.querySelector('.courses-container');
+    if (!coursesChecked) {
+        showError(coursesContainer, '请至少选择一门专长课程');
+        isValid = false;
+    } else {
+        clearError(coursesContainer);
+    }
+    
+    return isValid;
+}
+
+// 显示错误信息
+function showError(element, message) {
+    // 清除已有错误
+    clearError(element);
+    
+    // 创建错误消息元素
+    const errorElement = document.createElement('div');
+    errorElement.className = 'error-message';
+    errorElement.textContent = message;
+    
+    // 插入错误消息
+    element.parentNode.appendChild(errorElement);
+    
+    // 添加错误样式
+    element.classList.add('border-red-500');
+}
+
+// 清除错误信息
+function clearError(element) {
+    // 移除错误样式
+    element.classList.remove('border-red-500');
+    
+    // 查找并移除错误消息
+    const errorElement = element.parentNode.querySelector('.error-message');
+    if (errorElement) {
+        errorElement.remove();
+    }
+}
+
+// 显示提示消息
+function showToast(message) {
+    // 检查是否已有提示消息
+    let toast = document.getElementById('toast');
+    if (!toast) {
+        // 创建提示消息元素
+        toast = document.createElement('div');
+        toast.id = 'toast';
+        toast.className = 'fixed bottom-4 right-4 bg-green-500 text-white py-2 px-4 rounded-md shadow-lg transform transition-transform duration-300 translate-y-full';
+        document.body.appendChild(toast);
+    }
+    
+    // 设置消息内容
+    toast.textContent = message;
+    
+    // 显示提示消息
+    setTimeout(() => {
+        toast.classList.remove('translate-y-full');
+    }, 10);
+    
+    // 3秒后隐藏
+    setTimeout(() => {
+        toast.classList.add('translate-y-full');
+    }, 3000);
+}
+</script>
+</body>
+</html>

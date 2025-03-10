@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学员管理 - 培训机构管理系统</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --dark: #34495e;
+            --light: #ecf0f1;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 240px;
+            background-color: var(--dark);
+            color: white;
+            padding: 20px 0;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .sidebar-menu a:hover, 
+        .sidebar-menu a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left: 4px solid var(--primary);
+        }
+
+        .sidebar-menu a.active {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .sidebar-menu i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: white;
+            min-width: 120px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: var(--dark);
+            padding: 8px 12px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th, .table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table th {
+            font-weight: 600;
+            color: var(--dark);
+            background-color: #f8f9fa;
+        }
+
+        .table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 4px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background-color: #d4edda;
+            color: #28a745;
+        }
+
+        .badge-warning {
+            background-color: #ffecb3;
+            color: #f39c12;
+        }
+
+        .search-filter {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .search-filter input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        .search-filter select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+            }
+            .search-filter {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1 style="font-size: 20px;">培训机构管理系统</h1>
+                <p style="opacity: 0.7; margin-top: 5px; font-size: 12px;">核心业务管理平台</p>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="homepage.html"><i>📊</i> 仪表盘</a></li>
+                <li><a href="administration_management.html"><i>👥</i> 用户管理</a></li>
+                <li><a href="course_management.html"><i>📚</i> 课程管理</a></li>
+                <li><a href="student_management.html" class="active"><i>👨‍🎓</i> 学员管理</a></li>
+                <li><a href="payment_records.html"><i>💰</i> 缴费管理</a></li>
+                <li><a href="schedule_view.html"><i>📅</i> 课表管理</a></li>
+                <li><a href="attendance_management.html"><i>✅</i> 打卡与消课</a></li>
+                <li><a href="miniprogram_management.html"><i>📱</i> 小程序管理</a></li>
+                <li><a href="system_settings.html"><i>⚙️</i> 系统设置</a></li>
+            </ul>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <div class="header">
+                <h2>学员管理</h2>
+                <div class="user-info">
+                    <div class="user-avatar">A</div>
+                    <div>
+                        <div style="font-weight: 600;">管理员</div>
+                        <div style="font-size: 12px; color: #777;">超级管理员</div>
+                    </div>
+                    <div class="dropdown">
+                        <div class="dropdown-content">
+                            <a href="#">设置</a>
+                            <a href="#">修改密码</a>
+                            <a href="#" id="logout">登出</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 搜索和过滤 -->
+            <div class="search-filter">
+                <input type="text" id="searchInput" placeholder="搜索学员姓名或电话...">
+                <div>
+                    <select id="statusFilter">
+                        <option value="all">所有状态</option>
+                        <option value="active">在读</option>
+                        <option value="inactive">暂停</option>
+                    </select>
+                    <button class="btn" onclick="openAddModal()">添加新学员</button>
+                </div>
+            </div>
+
+            <!-- 学员列表 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">学员列表</div>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>电话</th>
+                                <th>剩余课时</th>
+                                <th>上次上课时间</th>
+                                <th>家长绑定</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTable">
+                            <tr>
+                                <td>张小明</td>
+                                <td>138-1234-5678</td>
+                                <td>12/24</td>
+                                <td>2025-03-08 14:00</td>
+                                <td><span class="badge badge-success">已绑定</span></td>
+                                <td><span class="badge badge-success">在读</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-secondary" onclick="checkIn('张小明')">打卡</button>
+                                    <button class="btn btn-sm" onclick="editStudent('1', '张小明', '138-1234-5678', '朋友介绍', '周一 14:00-15:00', '学习积极', '瑜伽基础', '李教练')">编辑</button>
+                                    <button class="btn btn-sm btn-warning" onclick="viewPayment('张小明')">缴费记录</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>李华</td>
+                                <td>139-8765-4321</td>
+                                <td>15/30</td>
+                                <td>2025-03-07 10:00</td>
+                                <td><span class="badge badge-warning">未绑定</span></td>
+                                <td><span class="badge badge-success">在读</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-secondary" onclick="checkIn('李华')">打卡</button>
+                                    <button class="btn btn-sm" onclick="editStudent('2', '李华', '139-8765-4321', '线上广告', '周二 10:00-11:00', '需要加强基础', '健身入门', '王教练')">编辑</button>
+                                    <button class="btn btn-sm btn-warning" onclick="viewPayment('李华')">缴费记录</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>王芳</td>
+                                <td>137-5555-6666</td>
+                                <td>8/20</td>
+                                <td>2025-02-28 16:00</td>
+                                <td><span class="badge badge-success">已绑定</span></td>
+                                <td><span class="badge badge-warning">暂停</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-secondary" onclick="checkIn('王芳')">打卡</button>
+                                    <button class="btn btn-sm" onclick="editStudent('3', '王芳', '137-5555-6666', '老学员推荐', '周三 16:00-17:00', '暂休', '瑜伽进阶', '张教练')">编辑</button>
+                                    <button class="btn btn-sm btn-warning" onclick="viewPayment('王芳')">缴费记录</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 添加/编辑学员模态框 -->
+            <div id="studentModal" class="modal">
+                <div class="modal-content">
+                    <form id="studentForm">
+                        <h3 id="modalTitle" style="font-size: 18px; font-weight: 600; margin-bottom: 20px;">添加新学员</h3>
+                        <input type="hidden" id="studentId">
+                        <div class="form-group">
+                            <label for="studentName">姓名</label>
+                            <input type="text" id="studentName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">电话号码</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="source">来源</label>
+                            <input type="text" id="source">
+                        </div>
+                        <div class="form-group">
+                            <label for="fixedTime">固定上课时间</label>
+                            <input type="text" id="fixedTime" placeholder="如：周一 14:00-15:00">
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">备注</label>
+                            <textarea id="notes" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="course">关联课程</label>
+                            <select id="course">
+                                <option value="瑜伽基础">瑜伽基础</option>
+                                <option value="健身入门">健身入门</option>
+                                <option value="瑜伽进阶">瑜伽进阶</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="coach">关联教练</label>
+                            <select id="coach">
+                                <option value="李教练">李教练</option>
+                                <option value="王教练">王教练</option>
+                                <option value="张教练">张教练</option>
+                                <option value="刘教练">刘教练</option>
+                            </select>
+                        </div>
+                        <div style="text-align: right;">
+                            <button type="button" class="btn btn-sm" onclick="closeModal()">取消</button>
+                            <button type="submit" class="btn btn-sm btn-secondary" id="submitBtn">添加学员</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('studentModal');
+        const form = document.getElementById('studentForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // 用户下拉菜单
+        document.querySelector('.user-avatar').addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.querySelector('.dropdown-content').classList.toggle('show');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.user-info')) {
+                document.querySelector('.dropdown-content').classList.remove('show');
+            }
+        });
+
+        // 打开添加模态框
+        function openAddModal() {
+            document.getElementById('modalTitle').textContent = '添加新学员';
+            form.reset();
+            document.getElementById('studentId').value = '';
+            submitBtn.textContent = '添加学员';
+            modal.style.display = 'block';
+        }
+
+        // 打开编辑模态框
+        function editStudent(id, name, phone, source, fixedTime, notes, course, coach) {
+            document.getElementById('modalTitle').textContent = '编辑学员';
+            document.getElementById('studentId').value = id;
+            document.getElementById('studentName').value = name;
+            document.getElementById('phone').value = phone;
+            document.getElementById('source').value = source;
+            document.getElementById('fixedTime').value = fixedTime;
+            document.getElementById('notes').value = notes;
+            document.getElementById('course').value = course;
+            document.getElementById('coach').value = coach;
+            submitBtn.textContent = '保存更改';
+            modal.style.display = 'block';
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // 提交表单
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const studentData = {
+                id: document.getElementById('studentId').value || `stu${Date.now()}`,
+                name: document.getElementById('studentName').value,
+                phone: document.getElementById('phone').value,
+                source: document.getElementById('source').value,
+                fixedTime: document.getElementById('fixedTime').value,
+                notes: document.getElementById('notes').value,
+                course: document.getElementById('course').value,
+                coach: document.getElementById('coach').value
+            };
+            alert(`在实际应用中，这将${studentData.id ? '更新' : '添加'}学员:\n${JSON.stringify(studentData, null, 2)}`);
+            closeModal();
+        });
+
+        // 打卡
+        function checkIn(name) {
+            alert(`为 ${name} 打卡成功！`);
+        }
+
+        // 查看缴费记录
+        function viewPayment(name) {
+            alert(`查看 ${name} 的缴费记录（实际应用中将显示详细记录）`);
+        }
+
+        // 搜索和过滤
+        document.getElementById('searchInput').addEventListener('input', filterTable);
+        document.getElementById('statusFilter').addEventListener('change', filterTable);
+
+        function filterTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            const rows = document.querySelectorAll('#studentTable tr');
+
+            rows.forEach(row => {
+                const name = row.cells[0].textContent.toLowerCase();
+                const phone = row.cells[1].textContent.toLowerCase();
+                const status = row.cells[5].querySelector('.badge').textContent === '在读' ? 'active' : 'inactive';
+
+                const matchesSearch = name.includes(searchTerm) || phone.includes(searchTerm);
+                const matchesStatus = statusFilter === 'all' || status === statusFilter;
+
+                row.style.display = matchesSearch && matchesStatus ? '' : 'none';
+            });
+        }
+
+        // 登出
+        document.getElementById('logout').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (confirm('确定要退出登录吗？')) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('userRole');
+                window.location.href = '/login.html';
+            }
+        });
+    </script>
+</body>
+</html>
