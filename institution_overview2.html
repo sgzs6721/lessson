@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>培训机构管理系统 - 机构概览</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --dark: #34495e;
+            --light: #ecf0f1;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 240px;
+            background-color: var(--dark);
+            color: white;
+            padding: 20px 0;
+            transition: all 0.3s;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .sidebar-menu a:hover, 
+        .sidebar-menu a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left: 4px solid var(--primary);
+        }
+
+        .sidebar-menu a.active {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .sidebar-menu i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: white;
+            min-width: 120px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: var(--dark);
+            padding: 8px 12px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 10px 0;
+            color: var(--primary);
+        }
+
+        .stat-title {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .trend-graph {
+            height: 100px;
+            background-color: #f8f9fa;
+            margin-top: 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th, .table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table th {
+            font-weight: 600;
+            color: var(--dark);
+            background-color: #f8f9fa;
+        }
+
+        .table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 10px 0;
+            }
+
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1 style="font-size: 20px;">培训机构管理系统</h1>
+                <p style="opacity: 0.7; margin-top: 5px; font-size: 12px;">核心业务管理平台</p>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active"><i>📊</i> 仪表盘</a></li>
+                <li><a href="#"><i>👥</i> 用户管理</a></li>
+                <li><a href="#"><i>📚</i> 课程管理</a></li>
+                <li><a href="#"><i>👨‍🎓</i> 学员管理</a></li>
+                <li><a href="#"><i>💰</i> 缴费管理</a></li>
+                <li><a href="#"><i>📅</i> 课表管理</a></li>
+                <li><a href="#"><i>✅</i> 打卡与消课</a></li>
+                <li><a href="#"><i>📱</i> 小程序管理</a></li>
+                <li><a href="#"><i>⚙️</i> 系统设置</a></li>
+            </ul>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <div class="header">
+                <h2>机构概览</h2>
+                <div class="user-info">
+                    <div class="user-avatar">A</div>
+                    <div>
+                        <div style="font-weight: 600;">管理员</div>
+                        <div style="font-size: 12px; color: #777;">超级管理员</div>
+                    </div>
+                    <div class="dropdown">
+                        <div class="dropdown-content">
+                            <a href="#">设置</a>
+                            <a href="#">修改密码</a>
+                            <a href="#" id="logout">登出</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 关键指标卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">关键指标</div>
+                </div>
+                <div class="card-body">
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <div class="stat-title">教练数量</div>
+                            <div class="stat-value">8</div>
+                            <div class="trend-graph">趋势图占位符（教练数量）</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">课程数量</div>
+                            <div class="stat-value">15</div>
+                            <div class="trend-graph">趋势图占位符（课程数量）</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">学员数量</div>
+                            <div class="stat-value">147</div>
+                            <div class="trend-graph">趋势图占位符（学员数量）</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">总报名课时</div>
+                            <div class="stat-value">3,500</div>
+                            <div class="trend-graph">趋势图占位符（总报名课时）</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">已完成课时</div>
+                            <div class="stat-value">2,100</div>
+                            <div class="trend-graph">趋势图占位符（已完成课时）</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-title">剩余课时</div>
+                            <div class="stat-value">1,400</div>
+                            <div class="trend-graph">趋势图占位符（剩余课时）</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 教练列表 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">教练列表</div>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>类型</th>
+                                <th>教授课程数</th>
+                                <th>总课时</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>李教练</td>
+                                <td>全职</td>
+                                <td>5</td>
+                                <td>600</td>
+                            </tr>
+                            <tr>
+                                <td>王教练</td>
+                                <td>全职</td>
+                                <td>4</td>
+                                <td>500</td>
+                            </tr>
+                            <tr>
+                                <td>张教练</td>
+                                <td>兼职</td>
+                                <td>3</td>
+                                <td>300</td>
+                            </tr>
+                            <tr>
+                                <td>刘教练</td>
+                                <td>全职</td>
+                                <td>6</td>
+                                <td>700</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 课程分布 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">课程分布</div>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>课程名称</th>
+                                <th>学员人数</th>
+                                <th>总课时</th>
+                                <th>已完成课时</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>基础培训课程</td>
+                                <td>50</td>
+                                <td>1,000</td>
+                                <td>600</td>
+                            </tr>
+                            <tr>
+                                <td>进阶技能课程</td>
+                                <td>40</td>
+                                <td>800</td>
+                                <td>500</td>
+                            </tr>
+                            <tr>
+                                <td>专业认证课程</td>
+                                <td>30</td>
+                                <td>600</td>
+                                <td>350</td>
+                            </tr>
+                            <tr>
+                                <td>短期强化课程</td>
+                                <td>27</td>
+                                <td>400</td>
+                                <td>250</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 头像点击显示下拉菜单
+        document.querySelector('.user-avatar').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const dropdownContent = document.querySelector('.dropdown-content');
+            dropdownContent.classList.toggle('show');
+        });
+
+        // 点击页面其他地方关闭下拉菜单
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.user-info')) {
+                const dropdownContent = document.querySelector('.dropdown-content');
+                dropdownContent.classList.remove('show');
+            }
+        });
+
+        // 登出功能
+        document.getElementById('logout').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (confirm('确定要退出登录吗？')) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('userRole');
+                window.location.href = '/login.html';
+            }
+        });
+
+        // 设置和修改密码链接处理
+        document.querySelectorAll('.dropdown-content a').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                if (this.textContent === '设置') {
+                    e.preventDefault();
+                    console.log('打开设置页面');
+                } else if (this.textContent === '修改密码') {
+                    e.preventDefault();
+                    console.log('打开修改密码页面');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
