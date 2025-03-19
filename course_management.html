@@ -48,14 +48,12 @@
 
         .sidebar-menu {
             list-style: none;
-        }
-
-        .sidebar-menu li {
-            margin-bottom: 5px;
+            flex-grow: 1;
         }
 
         .sidebar-menu a {
-            display: block;
+            display: flex;
+            align-items: center;
             padding: 12px 20px;
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
@@ -67,10 +65,6 @@
             background-color: rgba(255, 255, 255, 0.1);
             color: white;
             border-left: 4px solid var(--primary);
-        }
-
-        .sidebar-menu a.active {
-            background-color: rgba(255, 255, 255, 0.15);
         }
 
         .sidebar-menu i {
@@ -180,10 +174,6 @@
             transition: all 0.3s ease;
         }
 
-        .campus-header:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-        }
-
         .campus-header span {
             font-weight: 600;
             color: white;
@@ -204,10 +194,6 @@
             margin-left: 8px;
             color: rgba(255, 255, 255, 0.8);
             transition: transform 0.3s ease;
-        }
-
-        .campus-header.active::after {
-            transform: rotate(-90deg);
         }
 
         .campus-header.active {
@@ -240,25 +226,29 @@
             border-radius: 4px;
             transition: all 0.3s;
             white-space: nowrap;
-            color: rgba(255, 255, 255, 0.7);
         }
 
         .campus-item:hover {
             background-color: rgba(255, 255, 255, 0.1);
-            color: white;
         }
 
         .campus-item.active {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: var(--primary);
             color: white;
         }
 
         @media (max-width: 768px) {
-            .campus-list {
-                left: 0;
-                top: 100%;
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
                 width: 100%;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                padding: 10px 0;
+            }
+
+            .campus-selector {
+                padding: 10px;
             }
         }
 
@@ -614,17 +604,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
