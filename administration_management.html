@@ -81,28 +81,50 @@
         }
 
         .campus-header {
-            padding: 10px;
-            border-radius: 4px;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: all 0.3s;
+            padding: 12px 15px;
+            cursor: pointer;
+            user-select: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .campus-header:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .campus-header span {
+            font-weight: 600;
+            color: white;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .campus-header span::before {
+            content: '🏢';
+            margin-right: 8px;
+            font-size: 16px;
         }
 
         .campus-header::after {
-            content: '▼';
+            content: '▶';
             font-size: 12px;
-            margin-left: 5px;
+            margin-left: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .campus-header.active::after {
+            transform: rotate(-90deg);
         }
 
         .campus-header.active {
             background-color: rgba(255, 255, 255, 0.2);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .campus-header.active::after {
-            transform: rotate(-90deg);
         }
 
         .campus-list {
