@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>学员管理 - 培训机构管理系统</title>
+    <title>培训机构管理系统 - 学员管理</title>
     <style>
         :root {
             --primary: #3498db;
@@ -32,10 +32,12 @@
         }
 
         .sidebar {
-            width: 240px;
-            background-color: var(--dark);
+            width: 250px;
+            background-color: #2c3e50;
             color: white;
             padding: 20px 0;
+            display: flex;
+            flex-direction: column;
         }
 
         .sidebar-header {
@@ -46,14 +48,12 @@
 
         .sidebar-menu {
             list-style: none;
-        }
-
-        .sidebar-menu li {
-            margin-bottom: 5px;
+            flex-grow: 1;
         }
 
         .sidebar-menu a {
-            display: block;
+            display: flex;
+            align-items: center;
             padding: 12px 20px;
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
@@ -67,14 +67,116 @@
             border-left: 4px solid var(--primary);
         }
 
-        .sidebar-menu a.active {
-            background-color: rgba(255, 255, 255, 0.15);
-        }
-
         .sidebar-menu i {
             margin-right: 10px;
             width: 20px;
             text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 10px 0;
+            }
+
+            .campus-selector {
+                padding: 10px;
+            }
+        }
+
+        /* 校区选择器样式 */
+        .campus-selector {
+            padding: 0 20px;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            position: relative;
+        }
+
+        .campus-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            cursor: pointer;
+            user-select: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .campus-header:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .campus-header span {
+            font-weight: 600;
+            color: white;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .campus-header span::before {
+            content: '🏢';
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .campus-header::after {
+            content: '▶';
+            font-size: 12px;
+            margin-left: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .campus-header.active::after {
+            transform: rotate(-90deg);
+        }
+
+        .campus-header.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .campus-list {
+            display: none;
+            list-style: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background-color: #2c3e50;
+            min-width: 160px;
+            border-radius: 0 4px 4px 0;
+            box-shadow: 4px 0 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            padding: 10px;
+        }
+
+        .campus-list.show {
+            display: block;
+        }
+
+        .campus-item {
+            padding: 8px 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .campus-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .campus-item.active {
+            background-color: var(--primary);
+            color: white;
         }
 
         .main-content {
@@ -314,12 +416,26 @@
 </head>
 <body>
     <div class="container">
-        <!-- 侧边栏 -->
         <div class="sidebar">
             <div class="sidebar-header">
                 <h1 style="font-size: 20px;">培训机构管理系统</h1>
                 <p style="opacity: 0.7; margin-top: 5px; font-size: 12px;">核心业务管理平台</p>
             </div>
+
+            <!-- 校区选择器 -->
+            <div class="campus-selector">
+                <div class="campus-header">
+                    <span>校区选择</span>
+                </div>
+                <ul class="campus-list">
+                    <li class="campus-item active" data-campus="headquarters">总部校区</li>
+                    <li class="campus-item" data-campus="east">东城校区</li>
+                    <li class="campus-item" data-campus="west">西城校区</li>
+                    <li class="campus-item" data-campus="south">南城校区</li>
+                    <li class="campus-item" data-campus="north">北城校区</li>
+                </ul>
+            </div>
+
             <ul class="sidebar-menu">
                 <li><a href="homepage.html"><i>📊</i> 仪表盘</a></li>
                 <li><a href="administration_management.html"><i>👥</i> 用户管理</a></li>
@@ -584,6 +700,38 @@
                 localStorage.removeItem('userRole');
                 window.location.href = '/login.html';
             }
+        });
+
+        // 校区选择器折叠功能
+        document.querySelector('.campus-header').addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('active');
+            document.querySelector('.campus-list').classList.toggle('show');
+        });
+
+        // 校区选择功能
+        document.querySelectorAll('.campus-item').forEach(function(item) {
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.querySelectorAll('.campus-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                // 更新校区显示
+                const campusName = this.textContent;
+                document.querySelector('.campus-header span').textContent = campusName;
+                
+                // 关闭下拉菜单
+                document.querySelector('.campus-header').classList.remove('active');
+                document.querySelector('.campus-list').classList.remove('show');
+                
+                console.log('Selected campus:', campusName);
+            });
+        });
+
+        // 点击页面其他地方关闭校区选择器
+        document.addEventListener('click', function() {
+            document.querySelector('.campus-header').classList.remove('active');
+            document.querySelector('.campus-list').classList.remove('show');
         });
     </script>
 </body>
