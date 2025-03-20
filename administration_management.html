@@ -47,7 +47,6 @@
 
         .sidebar-menu {
             list-style: none;
-            flex-grow: 1;
         }
 
         .sidebar-menu a {
@@ -72,7 +71,6 @@
             text-align: center;
         }
 
-        /* 校区选择器样式 */
         .campus-selector {
             padding: 0 20px;
             margin-bottom: 20px;
@@ -122,11 +120,6 @@
             transform: rotate(-90deg);
         }
 
-        .campus-header.active {
-            background-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
         .campus-list {
             display: none;
             list-style: none;
@@ -169,13 +162,12 @@
             overflow-y: auto;
         }
 
-        /* 修改主面板样式 */
         .content-panel {
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             padding: 20px;
-            height: calc(100% - 40px); /* 减去main-content的padding */
+            height: calc(100% - 40px);
         }
 
         .header {
@@ -210,7 +202,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
         }
 
         .dropdown-content {
@@ -252,15 +243,13 @@
         }
 
         .search-box input {
-            padding: 8px 12px;
-            padding-left: 35px;
+            padding: 8px 12px 8px 35px;
             border: 1px solid #ddd;
             border-radius: 4px;
             width: 300px;
             font-size: 14px;
         }
 
-        /* 添加搜索图标 */
         .search-box::before {
             content: '🔍';
             position: absolute;
@@ -296,7 +285,6 @@
 
         .admin-table {
             width: 100%;
-            /* 移除表格的背景色和阴影，因为现在在白色面板内 */
             background: transparent;
             box-shadow: none;
         }
@@ -335,25 +323,21 @@
             .container {
                 flex-direction: column;
             }
-
             .sidebar {
                 width: 100%;
                 padding: 10px 0;
             }
-
             .campus-selector {
                 padding: 10px;
             }
-
             .campus-list {
-                left: 0; /* 在移动端向下展开 */
+                left: 0;
                 top: 100%;
                 width: 100%;
                 box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             }
         }
 
-        /* 分页控件样式 */
         .pagination {
             display: flex;
             justify-content: flex-end;
@@ -419,6 +403,125 @@
             margin-right: 15px;
             white-space: nowrap;
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 500px;
+            max-width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group select {
+            cursor: pointer;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .modal-footer button {
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            border: none;
+        }
+
+        .cancel-btn {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .save-btn {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-badge.active {
+            background-color: #e6f7ee;
+            color: #2ecc71;
+        }
+
+        .status-badge.inactive {
+            background-color: #feeaea;
+            color: #e74c3c;
+        }
     </style>
 </head>
 <body>
@@ -428,8 +531,6 @@
                 <h1 style="font-size: 20px;">培训机构管理系统</h1>
                 <p style="opacity: 0.7; margin-top: 5px; font-size: 12px;">核心业务管理平台</p>
             </div>
-
-            <!-- 校区选择器 -->
             <div class="campus-selector">
                 <div class="campus-header">
                     <span>校区选择</span>
@@ -442,7 +543,6 @@
                     <li class="campus-item" data-campus="north">北城校区</li>
                 </ul>
             </div>
-
             <ul class="sidebar-menu">
                 <li><a href="homepage.html"><i>📊</i> 仪表盘</a></li>
                 <li><a href="administration_management.html" class="active"><i>👥</i> 用户管理</a></li>
@@ -455,7 +555,6 @@
                 <li><a href="system_settings.html"><i>⚙️</i> 系统设置</a></li>
             </ul>
         </div>
-
         <div class="main-content">
             <div class="content-panel">
                 <div class="header">
@@ -473,7 +572,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="admin-controls">
                     <div class="search-box">
                         <input type="text" placeholder="搜索用户...">
@@ -483,7 +581,6 @@
                         <span>+</span>
                     </button>
                 </div>
-
                 <table class="admin-table">
                     <thead>
                         <tr>
@@ -495,101 +592,132 @@
                             <th>操作</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- 由JavaScript动态生成 -->
-                    </tbody>
+                    <tbody></tbody>
                 </table>
+                <div class="pagination"></div>
+            </div>
+        </div>
+    </div>
 
-                <div class="pagination">
-                    <!-- 由JavaScript动态生成 -->
-                </div>
+    <div class="modal" id="addUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">添加新用户</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm">
+                    <div class="form-group">
+                        <label for="username">用户名</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">密码</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">确认密码</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">角色</label>
+                        <select id="role" required>
+                            <option value="">请选择角色</option>
+                            <option value="超级管理员">超级管理员</option>
+                            <option value="管理员">管理员</option>
+                            <option value="教务">教务</option>
+                            <option value="财务">财务</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="campus">所属校区</label>
+                        <select id="campus" required>
+                            <option value="">请选择校区</option>
+                            <option value="总部校区">总部校区</option>
+                            <option value="东区校区">东区校区</option>
+                            <option value="西区校区">西区校区</option>
+                            <option value="南区校区">南区校区</option>
+                            <option value="北区校区">北区校区</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">状态</label>
+                        <select id="status" required>
+                            <option value="正常">正常</option>
+                            <option value="禁用">禁用</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn">取消</button>
+                <button class="save-btn">保存</button>
             </div>
         </div>
     </div>
 
     <script>
-        // 校区选择器折叠功能
-        document.querySelector('.campus-header').addEventListener('click', function(e) {
-            e.stopPropagation(); // 阻止事件冒泡
-            this.classList.toggle('active');
-            document.querySelector('.campus-list').classList.toggle('show');
-        });
-
-        // 校区选择功能
-        document.querySelectorAll('.campus-item').forEach(function(item) {
-            item.addEventListener('click', function(e) {
-                e.stopPropagation(); // 阻止事件冒泡
-                document.querySelectorAll('.campus-item').forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
-                
-                // 更新校区显示
-                const campusName = this.textContent;
-                document.querySelector('.campus-header span').textContent = campusName;
-                
-                // 关闭下拉菜单
-                document.querySelector('.campus-header').classList.remove('active');
-                document.querySelector('.campus-list').classList.remove('show');
-                
-                console.log('Selected campus:', campusName);
-            });
-        });
-
-        // 点击页面其他地方关闭校区选择器
-        document.addEventListener('click', function() {
-            document.querySelector('.campus-header').classList.remove('active');
-            document.querySelector('.campus-list').classList.remove('show');
-        });
-
-        // 用户信息下拉菜单
-        document.querySelector('.user-avatar').addEventListener('click', function(e) {
-            e.stopPropagation();
-            const dropdownContent = document.querySelector('.dropdown-content');
-            dropdownContent.classList.toggle('show');
-        });
-
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.user-info')) {
-                const dropdownContent = document.querySelector('.dropdown-content');
-                dropdownContent.classList.remove('show');
-            }
-        });
-
-        // 登出功能
-        document.getElementById('logout').addEventListener('click', function(e) {
-            e.preventDefault();
-            if (confirm('确定要退出登录吗？')) {
-                window.location.href = 'login.html';
-            }
-        });
-
-        // 模拟数据
-        const users = Array.from({ length: 50 }, (_, index) => ({
+        let users = Array.from({ length: 50 }, (_, index) => ({
             id: index + 1,
             name: `用户${index + 1}`,
             role: ['超级管理员', '管理员', '教务', '财务'][Math.floor(Math.random() * 4)],
             campus: ['总部校区', '东区校区', '西区校区', '南区校区'][Math.floor(Math.random() * 4)],
             status: Math.random() > 0.2 ? '正常' : '禁用',
             lastLogin: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000)
-                .toLocaleString('zh-CN', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                })
+                .toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })
         }));
 
-        // 分页配置
         let currentPage = 1;
-        let pageSize = 10; // 默认每页显示10条
+        let pageSize = 10;
         let totalPages = Math.ceil(users.length / pageSize);
 
-        // 渲染表格
-        function renderTable() {
+        document.querySelector('.campus-header').addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('active');
+            document.querySelector('.campus-list').classList.toggle('show');
+        });
+
+        document.querySelectorAll('.campus-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.querySelectorAll('.campus-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                const campusName = this.textContent;
+                document.querySelector('.campus-header span').textContent = campusName;
+                this.closest('.campus-selector').querySelector('.campus-header').classList.remove('active');
+                this.closest('.campus-list').classList.remove('show');
+                console.log('Selected campus:', campusName);
+            });
+        });
+
+        document.addEventListener('click', () => {
+            document.querySelector('.campus-header').classList.remove('active');
+            document.querySelector('.campus-list').classList.remove('show');
+        });
+
+        document.querySelector('.user-avatar').addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.querySelector('.dropdown-content').classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.user-info')) {
+                document.querySelector('.dropdown-content').classList.remove('show');
+            }
+        });
+
+        document.getElementById('logout').addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('确定要退出登录吗？')) {
+                window.location.href = 'login.html';
+            }
+        });
+
+        function renderTable(filteredUsers = users) {
             const tbody = document.querySelector('.admin-table tbody');
             const start = (currentPage - 1) * pageSize;
-            const end = start + pageSize;
-            const currentUsers = users.slice(start, end);
+            const end = Math.min(start + pageSize, filteredUsers.length);
+            const currentUsers = filteredUsers.slice(start, end);
 
             tbody.innerHTML = currentUsers.map(user => `
                 <tr>
@@ -599,21 +727,22 @@
                     <td><span class="status-badge ${user.status === '正常' ? 'active' : 'inactive'}">${user.status}</span></td>
                     <td>${user.lastLogin}</td>
                     <td class="action-buttons">
-                        <button class="edit-btn">编辑</button>
-                        <button class="delete-btn">删除</button>
+                        <button class="edit-btn" data-id="${user.id}">编辑</button>
+                        <button class="delete-btn" data-id="${user.id}">删除</button>
                     </td>
                 </tr>
             `).join('');
 
-            updatePagination();
+            updatePagination(filteredUsers.length);
+            addActionListeners();
         }
 
-        // 更新分页控件
-        function updatePagination() {
+        function updatePagination(totalItems = users.length) {
+            totalPages = Math.ceil(totalItems / pageSize);
             const pagination = document.querySelector('.pagination');
             const start = (currentPage - 1) * pageSize + 1;
-            const end = Math.min(currentPage * pageSize, users.length);
-            
+            const end = Math.min(currentPage * pageSize, totalItems);
+
             pagination.innerHTML = `
                 <div class="page-size-selector">
                     <label>每页显示：</label>
@@ -624,7 +753,7 @@
                         <option value="100" ${pageSize === 100 ? 'selected' : ''}>100条</option>
                     </select>
                 </div>
-                <span class="pagination-info">显示 ${start}-${end} 条，共 ${users.length} 条</span>
+                <span class="pagination-info">显示 ${start}-${end} 条，共 ${totalItems} 条</span>
                 <div class="pagination-controls">
                     <button onclick="changePage(1)" ${currentPage === 1 ? 'disabled' : ''}>首页</button>
                     <button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>上一页</button>
@@ -635,59 +764,117 @@
             `;
         }
 
-        // 生成页码按钮
         function generatePageButtons() {
             let buttons = '';
             let start = Math.max(1, currentPage - 2);
             let end = Math.min(totalPages, start + 4);
-            
-            if (end - start < 4) {
-                start = Math.max(1, end - 4);
-            }
-
+            if (end - start < 4) start = Math.max(1, end - 4);
             for (let i = start; i <= end; i++) {
-                buttons += `
-                    <button onclick="changePage(${i})" ${i === currentPage ? 'class="active"' : ''}>
-                        ${i}
-                    </button>
-                `;
+                buttons += `<button onclick="changePage(${i})" ${i === currentPage ? 'class="active"' : ''}>${i}</button>`;
             }
             return buttons;
         }
 
-        // 切换页面
         function changePage(page) {
             currentPage = page;
             renderTable();
         }
 
-        // 切换每页显示数量
         function changePageSize(newSize) {
             pageSize = parseInt(newSize);
             totalPages = Math.ceil(users.length / pageSize);
-            currentPage = 1; // 重置到第一页
+            currentPage = 1;
             renderTable();
         }
 
-        // 初始化
-        document.addEventListener('DOMContentLoaded', () => {
-            renderTable();
+        const addUserModal = document.getElementById('addUserModal');
+        const addUserBtn = document.querySelector('.add-admin-btn');
+        const closeBtn = document.querySelector('.close-btn');
+        const cancelBtn = document.querySelector('.cancel-btn');
+        const saveBtn = document.querySelector('.save-btn');
+        const addUserForm = document.getElementById('addUserForm');
+
+        addUserBtn.addEventListener('click', () => addUserModal.classList.add('show'));
+
+        function closeModal() {
+            addUserModal.classList.remove('show');
+            addUserForm.reset();
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+        addUserModal.addEventListener('click', (e) => {
+            if (e.target === addUserModal) closeModal();
         });
 
-        // 搜索功能
+        saveBtn.addEventListener('click', () => {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const role = document.getElementById('role').value;
+            const campus = document.getElementById('campus').value;
+            const status = document.getElementById('status').value;
+
+            if (!username || !password || !confirmPassword || !role || !campus) {
+                alert('请填写所有必填字段');
+                return;
+            }
+            if (password !== confirmPassword) {
+                alert('两次输入的密码不一致');
+                return;
+            }
+
+            const newUser = {
+                id: users.length + 1,
+                name: username,
+                role,
+                campus,
+                status,
+                lastLogin: '尚未登录'
+            };
+
+            users.unshift(newUser);
+            totalPages = Math.ceil(users.length / pageSize);
+            currentPage = 1;
+            renderTable();
+            closeModal();
+            alert('用户添加成功！');
+        });
+
         document.querySelector('.search-box input').addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
-            const filteredUsers = users.filter(user => 
+            const filteredUsers = users.filter(user =>
                 user.name.toLowerCase().includes(searchTerm) ||
                 user.role.toLowerCase().includes(searchTerm) ||
                 user.campus.toLowerCase().includes(searchTerm)
             );
-            
-            // 更新表格和分页
             currentPage = 1;
-            totalPages = Math.ceil(filteredUsers.length / pageSize);
-            renderTable();
+            renderTable(filteredUsers);
         });
+
+        function addActionListeners() {
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    alert(`编辑用户 ID: ${id} 的功能尚未实现`);
+                });
+            });
+
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    if (confirm(`确定要删除用户 ID: ${id} 吗？`)) {
+                        users = users.filter(user => user.id !== id);
+                        totalPages = Math.ceil(users.length / pageSize);
+                        if (currentPage > totalPages) currentPage = totalPages || 1;
+                        renderTable();
+                        alert('用户已删除');
+                    }
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => renderTable());
     </script>
 </body>
 </html>
