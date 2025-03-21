@@ -586,6 +586,83 @@
                 align-self: flex-end;
             }
         }
+
+        /* 给所有按钮增加统一风格 */
+        .action-btn {
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin: 0 3px;
+        }
+
+        .action-btn i {
+            font-size: 14px;
+        }
+
+        .action-btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .action-btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .action-btn-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        .action-btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .action-btn-light {
+            background-color: #f8f9fa;
+            color: #555;
+            border: 1px solid #ddd;
+        }
+
+        .action-btn:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+
+        /* 排课拖动样式 */
+        .schedule-cell.draggable .student-info {
+            cursor: grab;
+        }
+
+        .schedule-cell.draggable .student-info:active {
+            cursor: grabbing;
+        }
+
+        .schedule-cell.drop-target {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        .schedule-mode-controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .schedule-mode-controls.active {
+            display: flex;
+        }
     </style>
 </head>
 <body>
@@ -647,7 +724,11 @@
                     <div class="dashboard-card" id="dashboard-card">
                         <div class="card-header">
                             <div class="card-title">数据总览</div>
-                            <span class="drag-handle" draggable="true">☰</span>
+                            <div>
+                                <button class="btn btn-sm btn-secondary dashboard-period-btn active" data-period="week">本周</button>
+                                <button class="btn btn-sm dashboard-period-btn" data-period="month">本月</button>
+                                <span class="drag-handle" draggable="true">☰</span>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="dashboard-stats">
@@ -662,21 +743,16 @@
                                     <div style="font-size: 12px; color: #777;">兼职 <span style="color: var(--secondary);">3</span> | 全职 <span style="color: var(--secondary);">5</span></div>
                                 </div>
                                 <div class="stat-card">
-                                    <div class="stat-title">本周待上课</div>
-                                    <div class="stat-value">35</div>
-                                    <div style="font-size: 12px; color: #777;">已上课 <span style="color: var(--secondary);">18</span></div>
+                                    <div class="stat-title">本周课时</div>
+                                    <div class="stat-value">18/35</div>
+                                    <div style="font-size: 12px; color: #777;">销课金额 <span style="color: var(--secondary);">¥12,800</span></div>
                                 </div>
-                                <div class="stat-card">
-                                    <div class="stat-title">本周销课量</div>
-                                    <div class="stat-value">64</div>
-                                    <div style="font-size: 12px; color: #777;">金额 <span style="color: var(--secondary);">¥12,800</span></div>
+                                <div class="stat-card month-data" style="display: none;">
+                                    <div class="stat-title">本月课时</div>
+                                    <div class="stat-value">214/250</div>
+                                    <div style="font-size: 12px; color: #777;">销课金额 <span style="color: var(--secondary);">¥42,800</span></div>
                                 </div>
-                                <div class="stat-card">
-                                    <div class="stat-title">本月销课量</div>
-                                    <div class="stat-value">214</div>
-                                    <div style="font-size: 12px; color: #777;">金额 <span style="color: var(--secondary);">¥42,800</span></div>
-                                </div>
-                                <div class="stat-card">
+                                <div class="stat-card month-data" style="display: none;">
                                     <div class="stat-title">本月缴费学员</div>
                                     <div class="stat-value">28</div>
                                     <div style="font-size: 12px; color: #777;">新学员 <span style="color: var(--secondary);">12</span> | 续费 <span style="color: var(--secondary);">16</span></div>
@@ -695,13 +771,165 @@
                         </div>
                     </div>
 
+                    <!-- 教练员课时统计 -->
+                    <div class="dashboard-card" id="coach-stats-card">
+                        <div class="card-header">
+                            <div class="card-title">教练员课时统计</div>
+                            <div>
+                                <button class="btn btn-sm btn-secondary coach-period-btn active" data-period="week">本周</button>
+                                <button class="btn btn-sm coach-period-btn" data-period="month">本月</button>
+                                <span class="drag-handle" draggable="true">☰</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;">教练姓名</th>
+                                        <th style="text-align: center;">已销课时</th>
+                                        <th style="text-align: center;">待销课时</th>
+                                        <th style="text-align: center;">课时费(元/课时)</th>
+                                        <th style="text-align: center;">类型</th>
+                                        <th style="text-align: center;">预计工资(元)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="coach-stats-body">
+                                    <tr class="coach-data week-data" style="text-align: center;">
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 8px; justify-content: center;">
+                                                <div style="width: 16px; height: 16px; border-radius: 3px; background-color: rgba(231, 76, 60, 0.7);"></div>
+                                                李教练
+                                            </div>
+                                        </td>
+                                        <td>24</td>
+                                        <td>8</td>
+                                        <td>120</td>
+                                        <td>全职</td>
+                                        <td>2,880</td>
+                                    </tr>
+                                    <tr class="coach-data week-data" style="text-align: center;">
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 8px; justify-content: center;">
+                                                <div style="width: 16px; height: 16px; border-radius: 3px; background-color: rgba(52, 152, 219, 0.7);"></div>
+                                                王教练
+                                            </div>
+                                        </td>
+                                        <td>18</td>
+                                        <td>10</td>
+                                        <td>100</td>
+                                        <td>全职</td>
+                                        <td>1,800</td>
+                                    </tr>
+                                    <tr class="coach-data week-data" style="text-align: center;">
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 8px; justify-content: center;">
+                                                <div style="width: 16px; height: 16px; border-radius: 3px; background-color: rgba(46, 204, 113, 0.7);"></div>
+                                                张教练
+                                            </div>
+                                        </td>
+                                        <td>16</td>
+                                        <td>12</td>
+                                        <td>110</td>
+                                        <td>兼职</td>
+                                        <td>1,760</td>
+                                    </tr>
+                                    <tr class="coach-data week-data" style="text-align: center;">
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 8px; justify-content: center;">
+                                                <div style="width: 16px; height: 16px; border-radius: 3px; background-color: rgba(243, 156, 18, 0.7);"></div>
+                                                刘教练
+                                            </div>
+                                        </td>
+                                        <td>14</td>
+                                        <td>7</td>
+                                        <td>130</td>
+                                        <td>兼职</td>
+                                        <td>1,820</td>
+                                    </tr>
+                                    
+                                    <!-- 本月数据 -->
+                                    <tr class="coach-data month-data" style="display: none; text-align: center;">
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 8px; justify-content: center;">
+                                                <div style="width: 16px; height: 16px; border-radius: 3px; background-color: rgba(231, 76, 60, 0.7);"></div>
+                                                李教练
+                                            </div>
+                                        </td>
+                                        <td>86</td>
+                                        <td>14</td>
+                                        <td>120</td>
+                                        <td>全职</td>
+                                        <td>10,320</td>
+                                    </tr>
+                                    <tr class="coach-data month-data" style="display: none; text-align: center;">
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 8px; justify-content: center;">
+                                                <div style="width: 16px; height: 16px; border-radius: 3px; background-color: rgba(52, 152, 219, 0.7);"></div>
+                                                王教练
+                                            </div>
+                                        </td>
+                                        <td>62</td>
+                                        <td>18</td>
+                                        <td>100</td>
+                                        <td>全职</td>
+                                        <td>6,200</td>
+                                    </tr>
+                                    <tr class="coach-data month-data" style="display: none; text-align: center;">
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 8px; justify-content: center;">
+                                                <div style="width: 16px; height: 16px; border-radius: 3px; background-color: rgba(46, 204, 113, 0.7);"></div>
+                                                张教练
+                                            </div>
+                                        </td>
+                                        <td>54</td>
+                                        <td>16</td>
+                                        <td>110</td>
+                                        <td>兼职</td>
+                                        <td>5,940</td>
+                                    </tr>
+                                    <tr class="coach-data month-data" style="display: none; text-align: center;">
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 8px; justify-content: center;">
+                                                <div style="width: 16px; height: 16px; border-radius: 3px; background-color: rgba(243, 156, 18, 0.7);"></div>
+                                                刘教练
+                                            </div>
+                                        </td>
+                                        <td>48</td>
+                                        <td>12</td>
+                                        <td>130</td>
+                                        <td>兼职</td>
+                                        <td>6,240</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="coach-data week-data" style="font-weight: 600; background-color: #f8f9fa; text-align: center;">
+                                        <td>本周合计</td>
+                                        <td>72</td>
+                                        <td>37</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>8,260</td>
+                                    </tr>
+                                    <tr class="coach-data month-data" style="font-weight: 600; background-color: #f8f9fa; display: none; text-align: center;">
+                                        <td>本月合计</td>
+                                        <td>250</td>
+                                        <td>60</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>28,700</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
                     <!-- 今日上课学员 -->
                     <div class="card" id="today-card">
                         <div class="card-header">
                             <div class="card-title">今日上课学员</div>
-                            <div>
-                                <button class="btn btn-sm btn-secondary">批量打卡</button>
-                                <button class="btn btn-sm">刷新</button>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <button class="action-btn action-btn-secondary"><i>✓</i> 批量打卡</button>
+                                <button class="action-btn action-btn-light"><i>🔄</i> 刷新</button>
                                 <span class="drag-handle" draggable="true">☰</span>
                             </div>
                         </div>
@@ -729,9 +957,9 @@
                                         <td>12/24</td>
                                         <td><span class="badge badge-warning status" data-status="unchecked">未打卡</span></td>
                                         <td class="actions">
-                                            <button class="btn btn-sm btn-secondary check-in">打卡</button>
-                                            <button class="btn btn-sm btn-warning leave">请假</button>
-                                            <button class="btn btn-sm">详情</button>
+                                            <button class="action-btn action-btn-primary check-in"><i>✓</i> 打卡</button>
+                                            <button class="action-btn action-btn-warning leave"><i>📅</i> 请假</button>
+                                            <button class="action-btn action-btn-light"><i>👁️</i> 详情</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -742,7 +970,7 @@
                                         <td>15/30</td>
                                         <td><span class="badge badge-success status" data-status="checked">已打卡</span></td>
                                         <td class="actions">
-                                            <button class="btn btn-sm">详情</button>
+                                            <button class="action-btn action-btn-light"><i>👁️</i> 详情</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -753,8 +981,8 @@
                                         <td>8/20</td>
                                         <td><span class="badge badge-leave status" data-status="leave">已请假</span></td>
                                         <td class="actions">
-                                            <button class="btn btn-sm btn-secondary check-in">打卡</button>
-                                            <button class="btn btn-sm">详情</button>
+                                            <button class="action-btn action-btn-primary check-in"><i>✓</i> 打卡</button>
+                                            <button class="action-btn action-btn-light"><i>👁️</i> 详情</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -766,12 +994,21 @@
                     <div class="card" id="schedule-card">
                         <div class="card-header">
                             <div class="card-title">固定课表</div>
-                            <div>
-                                <a href="#" class="btn btn-sm">排课管理</a>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <button class="action-btn action-btn-primary" id="toggle-schedule-mode"><i>📝</i> 排课管理</button>
                                 <span class="drag-handle" draggable="true">☰</span>
                             </div>
                         </div>
                         <div class="card-body" style="overflow-x: auto;">
+                            <!-- 添加排课模式控制 -->
+                            <div class="schedule-mode-controls" id="schedule-mode-controls">
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <span style="font-weight: 600;">排课模式：</span>
+                                    <span style="color: var(--secondary);">可拖动课程到其他时间段</span>
+                                    <button class="action-btn action-btn-secondary" id="finish-schedule-mode"><i>✓</i> 完成</button>
+                                </div>
+                            </div>
+                            
                             <!-- 教练图例 -->
                             <div class="legend">
                                 <div class="legend-item" data-coach="all">
@@ -1313,6 +1550,51 @@
             }
         });
 
+        // 教练员课时统计周期切换
+        document.querySelectorAll('.coach-period-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                // 更新按钮状态
+                document.querySelectorAll('.coach-period-btn').forEach(b => b.classList.remove('btn-secondary', 'active'));
+                this.classList.add('btn-secondary', 'active');
+                
+                // 获取选择的周期
+                const period = this.getAttribute('data-period');
+                
+                // 切换显示数据
+                document.querySelectorAll('.coach-data').forEach(row => {
+                    if (row.classList.contains(period + '-data')) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // 数据总览周期切换
+        document.querySelectorAll('.dashboard-period-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                // 更新按钮状态
+                document.querySelectorAll('.dashboard-period-btn').forEach(b => b.classList.remove('btn-secondary', 'active'));
+                this.classList.add('btn-secondary', 'active');
+                
+                // 获取选择的周期
+                const period = this.getAttribute('data-period');
+                
+                // 切换显示数据
+                document.querySelectorAll('.dashboard-stats .stat-card').forEach(card => {
+                    // 检查是否是月度数据卡片
+                    if (card.classList.contains('month-data')) {
+                        // 如果是月度数据，根据选择的周期显示或隐藏
+                        card.style.display = period === 'month' ? '' : 'none';
+                    } else {
+                        // 如果不是月度数据（默认为周数据），则在月度模式下隐藏
+                        card.style.display = period === 'week' ? '' : 'none';
+                    }
+                });
+            });
+        });
+
         // 设置和修改密码链接处理
         document.querySelectorAll('.dropdown-content a').forEach(function(link) {
             link.addEventListener('click', function(e) {
@@ -1357,6 +1639,113 @@
         document.addEventListener('click', function() {
             document.querySelector('.campus-header').classList.remove('active');
             document.querySelector('.campus-list').classList.remove('show');
+        });
+
+        // 添加排课管理功能
+        document.getElementById('toggle-schedule-mode').addEventListener('click', function() {
+            const scheduleCells = document.querySelectorAll('.schedule-cell');
+            const scheduleControls = document.getElementById('schedule-mode-controls');
+            
+            // 切换控制面板显示
+            scheduleControls.classList.toggle('active');
+            
+            // 切换拖动模式
+            if (scheduleControls.classList.contains('active')) {
+                this.textContent = '取消';
+                this.classList.remove('action-btn-primary');
+                this.classList.add('action-btn-danger');
+                
+                // 启用拖动模式
+                scheduleCells.forEach(cell => {
+                    cell.classList.add('draggable');
+                    
+                    // 为单元格内的学生信息添加拖动功能
+                    const studentInfos = cell.querySelectorAll('.student-info');
+                    studentInfos.forEach(info => {
+                        info.setAttribute('draggable', 'true');
+                        
+                        // 拖动开始
+                        info.addEventListener('dragstart', function(e) {
+                            e.dataTransfer.setData('text/plain', this.outerHTML);
+                            this.classList.add('dragging');
+                        });
+                        
+                        // 拖动结束
+                        info.addEventListener('dragend', function() {
+                            this.classList.remove('dragging');
+                        });
+                    });
+                    
+                    // 添加放置区域功能
+                    cell.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                        this.classList.add('drop-target');
+                    });
+                    
+                    cell.addEventListener('dragleave', function() {
+                        this.classList.remove('drop-target');
+                    });
+                    
+                    cell.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        this.classList.remove('drop-target');
+                        const data = e.dataTransfer.getData('text/plain');
+                        
+                        // 获取被拖动的元素
+                        const draggedElement = document.querySelector('.student-info.dragging');
+                        if (draggedElement) {
+                            // 从原位置移除
+                            draggedElement.parentNode.removeChild(draggedElement);
+                        }
+                        
+                        // 添加到新位置
+                        this.innerHTML += data;
+                        
+                        // 为新添加的元素重新绑定拖动事件
+                        const newInfo = this.querySelector('.student-info:last-child');
+                        if (newInfo) {
+                            newInfo.setAttribute('draggable', 'true');
+                            newInfo.classList.remove('dragging');
+                            
+                            newInfo.addEventListener('dragstart', function(e) {
+                                e.dataTransfer.setData('text/plain', this.outerHTML);
+                                this.classList.add('dragging');
+                            });
+                            
+                            newInfo.addEventListener('dragend', function() {
+                                this.classList.remove('dragging');
+                            });
+                        }
+                    });
+                });
+            } else {
+                // 禁用拖动模式
+                this.innerHTML = '<i>📝</i> 排课管理';
+                this.classList.remove('action-btn-danger');
+                this.classList.add('action-btn-primary');
+                
+                scheduleCells.forEach(cell => {
+                    cell.classList.remove('draggable');
+                    
+                    // 移除拖动功能
+                    const studentInfos = cell.querySelectorAll('.student-info');
+                    studentInfos.forEach(info => {
+                        info.removeAttribute('draggable');
+                    });
+                    
+                    // 移除放置区域功能
+                    cell.removeEventListener('dragover', function(){});
+                    cell.removeEventListener('dragleave', function(){});
+                    cell.removeEventListener('drop', function(){});
+                });
+            }
+        });
+
+        // 完成排课管理
+        document.getElementById('finish-schedule-mode').addEventListener('click', function() {
+            // 触发取消排课模式
+            document.getElementById('toggle-schedule-mode').click();
+            alert('排课更新已保存');
         });
     </script>
 </body>
