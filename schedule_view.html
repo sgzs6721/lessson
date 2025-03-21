@@ -101,6 +101,97 @@
             color: var(--dark);
         }
 
+        /* 内容面板样式 */
+        .content-panel {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        /* 卡片容器和内部结构 */
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            background-color: #f8f9fa;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--dark);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* 行动按钮 */
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 12px;
+            border-radius: 4px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn i {
+            margin-right: 6px;
+        }
+
+        .action-btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .action-btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .action-btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .action-btn-secondary:hover {
+            background-color: #27ae60;
+        }
+
+        .action-btn-light {
+            background-color: #f8f9fa;
+            color: #555;
+            border: 1px solid #ddd;
+        }
+
+        .action-btn-light:hover {
+            background-color: #e9ecef;
+        }
+
+        .action-btn-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        .action-btn-warning:hover {
+            background-color: #e67e22;
+        }
+
         /* 用户信息和下拉菜单样式 */
         .user-info {
             display: flex;
@@ -357,6 +448,134 @@
             font-size: 11px;
         }
 
+        .schedule {
+            display: grid;
+            grid-template-columns: 120px repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .schedule-header {
+            background-color: #f8f9fa;
+            color: var(--dark);
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            border-bottom: 1px solid #eee;
+        }
+
+        .schedule-time {
+            background-color: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+            font-weight: 600;
+            white-space: nowrap;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            border: 1px solid #eee;
+        }
+
+        .schedule-cell {
+            background-color: white;
+            border: 1px solid #eee;
+            padding: 10px;
+            min-height: 120px;
+        }
+
+        .schedule-cell:hover {
+            background-color: #f8f9fa;
+        }
+
+        .student-info {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            border-radius: 3px;
+            margin: 4px 0;
+            font-size: 12px;
+            box-sizing: border-box;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        .student-info .name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .student-info .details {
+            font-size: 12px;
+            color: #666;
+            white-space: nowrap;
+        }
+
+        /* 教练颜色样式 */
+        .student-info.coach-li { background-color: rgba(231, 76, 60, 0.1); color: #e74c3c; }
+        .student-info.coach-wang { background-color: rgba(52, 152, 219, 0.1); color: #3498db; }
+        .student-info.coach-zhang { background-color: rgba(46, 204, 113, 0.1); color: #2ecc71; }
+        .student-info.coach-liu { background-color: rgba(243, 156, 18, 0.1); color: #f39c12; }
+
+        /* 教练图例样式 */
+        .legend {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 10px 0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .legend-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            border-radius: 3px;
+        }
+
+        /* 排课拖动样式 */
+        .schedule-cell.draggable .student-info {
+            cursor: grab;
+        }
+
+        .schedule-cell.draggable .student-info:active {
+            cursor: grabbing;
+        }
+
+        .schedule-cell.drop-target {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        .schedule-mode-controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .schedule-mode-controls.active {
+            display: flex;
+        }
+
         /* 响应式布局（与 homepage.html 一致） */
         @media (max-width: 768px) {
             .container {
@@ -387,6 +606,98 @@
                 width: 100%;
                 box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             }
+        }
+
+        /* 添加模态框样式 */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .modal-close {
+            cursor: pointer;
+            font-size: 20px;
+            color: #999;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .change-item {
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .change-header {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .change-detail {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .change-before, .change-after {
+            flex: 1;
+        }
+        
+        .change-label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .student-change {
+            background-color: #f8f9fa;
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -426,55 +737,401 @@
 
         <!-- 主内容区 -->
         <div class="main-content">
-            <!-- 顶部导航栏 -->
-            <div class="header">
-                <div class="page-title">
-                    <h2>课表管理</h2>
-                </div>
-                <div class="user-info">
-                    <div class="user-avatar">A</div>
-                    <div>
-                        <div style="font-weight: 600;">管理员</div>
-                        <div style="font-size: 12px; color: #777;">超级管理员</div>
+            <!-- 内容面板 -->
+            <div class="content-panel">
+                <!-- 顶部导航栏 -->
+                <div class="header">
+                    <div class="page-title">
+                        <h2>课表管理</h2>
                     </div>
-                    <div class="dropdown">
-                        <div class="dropdown-content">
-                            <a href="#">设置</a>
-                            <a href="#">修改密码</a>
-                            <a href="#" id="logout">登出</a>
+                    <div class="user-info">
+                        <div class="user-avatar">A</div>
+                        <div>
+                            <div style="font-weight: 600;">管理员</div>
+                            <div style="font-size: 12px; color: #777;">超级管理员</div>
+                        </div>
+                        <div class="dropdown">
+                            <div class="dropdown-content">
+                                <a href="#">设置</a>
+                                <a href="#">修改密码</a>
+                                <a href="#" id="logout">登出</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- 课表控制面板 -->
-            <div class="schedule-controls">
-                <div class="filter-row">
-                    <div class="filter-group">
-                        <label>选择教练</label>
-                        <select>
-                            <option value="">全部教练</option>
-                            <option value="1">李教练</option>
-                            <option value="2">王教练</option>
-                            <option value="3">张教练</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>课程类型</label>
-                        <select>
-                            <option value="">全部类型</option>
-                            <option value="dance">舞蹈课</option>
-                            <option value="yoga">瑜伽课</option>
-                            <option value="fitness">健身课</option>
-                        </select>
+                <!-- 课表控制面板 -->
+                <div class="schedule-controls">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label>选择教练</label>
+                            <select>
+                                <option value="">全部教练</option>
+                                <option value="1">李教练</option>
+                                <option value="2">王教练</option>
+                                <option value="3">张教练</option>
+                                <option value="4">刘教练</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>课程类型</label>
+                            <select>
+                                <option value="">全部类型</option>
+                                <option value="dance">舞蹈课</option>
+                                <option value="yoga">瑜伽课</option>
+                                <option value="fitness">健身课</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </div>
+                
+                <!-- 固定课表 -->
+                <div class="card" id="schedule-card">
+                    <div class="card-header">
+                        <div class="card-title">固定课表</div>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <button class="action-btn action-btn-primary" id="toggle-schedule-mode"><i>📝</i> 编辑</button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="overflow-x: auto;">
+                        <!-- 添加排课模式控制 -->
+                        <div class="schedule-mode-controls" id="schedule-mode-controls">
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <span style="font-weight: 600;">排课模式：</span>
+                                <span style="color: var(--secondary);">可拖动课程到其他时间段</span>
+                                <button class="action-btn action-btn-secondary" id="finish-schedule-mode"><i>✓</i> 完成</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 教练图例 -->
+                        <div class="legend">
+                            <div class="legend-item" data-coach="all">
+                                <div class="legend-color" style="background-color: rgba(52, 152, 219, 0.2);"></div>
+                                <span>全部</span>
+                            </div>
+                            <div class="legend-item" data-coach="li">
+                                <div class="legend-color" style="background-color: rgba(231, 76, 60, 0.2);"></div>
+                                <span>李教练</span>
+                            </div>
+                            <div class="legend-item" data-coach="wang">
+                                <div class="legend-color" style="background-color: rgba(52, 152, 219, 0.2);"></div>
+                                <span>王教练</span>
+                            </div>
+                            <div class="legend-item" data-coach="zhang">
+                                <div class="legend-color" style="background-color: rgba(46, 204, 113, 0.2);"></div>
+                                <span>张教练</span>
+                            </div>
+                            <div class="legend-item" data-coach="liu">
+                                <div class="legend-color" style="background-color: rgba(243, 156, 18, 0.2);"></div>
+                                <span>刘教练</span>
+                            </div>
+                        </div>
 
-            <!-- 课表容器 -->
-            <div class="schedule-container">
-                <div class="schedule-grid">
-                    <!-- 课表内容将通过JavaScript动态生成 -->
+                        <div class="schedule">
+                            <!-- 课表表头 -->
+                            <div class="schedule-header">时间段</div>
+                            <div class="schedule-header">周一</div>
+                            <div class="schedule-header">周二</div>
+                            <div class="schedule-header">周三</div>
+                            <div class="schedule-header">周四</div>
+                            <div class="schedule-header">周五</div>
+                            <div class="schedule-header">周六</div>
+                            <div class="schedule-header">周日</div>
+
+                            <!-- 课表内容 -->
+                            <div class="schedule-time">9:00-10:00</div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-li">
+                                    <div class="name">张小明</div>
+                                    <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
+                                </div>
+                                <div class="student-info coach-wang">
+                                    <div class="name">李华</div>
+                                    <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-zhang">
+                                    <div class="name">王芳</div>
+                                    <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-liu">
+                                    <div class="name">赵强</div>
+                                    <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
+                                </div>
+                                <div class="student-info coach-li">
+                                    <div class="name">陈丽</div>
+                                    <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell"></div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-wang">
+                                    <div class="name">孙红</div>
+                                    <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-zhang">
+                                    <div class="name">周杰</div>
+                                    <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
+                                </div>
+                                <div class="student-info coach-liu">
+                                    <div class="name">吴敏</div>
+                                    <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-li">
+                                    <div class="name">刘洋</div>
+                                    <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
+                                </div>
+                            </div>
+
+                            <div class="schedule-time">10:00-11:00</div>
+                            <div class="schedule-cell"></div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-wang">
+                                    <div class="name">李华</div>
+                                    <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
+                                </div>
+                                <div class="student-info coach-zhang">
+                                    <div class="name">王芳</div>
+                                    <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-li">
+                                    <div class="name">张小明</div>
+                                    <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-liu">
+                                    <div class="name">赵强</div>
+                                    <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-zhang">
+                                    <div class="name">周杰</div>
+                                    <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
+                                </div>
+                                <div class="student-info coach-wang">
+                                    <div class="name">孙红</div>
+                                    <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell"></div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-li">
+                                    <div class="name">陈丽</div>
+                                    <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
+                                </div>
+                                <div class="student-info coach-liu">
+                                    <div class="name">吴敏</div>
+                                    <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
+                                </div>
+                            </div>
+
+                            <div class="schedule-time">14:00-15:00</div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-li">
+                                    <div class="name">张小明</div>
+                                    <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
+                                </div>
+                                <div class="student-info coach-wang">
+                                    <div class="name">李华</div>
+                                    <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-zhang">
+                                    <div class="name">王芳</div>
+                                    <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell"></div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-liu">
+                                    <div class="name">赵强</div>
+                                    <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
+                                </div>
+                                <div class="student-info coach-li">
+                                    <div class="name">陈丽</div>
+                                    <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-wang">
+                                    <div class="name">孙红</div>
+                                    <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-zhang">
+                                    <div class="name">周杰</div>
+                                    <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
+                                </div>
+                                <div class="student-info coach-liu">
+                                    <div class="name">吴敏</div>
+                                    <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-li">
+                                    <div class="name">刘洋</div>
+                                    <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
+                                </div>
+                            </div>
+
+                            <div class="schedule-time">15:00-16:00</div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-li">
+                                    <div class="name">刘洋</div>
+                                    <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell"></div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-wang">
+                                    <div class="name">李华</div>
+                                    <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
+                                </div>
+                                <div class="student-info coach-zhang">
+                                    <div class="name">王芳</div>
+                                    <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-liu">
+                                    <div class="name">赵强</div>
+                                    <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell"></div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-zhang">
+                                    <div class="name">周杰</div>
+                                    <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
+                                </div>
+                                <div class="student-info coach-wang">
+                                    <div class="name">孙红</div>
+                                    <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-li">
+                                    <div class="name">陈丽</div>
+                                    <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
+                                </div>
+                            </div>
+
+                            <div class="schedule-time">16:00-17:00</div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-li">
+                                    <div class="name">张小明</div>
+                                    <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-wang">
+                                    <div class="name">李华</div>
+                                    <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
+                                </div>
+                                <div class="student-info coach-zhang">
+                                    <div class="name">王芳</div>
+                                    <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell"></div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-liu">
+                                    <div class="name">赵强</div>
+                                    <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
+                                </div>
+                                <div class="student-info coach-li">
+                                    <div class="name">陈丽</div>
+                                    <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-wang">
+                                    <div class="name">孙红</div>
+                                    <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-zhang">
+                                    <div class="name">周杰</div>
+                                    <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
+                                </div>
+                                <div class="student-info coach-liu">
+                                    <div class="name">吴敏</div>
+                                    <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-li">
+                                    <div class="name">刘洋</div>
+                                    <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
+                                </div>
+                            </div>
+
+                            <div class="schedule-time">17:00-18:00</div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-li">
+                                    <div class="name">张小明</div>
+                                    <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
+                                </div>
+                                <div class="student-info coach-wang">
+                                    <div class="name">李华</div>
+                                    <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell"></div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-zhang">
+                                    <div class="name">王芳</div>
+                                    <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-liu">
+                                    <div class="name">赵强</div>
+                                    <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-wang">
+                                    <div class="name">孙红</div>
+                                    <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
+                                </div>
+                                <div class="student-info coach-li">
+                                    <div class="name">陈丽</div>
+                                    <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-zhang">
+                                    <div class="name">周杰</div>
+                                    <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
+                                </div>
+                                <div class="student-info coach-liu">
+                                    <div class="name">吴敏</div>
+                                    <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
+                                </div>
+                            </div>
+                            <div class="schedule-cell">
+                                <div class="student-info coach-li">
+                                    <div class="name">刘洋</div>
+                                    <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -529,160 +1186,414 @@
             }
         });
 
-        // 示例课程数据
-        const scheduleData = {
-            'Monday-09:00': [
-                { type: 'dance', studentName: '张小明', info: '舞蹈基础班 | 剩余课时: 12' },
-                { type: 'yoga', studentName: '李华', info: '瑜伽初级班 | 剩余课时: 8' }
-            ],
-            'Monday-10:00': [
-                { type: 'fitness', studentName: '王芳', info: '健身私教 | 剩余课时: 15' },
-                { type: 'dance', studentName: '刘洋', info: '街舞进阶 | 剩余课时: 20' }
-            ],
-            'Monday-14:00': [
-                { type: 'yoga', studentName: '赵敏', info: '瑜伽高级班 | 剩余课时: 6' }
-            ],
-            'Monday-16:00': [
-                { type: 'fitness', studentName: '陈浩', info: '力量训练 | 剩余课时: 18' }
-            ],
-            'Tuesday-09:00': [
-                { type: 'yoga', studentName: '周婷', info: '瑜伽初级班 | 剩余课时: 10' },
-                { type: 'dance', studentName: '林小华', info: '拉丁舞基础 | 剩余课时: 14' }
-            ],
-            'Tuesday-11:00': [
-                { type: 'fitness', studentName: '张伟', info: '私人教练 | 剩余课时: 22' }
-            ],
-            'Tuesday-15:00': [
-                { type: 'dance', studentName: '李明', info: '街舞基础 | 剩余课时: 16' },
-                { type: 'yoga', studentName: '王静', info: '瑜伽进阶 | 剩余课时: 9' }
-            ],
-            'Wednesday-09:00': [
-                { type: 'fitness', studentName: '黄强', info: '体能训练 | 剩余课时: 11' }
-            ],
-            'Wednesday-10:00': [
-                { type: 'dance', studentName: '吴婷婷', info: '现代舞基础 | 剩余课时: 13' }
-            ],
-            'Wednesday-14:00': [
-                { type: 'yoga', studentName: '郑秀兰', info: '瑜伽冥想 | 剩余课时: 7' },
-                { type: 'fitness', studentName: '刘波', info: '减脂训练 | 剩余课时: 19' }
-            ],
-            'Thursday-09:00': [
-                { type: 'dance', studentName: '孙丽', info: '爵士舞进阶 | 剩余课时: 15' }
-            ],
-            'Thursday-11:00': [
-                { type: 'yoga', studentName: '张雯', info: '瑜伽拉伸 | 剩余课时: 12' },
-                { type: 'fitness', studentName: '王刚', info: '增肌训练 | 剩余课时: 21' }
-            ],
-            'Thursday-16:00': [
-                { type: 'dance', studentName: '李佳', info: '芭蕾基础 | 剩余课时: 17' }
-            ],
-            'Friday-09:00': [
-                { type: 'fitness', studentName: '陈明', info: '功能性训练 | 剩余课时: 14' },
-                { type: 'yoga', studentName: '周莉', info: '瑜伽塑形 | 剩余课时: 8' }
-            ],
-            'Friday-14:00': [
-                { type: 'dance', studentName: '赵阳', info: '街舞提高 | 剩余课时: 16' }
-            ],
-            'Friday-16:00': [
-                { type: 'fitness', studentName: '吴强', info: '核心训练 | 剩余课时: 20' }
-            ],
-            'Saturday-09:00': [
-                { type: 'yoga', studentName: '林婷', info: '瑜伽入门 | 剩余课时: 11' },
-                { type: 'dance', studentName: '张萍', info: '拉丁舞进阶 | 剩余课时: 13' }
-            ],
-            'Saturday-10:00': [
-                { type: 'fitness', studentName: '王浩', info: '体态调整 | 剩余课时: 18' }
-            ],
-            'Saturday-14:00': [
-                { type: 'dance', studentName: '刘芳', info: '现代舞提高 | 剩余课时: 15' },
-                { type: 'yoga', studentName: '陈静', info: '瑜伽进阶 | 剩余课时: 9' }
-            ],
-            'Saturday-16:00': [
-                { type: 'fitness', studentName: '李强', info: '力量训练 | 剩余课时: 22' }
-            ],
-            'Sunday-09:00': [
-                { type: 'dance', studentName: '周明', info: '爵士舞基础 | 剩余课时: 14' }
-            ],
-            'Sunday-10:00': [
-                { type: 'yoga', studentName: '张丽', info: '瑜伽塑形 | 剩余课时: 10' },
-                { type: 'fitness', studentName: '王健', info: '私教课程 | 剩余课时: 17' }
-            ],
-            'Sunday-14:00': [
-                { type: 'dance', studentName: '李艳', info: '芭蕾提高 | 剩余课时: 16' }
-            ],
-            'Sunday-16:00': [
-                { type: 'yoga', studentName: '赵琳', info: '瑜伽冥想 | 剩余课时: 12' },
-                { type: 'fitness', studentName: '吴刚', info: '增肌训练 | 剩余课时: 19' }
-            ]
-        };
-
-        function generateSchedule() {
-            const grid = document.querySelector('.schedule-grid');
-            const days = ['', '周一', '周二', '周三', '周四', '周五', '周六', '周日'];
-            const timeSlots = [
-                '09:00-10:00', '10:00-11:00', '11:00-12:00',
-                '14:00-15:00', '15:00-16:00', '16:00-17:00',
-                '17:00-18:00', '18:00-19:00', '19:00-20:00'
-            ];
-
-            grid.innerHTML = '';
-
-            days.forEach(day => {
-                const header = document.createElement('div');
-                header.className = 'grid-header';
-                header.textContent = day;
-                grid.appendChild(header);
-            });
-
-            timeSlots.forEach(time => {
-                const timeSlot = document.createElement('div');
-                timeSlot.className = 'time-slot';
-                timeSlot.textContent = time;
-                grid.appendChild(timeSlot);
-
-                const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-                dayNames.forEach(day => {
-                    const cell = document.createElement('div');
-                    cell.className = 'schedule-cell';
-                    
-                    const timeKey = time.split('-')[0];
-                    const scheduleKey = `${day}-${timeKey}`;
-                    const classes = scheduleData[scheduleKey] || [];
-
-                    classes.forEach(classItem => {
-                        const classDiv = document.createElement('div');
-                        classDiv.className = `class-item type-${classItem.type}`;
-                        classDiv.innerHTML = `
-                            <div class="student-name">${classItem.studentName}</div>
-                            <div class="class-info">${classItem.info}</div>
-                        `;
-                        cell.appendChild(classDiv);
-                    });
-
-                    cell.addEventListener('click', () => {
-                        handleCellClick(day, time);
-                    });
-
-                    grid.appendChild(cell);
+        // 教练筛选功能
+        document.querySelectorAll('.legend-item').forEach(function(legendItem) {
+            legendItem.addEventListener('click', function() {
+                document.querySelectorAll('.legend-item').forEach(item => {
+                    item.style.backgroundColor = '';
+                });
+                this.style.backgroundColor = 'rgba(52, 152, 219, 0.1)';
+                const coachClass = this.getAttribute('data-coach');
+                document.querySelectorAll('.student-info').forEach(function(student) {
+                    if (coachClass === 'all') {
+                        student.style.display = 'block';
+                    } else if (student.classList.contains(`coach-${coachClass}`)) {
+                        student.style.display = 'block';
+                    } else {
+                        student.style.display = 'none';
+                    }
                 });
             });
-        }
+        });
 
-        function handleCellClick(day, time) {
-            console.log(`Clicked: ${day} ${time}`);
-        }
+        // 页面加载时默认选中"全部"
+        window.addEventListener('load', function() {
+            const allLegendItem = document.querySelector('.legend-item[data-coach="all"]');
+            if (allLegendItem) {
+                allLegendItem.style.backgroundColor = 'rgba(52, 152, 219, 0.1)';
+            }
+        });
 
-        function initializeFilters() {
-            const coachSelect = document.querySelector('select');
-            coachSelect.addEventListener('change', (e) => {
-                console.log('Selected coach:', e.target.value);
-                generateSchedule();
+        // 添加排课管理功能
+        document.getElementById('toggle-schedule-mode').addEventListener('click', function() {
+            const scheduleCells = document.querySelectorAll('.schedule-cell');
+            const scheduleControls = document.getElementById('schedule-mode-controls');
+            
+            // 切换控制面板显示
+            scheduleControls.classList.toggle('active');
+            
+            // 切换拖动模式
+            if (scheduleControls.classList.contains('active')) {
+                this.textContent = '取消';
+                this.classList.remove('action-btn-primary');
+                this.classList.add('action-btn-danger');
+                
+                // 存储初始状态 - 用于比较变更
+                window.initialScheduleState = {};
+                scheduleCells.forEach((cell, index) => {
+                    window.initialScheduleState[index] = cell.innerHTML;
+                    
+                    // 存储每个学生的原始位置
+                    const studentInfos = cell.querySelectorAll('.student-info');
+                    studentInfos.forEach(info => {
+                        // 为每个学生信息添加原始位置标记
+                        info.setAttribute('data-original-cell', index);
+                    });
+                });
+                
+                // 启用拖动模式
+                scheduleCells.forEach(cell => {
+                    cell.classList.add('draggable');
+                    
+                    // 为单元格内的学生信息添加拖动功能
+                    const studentInfos = cell.querySelectorAll('.student-info');
+                    studentInfos.forEach(info => {
+                        info.setAttribute('draggable', 'true');
+                        
+                        // 拖动开始
+                        info.addEventListener('dragstart', function(e) {
+                            e.dataTransfer.setData('text/plain', this.outerHTML);
+                            e.dataTransfer.setData('original-cell', this.getAttribute('data-original-cell'));
+                            this.classList.add('dragging');
+                        });
+                        
+                        // 拖动结束
+                        info.addEventListener('dragend', function() {
+                            this.classList.remove('dragging');
+                        });
+                    });
+                    
+                    // 添加放置区域功能
+                    cell.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                        this.classList.add('drop-target');
+                    });
+                    
+                    cell.addEventListener('dragleave', function() {
+                        this.classList.remove('drop-target');
+                    });
+                    
+                    cell.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        this.classList.remove('drop-target');
+                        const data = e.dataTransfer.getData('text/plain');
+                        const originalCell = e.dataTransfer.getData('original-cell');
+                        
+                        // 获取被拖动的元素
+                        const draggedElement = document.querySelector('.student-info.dragging');
+                        if (draggedElement) {
+                            // 从原位置移除
+                            draggedElement.parentNode.removeChild(draggedElement);
+                            
+                            // 添加到新位置（不再追加HTML，直接创建新元素添加）
+                            const tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = data;
+                            const newElement = tempDiv.firstChild;
+                            this.appendChild(newElement);
+                            
+                            // 为新添加的元素重新绑定拖动事件
+                            newElement.setAttribute('draggable', 'true');
+                            newElement.classList.remove('dragging');
+                            
+                            newElement.addEventListener('dragstart', function(e) {
+                                e.dataTransfer.setData('text/plain', this.outerHTML);
+                                e.dataTransfer.setData('original-cell', this.getAttribute('data-original-cell'));
+                                this.classList.add('dragging');
+                            });
+                            
+                            newElement.addEventListener('dragend', function() {
+                                this.classList.remove('dragging');
+                            });
+                        }
+                    });
+                });
+            } else {
+                // 禁用拖动模式
+                this.innerHTML = '<i>📝</i> 编辑';
+                this.classList.remove('action-btn-danger');
+                this.classList.add('action-btn-primary');
+                
+                scheduleCells.forEach(cell => {
+                    cell.classList.remove('draggable');
+                    
+                    // 移除拖动功能
+                    const studentInfos = cell.querySelectorAll('.student-info');
+                    studentInfos.forEach(info => {
+                        info.removeAttribute('draggable');
+                    });
+                });
+            }
+        });
+
+        // 添加模态框样式
+        const modalStyles = document.createElement('style');
+        modalStyles.textContent = `
+            .modal-backdrop {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            }
+            
+            .modal-content {
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                width: 80%;
+                max-width: 600px;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+            
+            .modal-header {
+                padding: 15px 20px;
+                border-bottom: 1px solid #eee;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .modal-title {
+                font-size: 18px;
+                font-weight: 600;
+                color: var(--dark);
+            }
+            
+            .modal-close {
+                cursor: pointer;
+                font-size: 20px;
+                color: #999;
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+            
+            .modal-footer {
+                padding: 15px 20px;
+                border-top: 1px solid #eee;
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+            }
+            
+            .change-item {
+                border: 1px solid #eee;
+                border-radius: 6px;
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .change-header {
+                font-weight: 600;
+                margin-bottom: 10px;
+                color: var(--primary);
+            }
+            
+            .change-detail {
+                display: flex;
+                gap: 20px;
+                margin-bottom: 10px;
+            }
+            
+            .change-before, .change-after {
+                flex: 1;
+            }
+            
+            .change-label {
+                font-weight: 600;
+                margin-bottom: 5px;
+                color: var(--dark);
+            }
+            
+            .student-change {
+                background-color: #f8f9fa;
+                padding: 8px;
+                border-radius: 4px;
+                margin-bottom: 5px;
+            }
+        `;
+        document.head.appendChild(modalStyles);
+
+        // 创建模态框
+        function createChangeModal(changes) {
+            // 创建模态框元素
+            const modal = document.createElement('div');
+            modal.classList.add('modal-backdrop');
+            
+            const modalContent = document.createElement('div');
+            modalContent.classList.add('modal-content');
+            
+            // 模态框头部
+            const modalHeader = document.createElement('div');
+            modalHeader.classList.add('modal-header');
+            
+            const modalTitle = document.createElement('div');
+            modalTitle.classList.add('modal-title');
+            modalTitle.textContent = '课表变更确认';
+            
+            const modalClose = document.createElement('div');
+            modalClose.classList.add('modal-close');
+            modalClose.textContent = '×';
+            modalClose.addEventListener('click', () => {
+                document.body.removeChild(modal);
             });
+            
+            modalHeader.appendChild(modalTitle);
+            modalHeader.appendChild(modalClose);
+            
+            // 模态框内容
+            const modalBody = document.createElement('div');
+            modalBody.classList.add('modal-body');
+            
+            if (changes.length === 0) {
+                const noChanges = document.createElement('p');
+                noChanges.textContent = '未检测到课表变更';
+                modalBody.appendChild(noChanges);
+            } else {
+                changes.forEach((change, index) => {
+                    const changeItem = document.createElement('div');
+                    changeItem.classList.add('change-item');
+                    
+                    const changeHeader = document.createElement('div');
+                    changeHeader.classList.add('change-header');
+                    changeHeader.textContent = `变更 ${index + 1}: ${change.weekday} ${change.timeSlot}`;
+                    
+                    const changeDetail = document.createElement('div');
+                    changeDetail.classList.add('change-detail');
+                    
+                    // 变更前
+                    const changeBefore = document.createElement('div');
+                    changeBefore.classList.add('change-before');
+                    
+                    const beforeLabel = document.createElement('div');
+                    beforeLabel.classList.add('change-label');
+                    beforeLabel.textContent = '变更前:';
+                    changeBefore.appendChild(beforeLabel);
+                    
+                    change.before.forEach(student => {
+                        const studentChange = document.createElement('div');
+                        studentChange.classList.add('student-change');
+                        studentChange.textContent = student;
+                        changeBefore.appendChild(studentChange);
+                    });
+                    
+                    // 变更后
+                    const changeAfter = document.createElement('div');
+                    changeAfter.classList.add('change-after');
+                    
+                    const afterLabel = document.createElement('div');
+                    afterLabel.classList.add('change-label');
+                    afterLabel.textContent = '变更后:';
+                    changeAfter.appendChild(afterLabel);
+                    
+                    change.after.forEach(student => {
+                        const studentChange = document.createElement('div');
+                        studentChange.classList.add('student-change');
+                        studentChange.textContent = student;
+                        changeAfter.appendChild(studentChange);
+                    });
+                    
+                    changeDetail.appendChild(changeBefore);
+                    changeDetail.appendChild(changeAfter);
+                    
+                    changeItem.appendChild(changeHeader);
+                    changeItem.appendChild(changeDetail);
+                    
+                    modalBody.appendChild(changeItem);
+                });
+            }
+            
+            // 模态框底部
+            const modalFooter = document.createElement('div');
+            modalFooter.classList.add('modal-footer');
+            
+            const cancelButton = document.createElement('button');
+            cancelButton.classList.add('action-btn', 'action-btn-light');
+            cancelButton.textContent = '取消';
+            cancelButton.addEventListener('click', () => {
+                document.body.removeChild(modal);
+            });
+            
+            const confirmButton = document.createElement('button');
+            confirmButton.classList.add('action-btn', 'action-btn-primary');
+            confirmButton.textContent = '确认变更';
+            confirmButton.addEventListener('click', () => {
+                alert('排课更新已保存');
+                document.body.removeChild(modal);
+                document.getElementById('toggle-schedule-mode').click();
+            });
+            
+            modalFooter.appendChild(cancelButton);
+            modalFooter.appendChild(confirmButton);
+            
+            // 组装模态框
+            modalContent.appendChild(modalHeader);
+            modalContent.appendChild(modalBody);
+            modalContent.appendChild(modalFooter);
+            modal.appendChild(modalContent);
+            
+            return modal;
         }
 
-        window.addEventListener('load', () => {
-            generateSchedule();
-            initializeFilters();
+        // 完成排课管理 - 修改为显示变更信息模态框
+        document.getElementById('finish-schedule-mode').addEventListener('click', function() {
+            // 收集变更信息
+            const scheduleCells = document.querySelectorAll('.schedule-cell');
+            const changes = [];
+            
+            // 获取时间和星期信息
+            const timeSlots = document.querySelectorAll('.schedule-time');
+            const weekdayHeaders = document.querySelectorAll('.schedule-header');
+            const weekdays = [];
+            
+            // 跳过第一个（时间段标题）
+            for (let i = 1; i < weekdayHeaders.length; i++) {
+                weekdays.push(weekdayHeaders[i].textContent);
+            }
+            
+            // 检查所有单元格变更
+            scheduleCells.forEach((cell, index) => {
+                const initialHTML = window.initialScheduleState[index];
+                if (cell.innerHTML !== initialHTML) {
+                    // 确定单元格位置（星期和时间）
+                    const timeIndex = Math.floor(index / 7);
+                    const weekdayIndex = index % 7;
+                    
+                    // 获取时间和星期信息
+                    const timeSlot = timeSlots[timeIndex].textContent;
+                    const weekday = weekdays[weekdayIndex];
+                    
+                    // 创建一个临时元素解析原始HTML
+                    const originalTemp = document.createElement('div');
+                    originalTemp.innerHTML = initialHTML;
+                    const originalStudents = Array.from(originalTemp.querySelectorAll('.student-info')).map(info => {
+                        return info.querySelector('.name').textContent;
+                    });
+                    
+                    // 获取当前学生信息
+                    const currentStudents = Array.from(cell.querySelectorAll('.student-info')).map(info => {
+                        return info.querySelector('.name').textContent;
+                    });
+                    
+                    changes.push({
+                        timeSlot,
+                        weekday,
+                        before: originalStudents,
+                        after: currentStudents
+                    });
+                }
+            });
+            
+            // 创建并显示模态框
+            const modal = createChangeModal(changes);
+            document.body.appendChild(modal);
         });
     </script>
 </body>

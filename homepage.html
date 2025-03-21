@@ -663,6 +663,90 @@
         .schedule-mode-controls.active {
             display: flex;
         }
+
+        /* 添加校区样式 */
+        .add-campus {
+            cursor: pointer;
+            color: #2ecc71;
+            font-weight: bold;
+            margin-right: 5px;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        .add-campus:hover {
+            transform: scale(1.2);
+        }
+        
+        /* 模态框样式 */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 400px;
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .modal-close {
+            cursor: pointer;
+            font-size: 20px;
+            color: #999;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -677,7 +761,7 @@
             <!-- 校区选择器 -->
             <div class="campus-selector">
                 <div class="campus-header">
-                    <span>校区选择</span>
+                    <span><span class="add-campus">+</span> 校区选择</span>
                 </div>
                 <ul class="campus-list">
                     <li class="campus-item active" data-campus="headquarters">总部校区</li>
@@ -1746,6 +1830,118 @@
             // 触发取消排课模式
             document.getElementById('toggle-schedule-mode').click();
             alert('排课更新已保存');
+        });
+
+        // 添加校区功能
+        document.querySelector('.add-campus').addEventListener('click', function(e) {
+            e.stopPropagation(); // 阻止事件冒泡
+            
+            // 创建模态框
+            const modal = document.createElement('div');
+            modal.classList.add('modal-backdrop');
+            
+            const modalContent = document.createElement('div');
+            modalContent.classList.add('modal-content');
+            
+            // 模态框头部
+            const modalHeader = document.createElement('div');
+            modalHeader.classList.add('modal-header');
+            
+            const modalTitle = document.createElement('div');
+            modalTitle.classList.add('modal-title');
+            modalTitle.textContent = '添加新校区';
+            
+            const modalClose = document.createElement('div');
+            modalClose.classList.add('modal-close');
+            modalClose.textContent = '×';
+            modalClose.addEventListener('click', () => {
+                document.body.removeChild(modal);
+            });
+            
+            modalHeader.appendChild(modalTitle);
+            modalHeader.appendChild(modalClose);
+            
+            // 模态框内容
+            const modalBody = document.createElement('div');
+            modalBody.classList.add('modal-body');
+            
+            const formGroup = document.createElement('div');
+            formGroup.classList.add('form-group');
+            
+            const label = document.createElement('label');
+            label.setAttribute('for', 'campusName');
+            label.textContent = '校区名称';
+            
+            const input = document.createElement('input');
+            input.setAttribute('type', 'text');
+            input.setAttribute('id', 'campusName');
+            input.classList.add('form-control');
+            input.setAttribute('placeholder', '请输入校区名称');
+            
+            formGroup.appendChild(label);
+            formGroup.appendChild(input);
+            modalBody.appendChild(formGroup);
+            
+            // 模态框底部
+            const modalFooter = document.createElement('div');
+            modalFooter.classList.add('modal-footer');
+            
+            const cancelButton = document.createElement('button');
+            cancelButton.classList.add('action-btn', 'action-btn-light');
+            cancelButton.textContent = '取消';
+            cancelButton.addEventListener('click', () => {
+                document.body.removeChild(modal);
+            });
+            
+            const confirmButton = document.createElement('button');
+            confirmButton.classList.add('action-btn', 'action-btn-primary');
+            confirmButton.textContent = '添加';
+            confirmButton.addEventListener('click', () => {
+                const campusName = document.getElementById('campusName').value.trim();
+                if (campusName) {
+                    // 创建新校区
+                    const campusList = document.querySelector('.campus-list');
+                    const newCampus = document.createElement('li');
+                    newCampus.classList.add('campus-item');
+                    newCampus.setAttribute('data-campus', campusName.toLowerCase().replace(/\s+/g, '-'));
+                    newCampus.textContent = campusName;
+                    
+                    // 添加事件监听器
+                    newCampus.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        document.querySelectorAll('.campus-item').forEach(i => i.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        document.querySelector('.campus-header span').textContent = this.textContent;
+                        
+                        document.querySelector('.campus-header').classList.remove('active');
+                        document.querySelector('.campus-list').classList.remove('show');
+                    });
+                    
+                    campusList.appendChild(newCampus);
+                    alert('新校区添加成功！');
+                    document.body.removeChild(modal);
+                } else {
+                    alert('请输入校区名称');
+                }
+            });
+            
+            modalFooter.appendChild(cancelButton);
+            modalFooter.appendChild(confirmButton);
+            
+            // 组装模态框
+            modalContent.appendChild(modalHeader);
+            modalContent.appendChild(modalBody);
+            modalContent.appendChild(modalFooter);
+            modal.appendChild(modalContent);
+            
+            // 显示模态框
+            document.body.appendChild(modal);
+            
+            // 自动聚焦输入框
+            setTimeout(() => {
+                input.focus();
+            }, 100);
         });
     </script>
 </body>
