@@ -86,6 +86,14 @@
             overflow-y: auto;
         }
 
+        .content-panel {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -93,29 +101,12 @@
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 1px solid #eee;
-            flex-wrap: wrap;
-            gap: 15px;
         }
 
-        .page-title-panel {
-            background-color: white;
-            padding: 15px 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .page-title-panel h2 {
+        .page-title {
             font-size: 24px;
-            color: var(--dark);
-            margin: 0;
             font-weight: 600;
-            white-space: nowrap;
+            color: var(--dark);
         }
 
         /* 用户信息和下拉菜单样式 */
@@ -123,6 +114,8 @@
             display: flex;
             align-items: center;
             position: relative;
+            gap: 10px;
+            cursor: pointer;
         }
 
         .user-avatar {
@@ -134,9 +127,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 10px;
             font-weight: bold;
-            cursor: pointer;
         }
 
         .dropdown-content {
@@ -635,549 +626,545 @@
 
         <!-- 主内容区 -->
         <div class="main-content">
-            <div class="header">
-                <div class="page-title-panel">
-                    <h2>首页 - <span id="current-campus">总部校区</span></h2>
+            <div class="content-panel">
+                <div class="header">
+                    <h1 class="page-title">首页 - <span id="current-campus">总部校区</span></h1>
                     <div class="user-info">
                         <div class="user-avatar">A</div>
                         <div>
                             <div style="font-weight: 600;">管理员</div>
                             <div style="font-size: 12px; color: #777;">超级管理员</div>
                         </div>
-                        <div class="dropdown">
-                            <div class="dropdown-content">
-                                <a href="#">设置</a>
-                                <a href="#">修改密码</a>
-                                <a href="#" id="logout">登出</a>
-                            </div>
+                        <div class="dropdown-content">
+                            <a href="#">设置</a>
+                            <a href="#">修改密码</a>
+                            <a href="#" id="logout">登出</a>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- 可拖拽区域 -->
-            <div id="sortable-container">
-                <!-- 仪表盘统计 -->
-                <div class="dashboard-card" id="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-title">数据总览</div>
-                        <span class="drag-handle" draggable="true">☰</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="dashboard-stats">
-                            <div class="stat-card">
-                                <div class="stat-title">总学员数</div>
-                                <div class="stat-value">147</div>
-                                <div style="font-size: 12px; color: #777;">较上月 <span style="color: var(--secondary);">+12%</span></div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-title">教练数量</div>
-                                <div class="stat-value">8</div>
-                                <div style="font-size: 12px; color: #777;">兼职 <span style="color: var(--secondary);">3</span> | 全职 <span style="color: var(--secondary);">5</span></div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-title">本周待上课</div>
-                                <div class="stat-value">35</div>
-                                <div style="font-size: 12px; color: #777;">已上课 <span style="color: var(--secondary);">18</span></div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-title">本周销课量</div>
-                                <div class="stat-value">64</div>
-                                <div style="font-size: 12px; color: #777;">金额 <span style="color: var(--secondary);">¥12,800</span></div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-title">本月销课量</div>
-                                <div class="stat-value">214</div>
-                                <div style="font-size: 12px; color: #777;">金额 <span style="color: var(--secondary);">¥42,800</span></div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-title">本月缴费学员</div>
-                                <div class="stat-value">28</div>
-                                <div style="font-size: 12px; color: #777;">新学员 <span style="color: var(--secondary);">12</span> | 续费 <span style="color: var(--secondary);">16</span></div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-title">本月缴费金额</div>
-                                <div class="stat-value">¥92,560</div>
-                                <div style="font-size: 12px; color: #777;">新学员 <span style="color: var(--secondary);">¥45,800</span> | 续费 <span style="color: var(--secondary);">¥46,760</span></div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-title">本月出勤率</div>
-                                <div class="stat-value">92.5%</div>
-                                <div style="font-size: 12px; color: #777;">较上月 <span style="color: var(--secondary);">+2.3%</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 今日上课学员 -->
-                <div class="card" id="today-card">
-                    <div class="card-header">
-                        <div class="card-title">今日上课学员</div>
-                        <div>
-                            <button class="btn btn-sm btn-secondary">批量打卡</button>
-                            <button class="btn btn-sm">刷新</button>
+                <div id="sortable-container">
+                    <!-- 仪表盘统计 -->
+                    <div class="dashboard-card" id="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title">数据总览</div>
                             <span class="drag-handle" draggable="true">☰</span>
                         </div>
+                        <div class="card-body">
+                            <div class="dashboard-stats">
+                                <div class="stat-card">
+                                    <div class="stat-title">总学员数</div>
+                                    <div class="stat-value">147</div>
+                                    <div style="font-size: 12px; color: #777;">较上月 <span style="color: var(--secondary);">+12%</span></div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">教练数量</div>
+                                    <div class="stat-value">8</div>
+                                    <div style="font-size: 12px; color: #777;">兼职 <span style="color: var(--secondary);">3</span> | 全职 <span style="color: var(--secondary);">5</span></div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">本周待上课</div>
+                                    <div class="stat-value">35</div>
+                                    <div style="font-size: 12px; color: #777;">已上课 <span style="color: var(--secondary);">18</span></div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">本周销课量</div>
+                                    <div class="stat-value">64</div>
+                                    <div style="font-size: 12px; color: #777;">金额 <span style="color: var(--secondary);">¥12,800</span></div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">本月销课量</div>
+                                    <div class="stat-value">214</div>
+                                    <div style="font-size: 12px; color: #777;">金额 <span style="color: var(--secondary);">¥42,800</span></div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">本月缴费学员</div>
+                                    <div class="stat-value">28</div>
+                                    <div style="font-size: 12px; color: #777;">新学员 <span style="color: var(--secondary);">12</span> | 续费 <span style="color: var(--secondary);">16</span></div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">本月缴费金额</div>
+                                    <div class="stat-value">¥92,560</div>
+                                    <div style="font-size: 12px; color: #777;">新学员 <span style="color: var(--secondary);">¥45,800</span> | 续费 <span style="color: var(--secondary);">¥46,760</span></div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">本月出勤率</div>
+                                    <div class="stat-value">92.5%</div>
+                                    <div style="font-size: 12px; color: #777;">较上月 <span style="color: var(--secondary);">+2.3%</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 今日上课学员 -->
+                    <div class="card" id="today-card">
+                        <div class="card-header">
+                            <div class="card-title">今日上课学员</div>
+                            <div>
+                                <button class="btn btn-sm btn-secondary">批量打卡</button>
+                                <button class="btn btn-sm">刷新</button>
+                                <span class="drag-handle" draggable="true">☰</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40px;">
+                                            <input type="checkbox" id="selectAll">
+                                        </th>
+                                        <th>学员姓名</th>
+                                        <th>时间</th>
+                                        <th>教练</th>
+                                        <th>剩余课时</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="checkbox" class="select-item" data-status="unchecked"></td>
+                                        <td>张小明</td>
+                                        <td>14:00-16:00</td>
+                                        <td>李教练</td>
+                                        <td>12/24</td>
+                                        <td><span class="badge badge-warning status" data-status="unchecked">未打卡</span></td>
+                                        <td class="actions">
+                                            <button class="btn btn-sm btn-secondary check-in">打卡</button>
+                                            <button class="btn btn-sm btn-warning leave">请假</button>
+                                            <button class="btn btn-sm">详情</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="select-item" data-status="checked" disabled></td>
+                                        <td>李华</td>
+                                        <td>10:00-11:00</td>
+                                        <td>王教练</td>
+                                        <td>15/30</td>
+                                        <td><span class="badge badge-success status" data-status="checked">已打卡</span></td>
+                                        <td class="actions">
+                                            <button class="btn btn-sm">详情</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="select-item" data-status="leave" disabled></td>
+                                        <td>王芳</td>
+                                        <td>16:00-17:00</td>
+                                        <td>张教练</td>
+                                        <td>8/20</td>
+                                        <td><span class="badge badge-leave status" data-status="leave">已请假</span></td>
+                                        <td class="actions">
+                                            <button class="btn btn-sm btn-secondary check-in">打卡</button>
+                                            <button class="btn btn-sm">详情</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 固定课表 -->
+                    <div class="card" id="schedule-card">
+                        <div class="card-header">
+                            <div class="card-title">固定课表</div>
+                            <div>
+                                <a href="#" class="btn btn-sm">排课管理</a>
+                                <span class="drag-handle" draggable="true">☰</span>
+                            </div>
+                        </div>
+                        <div class="card-body" style="overflow-x: auto;">
+                            <!-- 教练图例 -->
+                            <div class="legend">
+                                <div class="legend-item" data-coach="all">
+                                    <div class="legend-color" style="background-color: rgba(52, 152, 219, 0.2);"></div>
+                                    <span>全部</span>
+                                </div>
+                                <div class="legend-item" data-coach="li">
+                                    <div class="legend-color" style="background-color: rgba(231, 76, 60, 0.2);"></div>
+                                    <span>李教练</span>
+                                </div>
+                                <div class="legend-item" data-coach="wang">
+                                    <div class="legend-color" style="background-color: rgba(52, 152, 219, 0.2);"></div>
+                                    <span>王教练</span>
+                                </div>
+                                <div class="legend-item" data-coach="zhang">
+                                    <div class="legend-color" style="background-color: rgba(46, 204, 113, 0.2);"></div>
+                                    <span>张教练</span>
+                                </div>
+                                <div class="legend-item" data-coach="liu">
+                                    <div class="legend-color" style="background-color: rgba(243, 156, 18, 0.2);"></div>
+                                    <span>刘教练</span>
+                                </div>
+                            </div>
+
+                            <div class="schedule">
+                                <!-- 课表表头 -->
+                                <div class="schedule-header">时间段</div>
+                                <div class="schedule-header">周一</div>
+                                <div class="schedule-header">周二</div>
+                                <div class="schedule-header">周三</div>
+                                <div class="schedule-header">周四</div>
+                                <div class="schedule-header">周五</div>
+                                <div class="schedule-header">周六</div>
+                                <div class="schedule-header">周日</div>
+
+                                <!-- 课表内容 -->
+                                <div class="schedule-time">9:00-10:00</div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-li">
+                                        <div class="name">张小明</div>
+                                        <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
+                                    </div>
+                                    <div class="student-info coach-wang">
+                                        <div class="name">李华</div>
+                                        <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-zhang">
+                                        <div class="name">王芳</div>
+                                        <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-liu">
+                                        <div class="name">赵强</div>
+                                        <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
+                                    </div>
+                                    <div class="student-info coach-li">
+                                        <div class="name">陈丽</div>
+                                        <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell"></div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-wang">
+                                        <div class="name">孙红</div>
+                                        <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-zhang">
+                                        <div class="name">周杰</div>
+                                        <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
+                                    </div>
+                                    <div class="student-info coach-liu">
+                                        <div class="name">吴敏</div>
+                                        <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-li">
+                                        <div class="name">刘洋</div>
+                                        <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
+                                    </div>
+                                </div>
+
+                                <div class="schedule-time">10:00-11:00</div>
+                                <div class="schedule-cell"></div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-wang">
+                                        <div class="name">李华</div>
+                                        <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
+                                    </div>
+                                    <div class="student-info coach-zhang">
+                                        <div class="name">王芳</div>
+                                        <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-li">
+                                        <div class="name">张小明</div>
+                                        <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-liu">
+                                        <div class="name">赵强</div>
+                                        <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-zhang">
+                                        <div class="name">周杰</div>
+                                        <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
+                                    </div>
+                                    <div class="student-info coach-wang">
+                                        <div class="name">孙红</div>
+                                        <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell"></div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-li">
+                                        <div class="name">陈丽</div>
+                                        <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
+                                    </div>
+                                    <div class="student-info coach-liu">
+                                        <div class="name">吴敏</div>
+                                        <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
+                                    </div>
+                                </div>
+
+                                <div class="schedule-time">14:00-15:00</div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-li">
+                                        <div class="name">张小明</div>
+                                        <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
+                                    </div>
+                                    <div class="student-info coach-wang">
+                                        <div class="name">李华</div>
+                                        <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-zhang">
+                                        <div class="name">王芳</div>
+                                        <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell"></div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-liu">
+                                        <div class="name">赵强</div>
+                                        <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
+                                    </div>
+                                    <div class="student-info coach-li">
+                                        <div class="name">陈丽</div>
+                                        <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-wang">
+                                        <div class="name">孙红</div>
+                                        <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-zhang">
+                                        <div class="name">周杰</div>
+                                        <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
+                                    </div>
+                                    <div class="student-info coach-liu">
+                                        <div class="name">吴敏</div>
+                                        <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-li">
+                                        <div class="name">刘洋</div>
+                                        <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
+                                    </div>
+                                </div>
+
+                                <div class="schedule-time">15:00-16:00</div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-li">
+                                        <div class="name">刘洋</div>
+                                        <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell"></div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-wang">
+                                        <div class="name">李华</div>
+                                        <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
+                                    </div>
+                                    <div class="student-info coach-zhang">
+                                        <div class="name">王芳</div>
+                                        <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-liu">
+                                        <div class="name">赵强</div>
+                                        <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell"></div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-zhang">
+                                        <div class="name">周杰</div>
+                                        <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
+                                    </div>
+                                    <div class="student-info coach-wang">
+                                        <div class="name">孙红</div>
+                                        <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-li">
+                                        <div class="name">陈丽</div>
+                                        <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
+                                    </div>
+                                </div>
+
+                                <div class="schedule-time">16:00-17:00</div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-li">
+                                        <div class="name">张小明</div>
+                                        <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-wang">
+                                        <div class="name">李华</div>
+                                        <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
+                                    </div>
+                                    <div class="student-info coach-zhang">
+                                        <div class="name">王芳</div>
+                                        <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell"></div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-liu">
+                                        <div class="name">赵强</div>
+                                        <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
+                                    </div>
+                                    <div class="student-info coach-li">
+                                        <div class="name">陈丽</div>
+                                        <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-wang">
+                                        <div class="name">孙红</div>
+                                        <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-zhang">
+                                        <div class="name">周杰</div>
+                                        <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
+                                    </div>
+                                    <div class="student-info coach-liu">
+                                        <div class="name">吴敏</div>
+                                        <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-li">
+                                        <div class="name">刘洋</div>
+                                        <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
+                                    </div>
+                                </div>
+
+                                <div class="schedule-time">17:00-18:00</div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-li">
+                                        <div class="name">张小明</div>
+                                        <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
+                                    </div>
+                                    <div class="student-info coach-wang">
+                                        <div class="name">李华</div>
+                                        <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell"></div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-zhang">
+                                        <div class="name">王芳</div>
+                                        <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-liu">
+                                        <div class="name">赵强</div>
+                                        <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-wang">
+                                        <div class="name">孙红</div>
+                                        <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
+                                    </div>
+                                    <div class="student-info coach-li">
+                                        <div class="name">陈丽</div>
+                                        <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-zhang">
+                                        <div class="name">周杰</div>
+                                        <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
+                                    </div>
+                                    <div class="student-info coach-liu">
+                                        <div class="name">吴敏</div>
+                                        <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
+                                    </div>
+                                </div>
+                                <div class="schedule-cell">
+                                    <div class="student-info coach-li">
+                                        <div class="name">刘洋</div>
+                                        <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 最近缴费记录 -->
+                <div class="card" id="payment-card">
+                    <div class="card-header">
+                        <div class="card-title">最近缴费记录</div>
+                        <a href="#" class="btn btn-sm">查看全部</a>
                     </div>
                     <div class="card-body">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th style="width: 40px;">
-                                        <input type="checkbox" id="selectAll">
-                                    </th>
                                     <th>学员姓名</th>
-                                    <th>时间</th>
+                                    <th>缴费金额</th>
+                                    <th>购买课时</th>
+                                    <th>缴费日期</th>
+                                    <th>类型</th>
                                     <th>教练</th>
-                                    <th>剩余课时</th>
-                                    <th>状态</th>
-                                    <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><input type="checkbox" class="select-item" data-status="unchecked"></td>
                                     <td>张小明</td>
-                                    <td>14:00-16:00</td>
+                                    <td>¥3,800</td>
+                                    <td>24课时</td>
+                                    <td>2025-03-01</td>
+                                    <td>1v1</td>
                                     <td>李教练</td>
-                                    <td>12/24</td>
-                                    <td><span class="badge badge-warning status" data-status="unchecked">未打卡</span></td>
-                                    <td class="actions">
-                                        <button class="btn btn-sm btn-secondary check-in">打卡</button>
-                                        <button class="btn btn-sm btn-warning leave">请假</button>
-                                        <button class="btn btn-sm">详情</button>
-                                    </td>
                                 </tr>
                                 <tr>
-                                    <td><input type="checkbox" class="select-item" data-status="checked" disabled></td>
                                     <td>李华</td>
-                                    <td>10:00-11:00</td>
+                                    <td>¥5,400</td>
+                                    <td>30课时</td>
+                                    <td>2025-03-02</td>
+                                    <td>1v1</td>
                                     <td>王教练</td>
-                                    <td>15/30</td>
-                                    <td><span class="badge badge-success status" data-status="checked">已打卡</span></td>
-                                    <td class="actions">
-                                        <button class="btn btn-sm">详情</button>
-                                    </td>
                                 </tr>
                                 <tr>
-                                    <td><input type="checkbox" class="select-item" data-status="leave" disabled></td>
                                     <td>王芳</td>
-                                    <td>16:00-17:00</td>
+                                    <td>¥3,000</td>
+                                    <td>20课时</td>
+                                    <td>2025-03-03</td>
+                                    <td>1v1</td>
                                     <td>张教练</td>
-                                    <td>8/20</td>
-                                    <td><span class="badge badge-leave status" data-status="leave">已请假</span></td>
-                                    <td class="actions">
-                                        <button class="btn btn-sm btn-secondary check-in">打卡</button>
-                                        <button class="btn btn-sm">详情</button>
-                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>赵强</td>
+                                    <td>¥3,200</td>
+                                    <td>20课时</td>
+                                    <td>2025-03-04</td>
+                                    <td>1v1</td>
+                                    <td>刘教练</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </div>
-
-                <!-- 固定课表 -->
-                <div class="card" id="schedule-card">
-                    <div class="card-header">
-                        <div class="card-title">固定课表</div>
-                        <div>
-                            <a href="#" class="btn btn-sm">排课管理</a>
-                            <span class="drag-handle" draggable="true">☰</span>
-                        </div>
-                    </div>
-                    <div class="card-body" style="overflow-x: auto;">
-                        <!-- 教练图例 -->
-                        <div class="legend">
-                            <div class="legend-item" data-coach="all">
-                                <div class="legend-color" style="background-color: rgba(52, 152, 219, 0.2);"></div>
-                                <span>全部</span>
-                            </div>
-                            <div class="legend-item" data-coach="li">
-                                <div class="legend-color" style="background-color: rgba(231, 76, 60, 0.2);"></div>
-                                <span>李教练</span>
-                            </div>
-                            <div class="legend-item" data-coach="wang">
-                                <div class="legend-color" style="background-color: rgba(52, 152, 219, 0.2);"></div>
-                                <span>王教练</span>
-                            </div>
-                            <div class="legend-item" data-coach="zhang">
-                                <div class="legend-color" style="background-color: rgba(46, 204, 113, 0.2);"></div>
-                                <span>张教练</span>
-                            </div>
-                            <div class="legend-item" data-coach="liu">
-                                <div class="legend-color" style="background-color: rgba(243, 156, 18, 0.2);"></div>
-                                <span>刘教练</span>
-                            </div>
-                        </div>
-
-                        <div class="schedule">
-                            <!-- 课表表头 -->
-                            <div class="schedule-header">时间段</div>
-                            <div class="schedule-header">周一</div>
-                            <div class="schedule-header">周二</div>
-                            <div class="schedule-header">周三</div>
-                            <div class="schedule-header">周四</div>
-                            <div class="schedule-header">周五</div>
-                            <div class="schedule-header">周六</div>
-                            <div class="schedule-header">周日</div>
-
-                            <!-- 课表内容 -->
-                            <div class="schedule-time">9:00-10:00</div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-li">
-                                    <div class="name">张小明</div>
-                                    <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
-                                </div>
-                                <div class="student-info coach-wang">
-                                    <div class="name">李华</div>
-                                    <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-zhang">
-                                    <div class="name">王芳</div>
-                                    <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-liu">
-                                    <div class="name">赵强</div>
-                                    <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
-                                </div>
-                                <div class="student-info coach-li">
-                                    <div class="name">陈丽</div>
-                                    <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell"></div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-wang">
-                                    <div class="name">孙红</div>
-                                    <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-zhang">
-                                    <div class="name">周杰</div>
-                                    <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
-                                </div>
-                                <div class="student-info coach-liu">
-                                    <div class="name">吴敏</div>
-                                    <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-li">
-                                    <div class="name">刘洋</div>
-                                    <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
-                                </div>
-                            </div>
-
-                            <div class="schedule-time">10:00-11:00</div>
-                            <div class="schedule-cell"></div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-wang">
-                                    <div class="name">李华</div>
-                                    <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
-                                </div>
-                                <div class="student-info coach-zhang">
-                                    <div class="name">王芳</div>
-                                    <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-li">
-                                    <div class="name">张小明</div>
-                                    <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-liu">
-                                    <div class="name">赵强</div>
-                                    <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-zhang">
-                                    <div class="name">周杰</div>
-                                    <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
-                                </div>
-                                <div class="student-info coach-wang">
-                                    <div class="name">孙红</div>
-                                    <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell"></div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-li">
-                                    <div class="name">陈丽</div>
-                                    <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
-                                </div>
-                                <div class="student-info coach-liu">
-                                    <div class="name">吴敏</div>
-                                    <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
-                                </div>
-                            </div>
-
-                            <div class="schedule-time">14:00-15:00</div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-li">
-                                    <div class="name">张小明</div>
-                                    <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
-                                </div>
-                                <div class="student-info coach-wang">
-                                    <div class="name">李华</div>
-                                    <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-zhang">
-                                    <div class="name">王芳</div>
-                                    <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell"></div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-liu">
-                                    <div class="name">赵强</div>
-                                    <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
-                                </div>
-                                <div class="student-info coach-li">
-                                    <div class="name">陈丽</div>
-                                    <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-wang">
-                                    <div class="name">孙红</div>
-                                    <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-zhang">
-                                    <div class="name">周杰</div>
-                                    <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-liu">
-                                    <div class="name">吴敏</div>
-                                    <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
-                                </div>
-                                <div class="student-info coach-li">
-                                    <div class="name">刘洋</div>
-                                    <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
-                                </div>
-                            </div>
-
-                            <div class="schedule-time">15:00-16:00</div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-li">
-                                    <div class="name">刘洋</div>
-                                    <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell"></div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-wang">
-                                    <div class="name">李华</div>
-                                    <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
-                                </div>
-                                <div class="student-info coach-zhang">
-                                    <div class="name">王芳</div>
-                                    <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-liu">
-                                    <div class="name">赵强</div>
-                                    <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell"></div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-zhang">
-                                    <div class="name">周杰</div>
-                                    <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
-                                </div>
-                                <div class="student-info coach-wang">
-                                    <div class="name">孙红</div>
-                                    <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-li">
-                                    <div class="name">陈丽</div>
-                                    <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
-                                </div>
-                            </div>
-
-                            <div class="schedule-time">16:00-17:00</div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-li">
-                                    <div class="name">张小明</div>
-                                    <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-wang">
-                                    <div class="name">李华</div>
-                                    <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
-                                </div>
-                                <div class="student-info coach-zhang">
-                                    <div class="name">王芳</div>
-                                    <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell"></div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-liu">
-                                    <div class="name">赵强</div>
-                                    <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
-                                </div>
-                                <div class="student-info coach-li">
-                                    <div class="name">陈丽</div>
-                                    <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-wang">
-                                    <div class="name">孙红</div>
-                                    <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-zhang">
-                                    <div class="name">周杰</div>
-                                    <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-liu">
-                                    <div class="name">吴敏</div>
-                                    <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
-                                </div>
-                                <div class="student-info coach-li">
-                                    <div class="name">刘洋</div>
-                                    <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
-                                </div>
-                            </div>
-
-                            <div class="schedule-time">17:00-18:00</div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-li">
-                                    <div class="name">张小明</div>
-                                    <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
-                                </div>
-                                <div class="student-info coach-wang">
-                                    <div class="name">李华</div>
-                                    <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell"></div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-zhang">
-                                    <div class="name">王芳</div>
-                                    <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-liu">
-                                    <div class="name">赵强</div>
-                                    <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-wang">
-                                    <div class="name">孙红</div>
-                                    <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
-                                </div>
-                                <div class="student-info coach-li">
-                                    <div class="name">陈丽</div>
-                                    <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-zhang">
-                                    <div class="name">周杰</div>
-                                    <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
-                                </div>
-                                <div class="student-info coach-liu">
-                                    <div class="name">吴敏</div>
-                                    <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
-                                </div>
-                            </div>
-                            <div class="schedule-cell">
-                                <div class="student-info coach-li">
-                                    <div class="name">刘洋</div>
-                                    <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 最近缴费记录 -->
-            <div class="card" id="payment-card">
-                <div class="card-header">
-                    <div class="card-title">最近缴费记录</div>
-                    <a href="#" class="btn btn-sm">查看全部</a>
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>学员姓名</th>
-                                <th>缴费金额</th>
-                                <th>购买课时</th>
-                                <th>缴费日期</th>
-                                <th>类型</th>
-                                <th>教练</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>张小明</td>
-                                <td>¥3,800</td>
-                                <td>24课时</td>
-                                <td>2025-03-01</td>
-                                <td>1v1</td>
-                                <td>李教练</td>
-                            </tr>
-                            <tr>
-                                <td>李华</td>
-                                <td>¥5,400</td>
-                                <td>30课时</td>
-                                <td>2025-03-02</td>
-                                <td>1v1</td>
-                                <td>王教练</td>
-                            </tr>
-                            <tr>
-                                <td>王芳</td>
-                                <td>¥3,000</td>
-                                <td>20课时</td>
-                                <td>2025-03-03</td>
-                                <td>1v1</td>
-                                <td>张教练</td>
-                            </tr>
-                            <tr>
-                                <td>赵强</td>
-                                <td>¥3,200</td>
-                                <td>20课时</td>
-                                <td>2025-03-04</td>
-                                <td>1v1</td>
-                                <td>刘教练</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
     </div>
     <script>
         // 头像点击显示下拉菜单
-        document.querySelector('.user-avatar').addEventListener('click', function(e) {
+        document.querySelector('.user-info').addEventListener('click', function(e) {
             e.stopPropagation();
             const dropdownContent = document.querySelector('.dropdown-content');
             dropdownContent.classList.toggle('show');
