@@ -761,7 +761,8 @@
             <!-- 校区选择器 -->
             <div class="campus-selector">
                 <div class="campus-header">
-                    <span><span class="add-campus">+</span> 校区选择</span>
+                    <button class="btn btn-sm" style="background-color: var(--secondary); color: white; padding: 2px 8px; font-size: 12px; margin-right: 10px;" id="add-campus-btn">+</button>
+                    <span>校区选择</span>
                 </div>
                 <ul class="campus-list">
                     <li class="campus-item active" data-campus="headquarters">总部校区</li>
@@ -807,10 +808,13 @@
                     <!-- 仪表盘统计 -->
                     <div class="dashboard-card" id="dashboard-card">
                         <div class="card-header">
-                            <div class="card-title">数据总览</div>
+                            <div class="card-title">数据总览
+                                <span style="margin-left: 15px; font-size: 14px; font-weight: normal;">
+                                    <button class="btn btn-sm btn-secondary dashboard-period-btn active" data-period="week" style="padding: 2px 8px;">本周</button>
+                                    <button class="btn btn-sm dashboard-period-btn" data-period="month" style="padding: 2px 8px;">本月</button>
+                                </span>
+                            </div>
                             <div>
-                                <button class="btn btn-sm btn-secondary dashboard-period-btn active" data-period="week">本周</button>
-                                <button class="btn btn-sm dashboard-period-btn" data-period="month">本月</button>
                                 <span class="drag-handle" draggable="true">☰</span>
                             </div>
                         </div>
@@ -841,12 +845,12 @@
                                     <div class="stat-value">28</div>
                                     <div style="font-size: 12px; color: #777;">新学员 <span style="color: var(--secondary);">12</span> | 续费 <span style="color: var(--secondary);">16</span></div>
                                 </div>
-                                <div class="stat-card">
+                                <div class="stat-card" style="max-width: fit-content; grid-column: span 2;">
                                     <div class="stat-title">本月缴费金额</div>
                                     <div class="stat-value">¥92,560</div>
                                     <div style="font-size: 12px; color: #777;">新学员 <span style="color: var(--secondary);">¥45,800</span> | 续费 <span style="color: var(--secondary);">¥46,760</span></div>
                                 </div>
-                                <div class="stat-card">
+                                <div class="stat-card" style="margin-left: 0;">
                                     <div class="stat-title">本月出勤率</div>
                                     <div class="stat-value">92.5%</div>
                                     <div style="font-size: 12px; color: #777;">较上月 <span style="color: var(--secondary);">+2.3%</span></div>
@@ -855,13 +859,98 @@
                         </div>
                     </div>
 
+                    <!-- 今日上课学员 -->
+                    <div class="card" id="today-card">
+                        <div class="card-header">
+                            <div class="card-title">今日上课学员
+                                <span style="margin-left: 15px; font-size: 14px; font-weight: normal;">
+                                    <button class="action-btn action-btn-secondary" style="padding: 2px 8px;"><i>✓</i> 批量打卡</button>
+                                </span>
+                            </div>
+                            <div>
+                                <span class="drag-handle" draggable="true">☰</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40px;">
+                                            <input type="checkbox" id="selectAll">
+                                        </th>
+                                        <th>学员姓名</th>
+                                        <th>时间</th>
+                                        <th>教练</th>
+                                        <th>剩余课时</th>
+                                        <th>课程类型</th>
+                                        <th>状态</th>
+                                        <th style="width: 300px; text-align: center;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="checkbox" class="select-item" data-status="unchecked"></td>
+                                        <td>张小明</td>
+                                        <td>14:00-16:00</td>
+                                        <td>李教练</td>
+                                        <td>12/24</td>
+                                        <td><span class="badge" style="background-color: #d4edda; color: #28a745;">固定课程</span></td>
+                                        <td><span class="badge badge-warning status" data-status="unchecked">未打卡</span></td>
+                                        <td class="actions" style="text-align: center;">
+                                            <div style="display: flex; align-items: center; justify-content: center; flex-wrap: nowrap;">
+                                                <button class="action-btn action-btn-warning leave" style="width: 90px; white-space: nowrap;"><i>📅</i> 请假</button>
+                                                <button class="action-btn action-btn-primary check-in" style="width: 90px; white-space: nowrap;"><i>✓</i> 打卡</button>
+                                                <button class="action-btn action-btn-light" style="width: 90px; white-space: nowrap;"><i>👁️</i> 详情</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="select-item" data-status="checked" disabled></td>
+                                        <td>李华</td>
+                                        <td>10:00-11:00</td>
+                                        <td>王教练</td>
+                                        <td>15/30</td>
+                                        <td><span class="badge" style="background-color: #cfe2ff; color: #0d6efd;">临时约课</span></td>
+                                        <td><span class="badge badge-success status" data-status="checked">已打卡</span></td>
+                                        <td class="actions" style="text-align: center;">
+                                            <div style="display: flex; align-items: center; justify-content: center; flex-wrap: nowrap;">
+                                                <div style="width: 90px;"></div>
+                                                <div style="width: 90px;"></div>
+                                                <button class="action-btn action-btn-light" style="width: 90px; white-space: nowrap;"><i>👁️</i> 详情</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="select-item" data-status="leave" disabled></td>
+                                        <td>王芳</td>
+                                        <td>16:00-17:00</td>
+                                        <td>张教练</td>
+                                        <td>8/20</td>
+                                        <td><span class="badge" style="background-color: #d4edda; color: #28a745;">固定课程</span></td>
+                                        <td><span class="badge badge-leave status" data-status="leave">已请假</span></td>
+                                        <td class="actions" style="text-align: center;">
+                                            <div style="display: flex; align-items: center; justify-content: center; flex-wrap: nowrap;">
+                                                <div style="width: 90px;"></div>
+                                                <button class="action-btn action-btn-primary check-in" style="width: 90px; white-space: nowrap;"><i>✓</i> 打卡</button>
+                                                <button class="action-btn action-btn-light" style="width: 90px; white-space: nowrap;"><i>👁️</i> 详情</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                     <!-- 教练员课时统计 -->
                     <div class="dashboard-card" id="coach-stats-card">
                         <div class="card-header">
-                            <div class="card-title">教练员课时统计</div>
+                            <div class="card-title">教练员课时统计
+                                <span style="margin-left: 15px; font-size: 14px; font-weight: normal;">
+                                    <button class="btn btn-sm btn-secondary coach-period-btn active" data-period="week" style="padding: 2px 8px;">本周</button>
+                                    <button class="btn btn-sm coach-period-btn" data-period="month" style="padding: 2px 8px;">本月</button>
+                                </span>
+                            </div>
                             <div>
-                                <button class="btn btn-sm btn-secondary coach-period-btn active" data-period="week">本周</button>
-                                <button class="btn btn-sm coach-period-btn" data-period="month">本月</button>
                                 <span class="drag-handle" draggable="true">☰</span>
                             </div>
                         </div>
@@ -1006,430 +1095,19 @@
                             </table>
                         </div>
                     </div>
-
-                    <!-- 今日上课学员 -->
-                    <div class="card" id="today-card">
-                        <div class="card-header">
-                            <div class="card-title">今日上课学员</div>
-                            <div style="display: flex; gap: 10px; align-items: center;">
-                                <button class="action-btn action-btn-secondary"><i>✓</i> 批量打卡</button>
-                                <button class="action-btn action-btn-light"><i>🔄</i> 刷新</button>
-                                <span class="drag-handle" draggable="true">☰</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 40px;">
-                                            <input type="checkbox" id="selectAll">
-                                        </th>
-                                        <th>学员姓名</th>
-                                        <th>时间</th>
-                                        <th>教练</th>
-                                        <th>剩余课时</th>
-                                        <th>状态</th>
-                                        <th>操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="checkbox" class="select-item" data-status="unchecked"></td>
-                                        <td>张小明</td>
-                                        <td>14:00-16:00</td>
-                                        <td>李教练</td>
-                                        <td>12/24</td>
-                                        <td><span class="badge badge-warning status" data-status="unchecked">未打卡</span></td>
-                                        <td class="actions">
-                                            <button class="action-btn action-btn-primary check-in"><i>✓</i> 打卡</button>
-                                            <button class="action-btn action-btn-warning leave"><i>📅</i> 请假</button>
-                                            <button class="action-btn action-btn-light"><i>👁️</i> 详情</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="select-item" data-status="checked" disabled></td>
-                                        <td>李华</td>
-                                        <td>10:00-11:00</td>
-                                        <td>王教练</td>
-                                        <td>15/30</td>
-                                        <td><span class="badge badge-success status" data-status="checked">已打卡</span></td>
-                                        <td class="actions">
-                                            <button class="action-btn action-btn-light"><i>👁️</i> 详情</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="select-item" data-status="leave" disabled></td>
-                                        <td>王芳</td>
-                                        <td>16:00-17:00</td>
-                                        <td>张教练</td>
-                                        <td>8/20</td>
-                                        <td><span class="badge badge-leave status" data-status="leave">已请假</span></td>
-                                        <td class="actions">
-                                            <button class="action-btn action-btn-primary check-in"><i>✓</i> 打卡</button>
-                                            <button class="action-btn action-btn-light"><i>👁️</i> 详情</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- 固定课表 -->
-                    <div class="card" id="schedule-card">
-                        <div class="card-header">
-                            <div class="card-title">固定课表</div>
-                            <div style="display: flex; gap: 10px; align-items: center;">
-                                <button class="action-btn action-btn-primary" id="toggle-schedule-mode"><i>📝</i> 排课管理</button>
-                                <span class="drag-handle" draggable="true">☰</span>
-                            </div>
-                        </div>
-                        <div class="card-body" style="overflow-x: auto;">
-                            <!-- 添加排课模式控制 -->
-                            <div class="schedule-mode-controls" id="schedule-mode-controls">
-                                <div style="display: flex; gap: 10px; align-items: center;">
-                                    <span style="font-weight: 600;">排课模式：</span>
-                                    <span style="color: var(--secondary);">可拖动课程到其他时间段</span>
-                                    <button class="action-btn action-btn-secondary" id="finish-schedule-mode"><i>✓</i> 完成</button>
-                                </div>
-                            </div>
-                            
-                            <!-- 教练图例 -->
-                            <div class="legend">
-                                <div class="legend-item" data-coach="all">
-                                    <div class="legend-color" style="background-color: rgba(52, 152, 219, 0.2);"></div>
-                                    <span>全部</span>
-                                </div>
-                                <div class="legend-item" data-coach="li">
-                                    <div class="legend-color" style="background-color: rgba(231, 76, 60, 0.2);"></div>
-                                    <span>李教练</span>
-                                </div>
-                                <div class="legend-item" data-coach="wang">
-                                    <div class="legend-color" style="background-color: rgba(52, 152, 219, 0.2);"></div>
-                                    <span>王教练</span>
-                                </div>
-                                <div class="legend-item" data-coach="zhang">
-                                    <div class="legend-color" style="background-color: rgba(46, 204, 113, 0.2);"></div>
-                                    <span>张教练</span>
-                                </div>
-                                <div class="legend-item" data-coach="liu">
-                                    <div class="legend-color" style="background-color: rgba(243, 156, 18, 0.2);"></div>
-                                    <span>刘教练</span>
-                                </div>
-                            </div>
-
-                            <div class="schedule">
-                                <!-- 课表表头 -->
-                                <div class="schedule-header">时间段</div>
-                                <div class="schedule-header">周一</div>
-                                <div class="schedule-header">周二</div>
-                                <div class="schedule-header">周三</div>
-                                <div class="schedule-header">周四</div>
-                                <div class="schedule-header">周五</div>
-                                <div class="schedule-header">周六</div>
-                                <div class="schedule-header">周日</div>
-
-                                <!-- 课表内容 -->
-                                <div class="schedule-time">9:00-10:00</div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-li">
-                                        <div class="name">张小明</div>
-                                        <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
-                                    </div>
-                                    <div class="student-info coach-wang">
-                                        <div class="name">李华</div>
-                                        <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-zhang">
-                                        <div class="name">王芳</div>
-                                        <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-liu">
-                                        <div class="name">赵强</div>
-                                        <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
-                                    </div>
-                                    <div class="student-info coach-li">
-                                        <div class="name">陈丽</div>
-                                        <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-wang">
-                                        <div class="name">孙红</div>
-                                        <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-zhang">
-                                        <div class="name">周杰</div>
-                                        <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
-                                    </div>
-                                    <div class="student-info coach-liu">
-                                        <div class="name">吴敏</div>
-                                        <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-li">
-                                        <div class="name">刘洋</div>
-                                        <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
-                                    </div>
-                                </div>
-
-                                <div class="schedule-time">10:00-11:00</div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-wang">
-                                        <div class="name">李华</div>
-                                        <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
-                                    </div>
-                                    <div class="student-info coach-zhang">
-                                        <div class="name">王芳</div>
-                                        <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-li">
-                                        <div class="name">张小明</div>
-                                        <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-liu">
-                                        <div class="name">赵强</div>
-                                        <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-zhang">
-                                        <div class="name">周杰</div>
-                                        <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
-                                    </div>
-                                    <div class="student-info coach-wang">
-                                        <div class="name">孙红</div>
-                                        <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-li">
-                                        <div class="name">陈丽</div>
-                                        <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
-                                    </div>
-                                    <div class="student-info coach-liu">
-                                        <div class="name">吴敏</div>
-                                        <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
-                                    </div>
-                                </div>
-
-                                <div class="schedule-time">14:00-15:00</div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-li">
-                                        <div class="name">张小明</div>
-                                        <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
-                                    </div>
-                                    <div class="student-info coach-wang">
-                                        <div class="name">李华</div>
-                                        <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-zhang">
-                                        <div class="name">王芳</div>
-                                        <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-liu">
-                                        <div class="name">赵强</div>
-                                        <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
-                                    </div>
-                                    <div class="student-info coach-li">
-                                        <div class="name">陈丽</div>
-                                        <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-wang">
-                                        <div class="name">孙红</div>
-                                        <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-zhang">
-                                        <div class="name">周杰</div>
-                                        <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
-                                    </div>
-                                    <div class="student-info coach-liu">
-                                        <div class="name">吴敏</div>
-                                        <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-li">
-                                        <div class="name">刘洋</div>
-                                        <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
-                                    </div>
-                                </div>
-
-                                <div class="schedule-time">15:00-16:00</div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-li">
-                                        <div class="name">刘洋</div>
-                                        <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-wang">
-                                        <div class="name">李华</div>
-                                        <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
-                                    </div>
-                                    <div class="student-info coach-zhang">
-                                        <div class="name">王芳</div>
-                                        <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-liu">
-                                        <div class="name">赵强</div>
-                                        <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-zhang">
-                                        <div class="name">周杰</div>
-                                        <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
-                                    </div>
-                                    <div class="student-info coach-wang">
-                                        <div class="name">孙红</div>
-                                        <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-li">
-                                        <div class="name">陈丽</div>
-                                        <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
-                                    </div>
-                                </div>
-
-                                <div class="schedule-time">16:00-17:00</div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-li">
-                                        <div class="name">张小明</div>
-                                        <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-wang">
-                                        <div class="name">李华</div>
-                                        <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
-                                    </div>
-                                    <div class="student-info coach-zhang">
-                                        <div class="name">王芳</div>
-                                        <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-liu">
-                                        <div class="name">赵强</div>
-                                        <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
-                                    </div>
-                                    <div class="student-info coach-li">
-                                        <div class="name">陈丽</div>
-                                        <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-wang">
-                                        <div class="name">孙红</div>
-                                        <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-zhang">
-                                        <div class="name">周杰</div>
-                                        <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
-                                    </div>
-                                    <div class="student-info coach-liu">
-                                        <div class="name">吴敏</div>
-                                        <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-li">
-                                        <div class="name">刘洋</div>
-                                        <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
-                                    </div>
-                                </div>
-
-                                <div class="schedule-time">17:00-18:00</div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-li">
-                                        <div class="name">张小明</div>
-                                        <div class="details">剩余课时: 12/24 | 单价: ¥200</div>
-                                    </div>
-                                    <div class="student-info coach-wang">
-                                        <div class="name">李华</div>
-                                        <div class="details">剩余课时: 15/30 | 单价: ¥180</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell"></div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-zhang">
-                                        <div class="name">王芳</div>
-                                        <div class="details">剩余课时: 8/20 | 单价: ¥150</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-liu">
-                                        <div class="name">赵强</div>
-                                        <div class="details">剩余课时: 10/20 | 单价: ¥160</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-wang">
-                                        <div class="name">孙红</div>
-                                        <div class="details">剩余课时: 14/28 | 单价: ¥170</div>
-                                    </div>
-                                    <div class="student-info coach-li">
-                                        <div class="name">陈丽</div>
-                                        <div class="details">剩余课时: 18/36 | 单价: ¥190</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-zhang">
-                                        <div class="name">周杰</div>
-                                        <div class="details">剩余课时: 9/18 | 单价: ¥200</div>
-                                    </div>
-                                    <div class="student-info coach-liu">
-                                        <div class="name">吴敏</div>
-                                        <div class="details">剩余课时: 20/40 | 单价: ¥180</div>
-                                    </div>
-                                </div>
-                                <div class="schedule-cell">
-                                    <div class="student-info coach-li">
-                                        <div class="name">刘洋</div>
-                                        <div class="details">剩余课时: 16/32 | 单价: ¥190</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- 最近缴费记录 -->
                 <div class="card" id="payment-card">
                     <div class="card-header">
-                        <div class="card-title">最近缴费记录</div>
-                        <a href="#" class="btn btn-sm">查看全部</a>
+                        <div class="card-title">最近缴费记录
+                            <span style="margin-left: 15px; font-size: 14px; font-weight: normal;">
+                                <a href="#" class="btn btn-sm" style="padding: 2px 8px;">查看全部</a>
+                            </span>
+                        </div>
+                        <div>
+                            <span class="drag-handle" draggable="true">☰</span>
+                        </div>
                     </div>
                     <div class="card-body">
                         <table class="table">
@@ -1507,43 +1185,13 @@
             });
         });
 
-        // 教练筛选功能
-        document.querySelectorAll('.legend-item').forEach(function(legendItem) {
-            legendItem.addEventListener('click', function() {
-                document.querySelectorAll('.legend-item').forEach(item => {
-                    item.style.backgroundColor = '';
-                });
-                this.style.backgroundColor = 'rgba(52, 152, 219, 0.1)';
-                const coachClass = this.getAttribute('data-coach');
-                document.querySelectorAll('.student-info').forEach(function(student) {
-                    if (coachClass === 'all') {
-                        student.style.display = 'block';
-                    } else if (student.classList.contains(`coach-${coachClass}`)) {
-                        student.style.display = 'block';
-                    } else {
-                        student.style.display = 'none';
-                    }
-                });
-            });
-        });
-
-        // 校区选择功能
-        document.querySelectorAll('.campus-tab').forEach(function(tab) {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.campus-tab').forEach(item => {
-                    item.classList.remove('active');
-                });
-                this.classList.add('active');
-                const campusName = this.textContent;
-                document.getElementById('campus-name').textContent = campusName;
-                console.log(`切换到校区: ${campusName}`);
-            });
-        });
-
         // 操作按钮根据状态显示隐藏
         function updateActions() {
             document.querySelectorAll('.table tbody tr').forEach(row => {
-                const status = row.querySelector('.status').getAttribute('data-status');
+                const statusElem = row.querySelector('.status');
+                if (!statusElem) return;
+                
+                const status = statusElem.getAttribute('data-status');
                 const checkInBtn = row.querySelector('.check-in');
                 const leaveBtn = row.querySelector('.leave');
 
@@ -1551,8 +1199,8 @@
                 if (leaveBtn) leaveBtn.style.display = 'none';
 
                 if (status === 'unchecked') {
-                    if (checkInBtn) checkInBtn.style.display = 'inline-block';
                     if (leaveBtn) leaveBtn.style.display = 'inline-block';
+                    if (checkInBtn) checkInBtn.style.display = 'inline-block';
                 } else if (status === 'checked') {
                     // 已打卡不显示任何操作按钮，仅详情
                 } else if (status === 'leave') {
@@ -1560,6 +1208,90 @@
                 }
             });
         }
+
+        // 实现打卡功能
+        function implementCheckIn(row) {
+            // 找到状态元素和复选框
+            const statusElem = row.querySelector('.status');
+            const checkbox = row.querySelector('.select-item');
+            
+            // 更新状态
+            statusElem.textContent = '已打卡';
+            statusElem.classList.remove('badge-warning', 'badge-leave');
+            statusElem.classList.add('badge-success');
+            statusElem.setAttribute('data-status', 'checked');
+            
+            // 更新复选框状态
+            if (checkbox) {
+                checkbox.checked = false;
+                checkbox.disabled = true;
+                checkbox.setAttribute('data-status', 'checked');
+            }
+            
+            // 更新操作按钮
+            updateActions();
+        }
+        
+        // 实现请假功能
+        function implementLeave(row) {
+            // 找到状态元素和复选框
+            const statusElem = row.querySelector('.status');
+            const checkbox = row.querySelector('.select-item');
+            
+            // 更新状态
+            statusElem.textContent = '已请假';
+            statusElem.classList.remove('badge-warning', 'badge-success');
+            statusElem.classList.add('badge-leave');
+            statusElem.setAttribute('data-status', 'leave');
+            
+            // 更新复选框状态
+            if (checkbox) {
+                checkbox.checked = false;
+                checkbox.disabled = true;
+                checkbox.setAttribute('data-status', 'leave');
+            }
+            
+            // 更新操作按钮
+            updateActions();
+        }
+        
+        // 为所有打卡按钮添加事件监听
+        document.querySelectorAll('.check-in').forEach(button => {
+            button.addEventListener('click', function() {
+                const row = this.closest('tr');
+                implementCheckIn(row);
+            });
+        });
+        
+        // 为所有请假按钮添加事件监听
+        document.querySelectorAll('.leave').forEach(button => {
+            button.addEventListener('click', function() {
+                const row = this.closest('tr');
+                implementLeave(row);
+            });
+        });
+        
+        // 批量打卡功能
+        document.querySelector('.action-btn-secondary').addEventListener('click', function() {
+            const selectedCheckboxes = document.querySelectorAll('.select-item:checked');
+            
+            if (selectedCheckboxes.length === 0) {
+                alert('请先选择要批量打卡的学员');
+                return;
+            }
+            
+            if (confirm(`确定要为选中的 ${selectedCheckboxes.length} 名学员进行打卡吗？`)) {
+                selectedCheckboxes.forEach(checkbox => {
+                    const row = checkbox.closest('tr');
+                    implementCheckIn(row);
+                });
+                
+                // 重置全选复选框
+                document.getElementById('selectAll').checked = false;
+                
+                alert('批量打卡成功！');
+            }
+        });
 
         // 拖拽排序功能（通过图标触发）
         const sortableContainer = document.getElementById('sortable-container');
@@ -1609,30 +1341,32 @@
         // 初始化时更新操作按钮和复选框状态
         window.addEventListener('load', function() {
             updateActions();
+            
             document.querySelectorAll('.select-item').forEach(checkbox => {
                 if (checkbox.getAttribute('data-status') !== 'unchecked') {
                     checkbox.disabled = true;
                 }
             });
-        });
-
-        // 登出功能
-        document.getElementById('logout').addEventListener('click', function(e) {
-            e.preventDefault();
-            if (confirm('确定要退出登录吗？')) {
-                localStorage.removeItem('token');
-                localStorage.removeItem('userRole');
-                window.location.href = '/login.html';
-            }
-        });
-
-        // 页面加载时默认选中"全部"
-        window.addEventListener('load', function() {
+            
+            // 教练筛选功能初始化
             const allLegendItem = document.querySelector('.legend-item[data-coach="all"]');
             if (allLegendItem) {
                 allLegendItem.style.backgroundColor = 'rgba(52, 152, 219, 0.1)';
             }
         });
+
+        // 登出功能
+        const logoutBtn = document.getElementById('logout');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('确定要退出登录吗？')) {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('userRole');
+                    window.location.href = '/login.html';
+                }
+            });
+        }
 
         // 教练员课时统计周期切换
         document.querySelectorAll('.coach-period-btn').forEach(function(btn) {
@@ -1693,11 +1427,14 @@
         });
 
         // 校区选择器交互
-        document.querySelector('.campus-header').addEventListener('click', function(e) {
-            e.stopPropagation();
-            this.classList.toggle('active');
-            document.querySelector('.campus-list').classList.toggle('show');
-        });
+        const campusHeader = document.querySelector('.campus-header');
+        if (campusHeader) {
+            campusHeader.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.classList.toggle('active');
+                document.querySelector('.campus-list').classList.toggle('show');
+            });
+        }
 
         // 校区选择
         document.querySelectorAll('.campus-item').forEach(function(item) {
@@ -1708,9 +1445,6 @@
                 
                 // 更新校区显示
                 const campusName = this.textContent;
-                document.querySelector('.campus-header span').textContent = campusName;
-                
-                // 更新右侧标题的校区名称
                 document.getElementById('current-campus').textContent = campusName;
                 
                 // 关闭下拉菜单
@@ -1721,228 +1455,170 @@
 
         // 点击其他区域关闭
         document.addEventListener('click', function() {
-            document.querySelector('.campus-header').classList.remove('active');
-            document.querySelector('.campus-list').classList.remove('show');
-        });
-
-        // 添加排课管理功能
-        document.getElementById('toggle-schedule-mode').addEventListener('click', function() {
-            const scheduleCells = document.querySelectorAll('.schedule-cell');
-            const scheduleControls = document.getElementById('schedule-mode-controls');
-            
-            // 切换控制面板显示
-            scheduleControls.classList.toggle('active');
-            
-            // 切换拖动模式
-            if (scheduleControls.classList.contains('active')) {
-                this.textContent = '取消';
-                this.classList.remove('action-btn-primary');
-                this.classList.add('action-btn-danger');
-                
-                // 启用拖动模式
-                scheduleCells.forEach(cell => {
-                    cell.classList.add('draggable');
-                    
-                    // 为单元格内的学生信息添加拖动功能
-                    const studentInfos = cell.querySelectorAll('.student-info');
-                    studentInfos.forEach(info => {
-                        info.setAttribute('draggable', 'true');
-                        
-                        // 拖动开始
-                        info.addEventListener('dragstart', function(e) {
-                            e.dataTransfer.setData('text/plain', this.outerHTML);
-                            this.classList.add('dragging');
-                        });
-                        
-                        // 拖动结束
-                        info.addEventListener('dragend', function() {
-                            this.classList.remove('dragging');
-                        });
-                    });
-                    
-                    // 添加放置区域功能
-                    cell.addEventListener('dragover', function(e) {
-                        e.preventDefault();
-                        this.classList.add('drop-target');
-                    });
-                    
-                    cell.addEventListener('dragleave', function() {
-                        this.classList.remove('drop-target');
-                    });
-                    
-                    cell.addEventListener('drop', function(e) {
-                        e.preventDefault();
-                        this.classList.remove('drop-target');
-                        const data = e.dataTransfer.getData('text/plain');
-                        
-                        // 获取被拖动的元素
-                        const draggedElement = document.querySelector('.student-info.dragging');
-                        if (draggedElement) {
-                            // 从原位置移除
-                            draggedElement.parentNode.removeChild(draggedElement);
-                        }
-                        
-                        // 添加到新位置
-                        this.innerHTML += data;
-                        
-                        // 为新添加的元素重新绑定拖动事件
-                        const newInfo = this.querySelector('.student-info:last-child');
-                        if (newInfo) {
-                            newInfo.setAttribute('draggable', 'true');
-                            newInfo.classList.remove('dragging');
-                            
-                            newInfo.addEventListener('dragstart', function(e) {
-                                e.dataTransfer.setData('text/plain', this.outerHTML);
-                                this.classList.add('dragging');
-                            });
-                            
-                            newInfo.addEventListener('dragend', function() {
-                                this.classList.remove('dragging');
-                            });
-                        }
-                    });
-                });
-            } else {
-                // 禁用拖动模式
-                this.innerHTML = '<i>📝</i> 排课管理';
-                this.classList.remove('action-btn-danger');
-                this.classList.add('action-btn-primary');
-                
-                scheduleCells.forEach(cell => {
-                    cell.classList.remove('draggable');
-                    
-                    // 移除拖动功能
-                    const studentInfos = cell.querySelectorAll('.student-info');
-                    studentInfos.forEach(info => {
-                        info.removeAttribute('draggable');
-                    });
-                    
-                    // 移除放置区域功能
-                    cell.removeEventListener('dragover', function(){});
-                    cell.removeEventListener('dragleave', function(){});
-                    cell.removeEventListener('drop', function(){});
-                });
+            const campusHeader = document.querySelector('.campus-header');
+            if (campusHeader) {
+                campusHeader.classList.remove('active');
+                const campusList = document.querySelector('.campus-list');
+                if (campusList) {
+                    campusList.classList.remove('show');
+                }
             }
         });
 
-        // 完成排课管理
-        document.getElementById('finish-schedule-mode').addEventListener('click', function() {
-            // 触发取消排课模式
-            document.getElementById('toggle-schedule-mode').click();
-            alert('排课更新已保存');
-        });
-
         // 添加校区功能
-        document.querySelector('.add-campus').addEventListener('click', function(e) {
-            e.stopPropagation(); // 阻止事件冒泡
-            
-            // 创建模态框
-            const modal = document.createElement('div');
-            modal.classList.add('modal-backdrop');
-            
-            const modalContent = document.createElement('div');
-            modalContent.classList.add('modal-content');
-            
-            // 模态框头部
-            const modalHeader = document.createElement('div');
-            modalHeader.classList.add('modal-header');
-            
-            const modalTitle = document.createElement('div');
-            modalTitle.classList.add('modal-title');
-            modalTitle.textContent = '添加新校区';
-            
-            const modalClose = document.createElement('div');
-            modalClose.classList.add('modal-close');
-            modalClose.textContent = '×';
-            modalClose.addEventListener('click', () => {
-                document.body.removeChild(modal);
-            });
-            
-            modalHeader.appendChild(modalTitle);
-            modalHeader.appendChild(modalClose);
-            
-            // 模态框内容
-            const modalBody = document.createElement('div');
-            modalBody.classList.add('modal-body');
-            
-            const formGroup = document.createElement('div');
-            formGroup.classList.add('form-group');
-            
-            const label = document.createElement('label');
-            label.setAttribute('for', 'campusName');
-            label.textContent = '校区名称';
-            
-            const input = document.createElement('input');
-            input.setAttribute('type', 'text');
-            input.setAttribute('id', 'campusName');
-            input.classList.add('form-control');
-            input.setAttribute('placeholder', '请输入校区名称');
-            
-            formGroup.appendChild(label);
-            formGroup.appendChild(input);
-            modalBody.appendChild(formGroup);
-            
-            // 模态框底部
-            const modalFooter = document.createElement('div');
-            modalFooter.classList.add('modal-footer');
-            
-            const cancelButton = document.createElement('button');
-            cancelButton.classList.add('action-btn', 'action-btn-light');
-            cancelButton.textContent = '取消';
-            cancelButton.addEventListener('click', () => {
-                document.body.removeChild(modal);
-            });
-            
-            const confirmButton = document.createElement('button');
-            confirmButton.classList.add('action-btn', 'action-btn-primary');
-            confirmButton.textContent = '添加';
-            confirmButton.addEventListener('click', () => {
-                const campusName = document.getElementById('campusName').value.trim();
-                if (campusName) {
-                    // 创建新校区
-                    const campusList = document.querySelector('.campus-list');
-                    const newCampus = document.createElement('li');
-                    newCampus.classList.add('campus-item');
-                    newCampus.setAttribute('data-campus', campusName.toLowerCase().replace(/\s+/g, '-'));
-                    newCampus.textContent = campusName;
-                    
-                    // 添加事件监听器
-                    newCampus.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        document.querySelectorAll('.campus-item').forEach(i => i.classList.remove('active'));
-                        this.classList.add('active');
-                        
-                        document.querySelector('.campus-header span').textContent = this.textContent;
-                        
-                        document.querySelector('.campus-header').classList.remove('active');
-                        document.querySelector('.campus-list').classList.remove('show');
-                    });
-                    
-                    campusList.appendChild(newCampus);
-                    alert('新校区添加成功！');
+        const addCampusBtn = document.getElementById('add-campus-btn');
+        if (addCampusBtn) {
+            addCampusBtn.addEventListener('click', function() {
+                // 创建模态框
+                const modal = document.createElement('div');
+                modal.classList.add('modal-backdrop');
+                
+                const modalContent = document.createElement('div');
+                modalContent.classList.add('modal-content');
+                
+                // 模态框头部
+                const modalHeader = document.createElement('div');
+                modalHeader.classList.add('modal-header');
+                
+                const modalTitle = document.createElement('div');
+                modalTitle.classList.add('modal-title');
+                modalTitle.textContent = '添加新校区';
+                
+                const modalClose = document.createElement('div');
+                modalClose.classList.add('modal-close');
+                modalClose.textContent = '×';
+                modalClose.addEventListener('click', () => {
                     document.body.removeChild(modal);
-                } else {
-                    alert('请输入校区名称');
-                }
+                });
+                
+                modalHeader.appendChild(modalTitle);
+                modalHeader.appendChild(modalClose);
+                
+                // 模态框内容
+                const modalBody = document.createElement('div');
+                modalBody.classList.add('modal-body');
+                
+                // 校区名称
+                const nameGroup = document.createElement('div');
+                nameGroup.classList.add('form-group');
+                
+                const nameLabel = document.createElement('label');
+                nameLabel.setAttribute('for', 'campusName');
+                nameLabel.textContent = '校区名称';
+                
+                const nameInput = document.createElement('input');
+                nameInput.setAttribute('type', 'text');
+                nameInput.setAttribute('id', 'campusName');
+                nameInput.classList.add('form-control');
+                nameInput.setAttribute('placeholder', '请输入校区名称');
+                
+                nameGroup.appendChild(nameLabel);
+                nameGroup.appendChild(nameInput);
+                
+                // 负责人
+                const managerGroup = document.createElement('div');
+                managerGroup.classList.add('form-group');
+                
+                const managerLabel = document.createElement('label');
+                managerLabel.setAttribute('for', 'campusManager');
+                managerLabel.textContent = '负责人';
+                
+                const managerInput = document.createElement('input');
+                managerInput.setAttribute('type', 'text');
+                managerInput.setAttribute('id', 'campusManager');
+                managerInput.classList.add('form-control');
+                managerInput.setAttribute('placeholder', '请输入负责人姓名');
+                
+                managerGroup.appendChild(managerLabel);
+                managerGroup.appendChild(managerInput);
+                
+                // 联系电话
+                const phoneGroup = document.createElement('div');
+                phoneGroup.classList.add('form-group');
+                
+                const phoneLabel = document.createElement('label');
+                phoneLabel.setAttribute('for', 'campusPhone');
+                phoneLabel.textContent = '联系电话';
+                
+                const phoneInput = document.createElement('input');
+                phoneInput.setAttribute('type', 'text');
+                phoneInput.setAttribute('id', 'campusPhone');
+                phoneInput.classList.add('form-control');
+                phoneInput.setAttribute('placeholder', '请输入联系电话');
+                
+                phoneGroup.appendChild(phoneLabel);
+                phoneGroup.appendChild(phoneInput);
+                
+                // 添加到模态框内容
+                modalBody.appendChild(nameGroup);
+                modalBody.appendChild(managerGroup);
+                modalBody.appendChild(phoneGroup);
+                
+                // 模态框底部
+                const modalFooter = document.createElement('div');
+                modalFooter.classList.add('modal-footer');
+                
+                const cancelButton = document.createElement('button');
+                cancelButton.classList.add('action-btn', 'action-btn-light');
+                cancelButton.textContent = '取消';
+                cancelButton.addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+                
+                const confirmButton = document.createElement('button');
+                confirmButton.classList.add('action-btn', 'action-btn-primary');
+                confirmButton.textContent = '添加';
+                confirmButton.addEventListener('click', () => {
+                    const campusName = document.getElementById('campusName').value.trim();
+                    const campusManager = document.getElementById('campusManager').value.trim();
+                    const campusPhone = document.getElementById('campusPhone').value.trim();
+                    
+                    if (campusName && campusManager && campusPhone) {
+                        // 创建新校区
+                        const campusList = document.querySelector('.campus-list');
+                        const newCampus = document.createElement('li');
+                        newCampus.classList.add('campus-item');
+                        newCampus.setAttribute('data-campus', campusName.toLowerCase().replace(/\s+/g, '-'));
+                        newCampus.textContent = campusName;
+                        
+                        // 添加事件监听器
+                        newCampus.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            document.querySelectorAll('.campus-item').forEach(i => i.classList.remove('active'));
+                            this.classList.add('active');
+                            
+                            document.getElementById('current-campus').textContent = this.textContent;
+                            
+                            document.querySelector('.campus-header').classList.remove('active');
+                            document.querySelector('.campus-list').classList.remove('show');
+                        });
+                        
+                        campusList.appendChild(newCampus);
+                        alert('新校区添加成功！');
+                        document.body.removeChild(modal);
+                    } else {
+                        alert('请填写完整的校区信息');
+                    }
+                });
+                
+                modalFooter.appendChild(cancelButton);
+                modalFooter.appendChild(confirmButton);
+                
+                // 组装模态框
+                modalContent.appendChild(modalHeader);
+                modalContent.appendChild(modalBody);
+                modalContent.appendChild(modalFooter);
+                modal.appendChild(modalContent);
+                
+                // 显示模态框
+                document.body.appendChild(modal);
+                
+                // 自动聚焦输入框
+                setTimeout(() => {
+                    nameInput.focus();
+                }, 100);
             });
-            
-            modalFooter.appendChild(cancelButton);
-            modalFooter.appendChild(confirmButton);
-            
-            // 组装模态框
-            modalContent.appendChild(modalHeader);
-            modalContent.appendChild(modalBody);
-            modalContent.appendChild(modalFooter);
-            modal.appendChild(modalContent);
-            
-            // 显示模态框
-            document.body.appendChild(modal);
-            
-            // 自动聚焦输入框
-            setTimeout(() => {
-                input.focus();
-            }, 100);
-        });
+        }
     </script>
 </body>
 
