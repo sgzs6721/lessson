@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校区管理 - 培训管理系统</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --dark: #34495e;
+            --light: #ecf0f1;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .sidebar-menu a:hover, 
+        .sidebar-menu a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left: 4px solid var(--primary);
+        }
+
+        .sidebar-menu i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th, .table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table th {
+            font-weight: 600;
+            color: var(--dark);
+            background-color: #f8f9fa;
+        }
+
+        .table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 4px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .manager-select-modal {
+            max-width: 800px;
+        }
+
+        .manager-select-modal .table {
+            margin-top: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .manager-select-modal .table th,
+        .manager-select-modal .table td {
+            padding: 10px;
+        }
+
+        .manager-select-modal .table tbody tr {
+            cursor: pointer;
+        }
+
+        .manager-select-modal .table tbody tr:hover {
+            background-color: #f0f7ff;
+        }
+
+        .manager-select-modal .table tbody tr.selected {
+            background-color: #e3f2fd;
+        }
+
+        .manager-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .manager-avatar {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .manager-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .manager-name {
+            font-weight: 600;
+        }
+
+        .manager-role {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .search-filter {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .search-filter input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        .search-filter select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .campus-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background-color: #e6f7ee;
+            color: #2ecc71;
+        }
+
+        .status-inactive {
+            background-color: #feeaea;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1 style="font-size: 20px;">培训机构管理系统</h1>
+                <p style="opacity: 0.7; margin-top: 5px; font-size: 12px;">核心业务管理平台</p>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li><a href="homepage.html"><i>📊</i> 仪表盘</a></li>
+                <li><a href="administration_management.html"><i>👥</i> 人员管理</a></li>
+                <li><a href="campus_management.html" class="active"><i>🏢</i> 校区管理</a></li>
+                <li><a href="course_management.html"><i>📚</i> 课程管理</a></li>
+                <li><a href="student_management.html"><i>👨‍🎓</i> 学员管理</a></li>
+                <li><a href="payment_records.html"><i>💰</i> 缴费管理</a></li>
+                <li><a href="schedule_view.html"><i>📅</i> 课表管理</a></li>
+                <li><a href="attendance_management.html"><i>✅</i> 打卡与消课</a></li>
+                <li><a href="miniprogram_management.html"><i>📱</i> 小程序管理</a></li>
+                <li><a href="system_settings.html"><i>⚙️</i> 系统设置</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <h2>校区管理</h2>
+                <div class="user-info">
+                    <div class="user-avatar">A</div>
+                    <div>
+                        <div style="font-weight: 600;">管理员</div>
+                        <div style="font-size: 12px; color: #777;">超级管理员</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 搜索和过滤 -->
+            <div class="search-filter">
+                <input type="text" id="searchInput" placeholder="搜索校区名称...">
+                <div>
+                    <select id="statusFilter">
+                        <option value="all">所有状态</option>
+                        <option value="active">正常</option>
+                        <option value="inactive">停用</option>
+                    </select>
+                    <button class="btn" onclick="openAddModal()">添加校区</button>
+                </div>
+            </div>
+
+            <!-- 校区列表 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">校区列表</div>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>校区名称</th>
+                                <th>负责人</th>
+                                <th>联系电话</th>
+                                <th>地址</th>
+                                <th>状态</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>总部校区</td>
+                                <td>张明</td>
+                                <td>13800138001</td>
+                                <td>北京市朝阳区xxx街道xxx号</td>
+                                <td><span class="campus-status status-active">正常</span></td>
+                                <td>2024-01-01</td>
+                                <td>
+                                    <button class="btn btn-sm" onclick="editCampus(1)">编辑</button>
+                                    <button class="btn btn-sm btn-warning" onclick="toggleCampusStatus(1)">停用</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>东城校区</td>
+                                <td>王芳</td>
+                                <td>13800138003</td>
+                                <td>北京市东城区xxx街道xxx号</td>
+                                <td><span class="campus-status status-active">正常</span></td>
+                                <td>2024-01-15</td>
+                                <td>
+                                    <button class="btn btn-sm" onclick="editCampus(2)">编辑</button>
+                                    <button class="btn btn-sm btn-warning" onclick="toggleCampusStatus(2)">停用</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 添加/编辑校区模态框 -->
+            <div id="campusModal" class="modal">
+                <div class="modal-content">
+                    <form id="campusForm">
+                        <h3 id="modalTitle" style="font-size: 18px; font-weight: 600; margin-bottom: 20px;">添加校区</h3>
+                        <input type="hidden" id="campusId">
+                        <div class="form-group">
+                            <label for="campusName">校区名称</label>
+                            <input type="text" id="campusName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="manager">负责人</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" id="managerName" readonly style="flex: 1;">
+                                <input type="hidden" id="managerId">
+                                <button type="button" class="btn btn-sm" onclick="openManagerSelectModal()">选择负责人</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">联系电话</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">地址</label>
+                            <input type="text" id="address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">状态</label>
+                            <select id="status" required>
+                                <option value="active">正常</option>
+                                <option value="inactive">停用</option>
+                            </select>
+                        </div>
+                        <div style="text-align: right;">
+                            <button type="button" class="btn btn-sm" onclick="closeModal()">取消</button>
+                            <button type="submit" class="btn btn-sm btn-secondary" id="submitBtn">添加校区</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 选择负责人模态框 -->
+            <div id="managerSelectModal" class="modal">
+                <div class="modal-content manager-select-modal">
+                    <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 20px;">选择负责人</h3>
+                    <div class="search-filter">
+                        <input type="text" id="managerSearchInput" placeholder="搜索负责人姓名或角色...">
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>角色</th>
+                                <th>联系电话</th>
+                                <th>所属校区</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr onclick="selectManager(1, '张明', '超级管理员')">
+                                <td>
+                                    <div class="manager-info">
+                                        <div class="manager-avatar">张</div>
+                                        <div class="manager-details">
+                                            <div class="manager-name">张明</div>
+                                            <div class="manager-role">超级管理员</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="role-badge role-super">超级管理员</span></td>
+                                <td>13800138001</td>
+                                <td>总部</td>
+                            </tr>
+                            <tr onclick="selectManager(2, '李华', '协同管理员')">
+                                <td>
+                                    <div class="manager-info">
+                                        <div class="manager-avatar">李</div>
+                                        <div class="manager-details">
+                                            <div class="manager-name">李华</div>
+                                            <div class="manager-role">协同管理员</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="role-badge role-coordinator">协同管理员</span></td>
+                                <td>13800138002</td>
+                                <td>总部</td>
+                            </tr>
+                            <tr onclick="selectManager(3, '王芳', '校区管理员')">
+                                <td>
+                                    <div class="manager-info">
+                                        <div class="manager-avatar">王</div>
+                                        <div class="manager-details">
+                                            <div class="manager-name">王芳</div>
+                                            <div class="manager-role">校区管理员</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="role-badge role-campus">校区管理员</span></td>
+                                <td>13800138003</td>
+                                <td>东城校区</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="text-align: right; margin-top: 20px;">
+                        <button class="btn btn-sm" onclick="closeManagerSelectModal()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('campusModal');
+        const managerSelectModal = document.getElementById('managerSelectModal');
+        const form = document.getElementById('campusForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // 打开添加模态框
+        function openAddModal() {
+            document.getElementById('modalTitle').textContent = '添加校区';
+            document.getElementById('campusForm').reset();
+            submitBtn.textContent = '添加校区';
+            modal.style.display = 'block';
+        }
+
+        // 打开选择负责人模态框
+        function openManagerSelectModal() {
+            managerSelectModal.style.display = 'block';
+        }
+
+        // 关闭选择负责人模态框
+        function closeManagerSelectModal() {
+            managerSelectModal.style.display = 'none';
+        }
+
+        // 选择负责人
+        function selectManager(id, name, role) {
+            document.getElementById('managerId').value = id;
+            document.getElementById('managerName').value = `${name} (${role})`;
+            closeManagerSelectModal();
+        }
+
+        // 打开编辑模态框
+        function editCampus(id) {
+            document.getElementById('modalTitle').textContent = '编辑校区';
+            submitBtn.textContent = '保存更改';
+            // 这里应该根据ID获取校区信息并填充表单
+            modal.style.display = 'block';
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // 切换校区状态
+        function toggleCampusStatus(id) {
+            if (confirm('确定要停用该校区吗？')) {
+                alert('校区状态已更新');
+            }
+        }
+
+        // 提交表单
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const campusData = {
+                id: document.getElementById('campusId').value,
+                name: document.getElementById('campusName').value,
+                managerId: document.getElementById('managerId').value,
+                managerName: document.getElementById('managerName').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                status: document.getElementById('status').value
+            };
+            alert(`在实际应用中，这将${campusData.id ? '更新' : '添加'}校区:\n${JSON.stringify(campusData, null, 2)}`);
+            closeModal();
+        });
+
+        // 搜索和过滤
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+        document.getElementById('statusFilter').addEventListener('change', applyFilters);
+        document.getElementById('managerSearchInput').addEventListener('input', applyManagerFilters);
+
+        function applyManagerFilters() {
+            const searchTerm = document.getElementById('managerSearchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#managerSelectModal .table tbody tr');
+            
+            rows.forEach(row => {
+                const name = row.querySelector('.manager-name').textContent.toLowerCase();
+                const role = row.querySelector('.manager-role').textContent.toLowerCase();
+                const phone = row.cells[2].textContent.toLowerCase();
+                const campus = row.cells[3].textContent.toLowerCase();
+                
+                const matches = name.includes(searchTerm) || 
+                              role.includes(searchTerm) || 
+                              phone.includes(searchTerm) || 
+                              campus.includes(searchTerm);
+                
+                row.style.display = matches ? '' : 'none';
+            });
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            
+            const rows = document.querySelectorAll('.table tbody tr');
+            
+            rows.forEach(row => {
+                const name = row.cells[0].textContent.toLowerCase();
+                const status = row.cells[4].querySelector('.campus-status').textContent;
+                const statusValue = status === '正常' ? 'active' : 'inactive';
+                
+                const matchesSearch = name.includes(searchTerm);
+                const matchesStatus = statusFilter === 'all' || statusValue === statusFilter;
+                
+                row.style.display = matchesSearch && matchesStatus ? '' : 'none';
+            });
+        }
+
+        // 初始化页面
+        window.addEventListener('DOMContentLoaded', function() {
+            // 初始化筛选功能
+            applyFilters();
+        });
+    </script>
+</body>
+</html> 

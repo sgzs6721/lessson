@@ -86,6 +86,73 @@
             overflow-y: auto;
         }
 
+        /* 卡片和表格通用样式 */
+        .card, .dashboard-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            overflow: hidden;
+            width: 100%;
+            transition: opacity 0.2s;
+        }
+
+        .dashboard-card.dragging, .card.dragging {
+            opacity: 0.5;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            background-color: #fff;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* 表格样式统一 */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th, 
+        .table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        .table th {
+            font-weight: 600;
+            color: var(--dark);
+            background-color: #f8f9fa;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* 主内容区样式 */
         .content-panel {
             background-color: white;
             border-radius: 8px;
@@ -107,6 +174,103 @@
             font-size: 24px;
             font-weight: 600;
             color: var(--dark);
+        }
+
+        .campus-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background: linear-gradient(135deg, #3498db, #2ecc71);
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .campus-info-content {
+            flex: 1;
+        }
+
+        .campus-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .campus-details {
+            display: flex;
+            gap: 30px;
+        }
+
+        .campus-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .campus-detail-item i {
+            font-size: 18px;
+        }
+
+        .campus-detail-item span {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .campus-status-badge {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .drag-handle {
+            cursor: grab;
+            font-size: 18px;
+            color: #777;
+            padding: 0 5px;
+        }
+
+        .drag-handle:hover {
+            color: var(--primary);
+        }
+
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+
+        /* 仪表盘统计 */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 10px;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            height: 100%;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 10px 0;
+            color: var(--primary);
+        }
+
+        .stat-title {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 5px;
         }
 
         /* 用户信息和下拉菜单样式 */
@@ -275,198 +439,83 @@
             color: white;
         }
 
-        /* 卡片样式 */
-        .card {
+        /* 模态框样式 */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
             background-color: white;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-            overflow: hidden;
-            transition: opacity 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 400px;
         }
-
-        .card.dragging {
-            opacity: 0.5;
-        }
-
-        .card-header {
+        
+        .modal-header {
             padding: 15px 20px;
             border-bottom: 1px solid #eee;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
-        .card-title {
+        
+        .modal-title {
             font-size: 18px;
             font-weight: 600;
             color: var(--dark);
         }
-
-        .drag-handle {
-            cursor: grab;
-            font-size: 18px;
-            color: #777;
-            padding: 0 5px;
+        
+        .modal-close {
+            cursor: pointer;
+            font-size: 20px;
+            color: #999;
         }
-
-        .drag-handle:hover {
-            color: var(--primary);
-        }
-
-        .drag-handle:active {
-            cursor: grabbing;
-        }
-
-        .card-body {
+        
+        .modal-body {
             padding: 20px;
         }
-
-        /* 表格样式 */
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .table th, .table td {
-            padding: 12px 15px;
-            text-align: center;
-            border-bottom: 1px solid #eee;
-        }
-
-        .table th {
-            font-weight: 600;
-            color: var(--dark);
-            background-color: #f8f9fa;
-            text-align: center;
-        }
-
-        .table tr:hover {
-            background-color: #f8f9fa;
-        }
-
-        /* 按钮样式 */
-        .btn {
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 4px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-            text-decoration: none;
-            margin: 0 5px;
-        }
-
-        .btn:hover {
-            opacity: 0.9;
-        }
-
-        .btn-sm {
-            padding: 5px 10px;
-            font-size: 12px;
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary);
-        }
-
-        .btn-warning {
-            background-color: var(--warning);
-        }
-
-        /* 课表样式 */
-        .schedule {
-            display: grid;
-            grid-template-columns: 120px repeat(7, 1fr);
-            gap: 5px;
-        }
-
-        .schedule-header {
-            background-color: #f8f9fa;
-            color: var(--dark);
-            padding: 12px;
-            text-align: center;
-            font-weight: 600;
-            border-bottom: 1px solid #eee;
-        }
-
-        .schedule-time {
-            background-color: #f8f9fa;
-            padding: 10px;
-            text-align: center;
-            border-radius: 4px;
-            font-weight: 600;
-            white-space: nowrap;
-            font-size: 12px;
+        
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            border: 1px solid #eee;
+            justify-content: flex-end;
+            gap: 10px;
         }
-
-        .schedule-cell {
-            background-color: white;
-            border: 1px solid #eee;
-            padding: 10px;
-            min-height: 120px;
+        
+        .form-group {
+            margin-bottom: 15px;
         }
-
-        .schedule-cell:hover {
-            background-color: #f8f9fa;
-        }
-
-        .student-info {
+        
+        .form-group label {
             display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-control {
             width: 100%;
-            padding: 8px;
-            border-radius: 3px;
-            margin: 4px 0;
-            font-size: 12px;
-            box-sizing: border-box;
-            text-align: center;
-            opacity: 0.8;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
         }
-
-        .student-info .name {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .student-info .details {
-            font-size: 12px;
-            color: #666;
-            white-space: nowrap;
-        }
-
-        /* 教练颜色样式 */
-        .student-info.coach-li { background-color: rgba(231, 76, 60, 0.1); color: #e74c3c; }
-        .student-info.coach-wang { background-color: rgba(52, 152, 219, 0.1); color: #3498db; }
-        .student-info.coach-zhang { background-color: rgba(46, 204, 113, 0.1); color: #2ecc71; }
-        .student-info.coach-liu { background-color: rgba(243, 156, 18, 0.1); color: #f39c12; }
 
         /* 统计卡片样式 */
-        .dashboard-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-            overflow: hidden;
-            transition: opacity 0.2s;
-        }
-
-        .dashboard-card.dragging {
-            opacity: 0.5;
-        }
-
         .dashboard-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
+            padding: 10px;
         }
 
         .stat-card {
@@ -477,6 +526,7 @@
             display: flex;
             flex-direction: column;
             text-align: center;
+            height: 100%;
         }
 
         .stat-value {
@@ -489,6 +539,7 @@
         .stat-title {
             color: #777;
             font-size: 14px;
+            margin-bottom: 5px;
         }
 
         /* 状态标签样式 */
@@ -676,77 +727,6 @@
         .add-campus:hover {
             transform: scale(1.2);
         }
-        
-        /* 模态框样式 */
-        .modal-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        
-        .modal-content {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 80%;
-            max-width: 400px;
-        }
-        
-        .modal-header {
-            padding: 15px 20px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .modal-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .modal-close {
-            cursor: pointer;
-            font-size: 20px;
-            color: #999;
-        }
-        
-        .modal-body {
-            padding: 20px;
-        }
-        
-        .modal-footer {
-            padding: 15px 20px;
-            border-top: 1px solid #eee;
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
     </style>
 </head>
 <body>
@@ -805,6 +785,24 @@
                     </div>
                 </div>
                 <div id="sortable-container">
+                    <!-- 校区基本信息 -->
+                    <div class="campus-info">
+                        <div class="campus-info-content">
+                            <div class="campus-name">总部校区</div>
+                            <div class="campus-details">
+                                <div class="campus-detail-item">
+                                    <i>👤</i>
+                                    <span>负责人：张明</span>
+                                </div>
+                                <div class="campus-detail-item">
+                                    <i>📞</i>
+                                    <span>联系电话：13800138001</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="campus-status-badge">正常运营中</div>
+                    </div>
+
                     <!-- 仪表盘统计 -->
                     <div class="dashboard-card" id="dashboard-card">
                         <div class="card-header">
@@ -834,6 +832,11 @@
                                     <div class="stat-title">本周课时</div>
                                     <div class="stat-value">18/35</div>
                                     <div style="font-size: 12px; color: #777;">销课金额 <span style="color: var(--secondary);">¥12,800</span></div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">本周缴费学员</div>
+                                    <div class="stat-value">7</div>
+                                    <div style="font-size: 12px; color: #777;">新学员 <span style="color: var(--secondary);">3</span> | 续费 <span style="color: var(--secondary);">4</span></div>
                                 </div>
                                 <div class="stat-card month-data" style="display: none;">
                                     <div class="stat-title">本月课时</div>
@@ -1447,6 +1450,12 @@
                 const campusName = this.textContent;
                 document.getElementById('current-campus').textContent = campusName;
                 
+                // 更新校区信息卡片
+                const campusInfoName = document.querySelector('.campus-name');
+                if (campusInfoName) {
+                    campusInfoName.textContent = campusName;
+                }
+                
                 // 关闭下拉菜单
                 document.querySelector('.campus-header').classList.remove('active');
                 document.querySelector('.campus-list').classList.remove('show');
@@ -1515,44 +1524,8 @@
                 nameGroup.appendChild(nameLabel);
                 nameGroup.appendChild(nameInput);
                 
-                // 负责人
-                const managerGroup = document.createElement('div');
-                managerGroup.classList.add('form-group');
-                
-                const managerLabel = document.createElement('label');
-                managerLabel.setAttribute('for', 'campusManager');
-                managerLabel.textContent = '负责人';
-                
-                const managerInput = document.createElement('input');
-                managerInput.setAttribute('type', 'text');
-                managerInput.setAttribute('id', 'campusManager');
-                managerInput.classList.add('form-control');
-                managerInput.setAttribute('placeholder', '请输入负责人姓名');
-                
-                managerGroup.appendChild(managerLabel);
-                managerGroup.appendChild(managerInput);
-                
-                // 联系电话
-                const phoneGroup = document.createElement('div');
-                phoneGroup.classList.add('form-group');
-                
-                const phoneLabel = document.createElement('label');
-                phoneLabel.setAttribute('for', 'campusPhone');
-                phoneLabel.textContent = '联系电话';
-                
-                const phoneInput = document.createElement('input');
-                phoneInput.setAttribute('type', 'text');
-                phoneInput.setAttribute('id', 'campusPhone');
-                phoneInput.classList.add('form-control');
-                phoneInput.setAttribute('placeholder', '请输入联系电话');
-                
-                phoneGroup.appendChild(phoneLabel);
-                phoneGroup.appendChild(phoneInput);
-                
                 // 添加到模态框内容
                 modalBody.appendChild(nameGroup);
-                modalBody.appendChild(managerGroup);
-                modalBody.appendChild(phoneGroup);
                 
                 // 模态框底部
                 const modalFooter = document.createElement('div');
@@ -1570,10 +1543,8 @@
                 confirmButton.textContent = '添加';
                 confirmButton.addEventListener('click', () => {
                     const campusName = document.getElementById('campusName').value.trim();
-                    const campusManager = document.getElementById('campusManager').value.trim();
-                    const campusPhone = document.getElementById('campusPhone').value.trim();
                     
-                    if (campusName && campusManager && campusPhone) {
+                    if (campusName) {
                         // 创建新校区
                         const campusList = document.querySelector('.campus-list');
                         const newCampus = document.createElement('li');
@@ -1597,7 +1568,7 @@
                         alert('新校区添加成功！');
                         document.body.removeChild(modal);
                     } else {
-                        alert('请填写完整的校区信息');
+                        alert('请输入校区名称');
                     }
                 });
                 
@@ -1621,4 +1592,3 @@
         }
     </script>
 </body>
-
