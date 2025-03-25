@@ -410,6 +410,7 @@
             <ul class="sidebar-menu">
                 <li><a href="homepage.html"><span>📊</span> 仪表盘</a></li>
                 <li><a href="user_management.html"><span>👥</span> 用户管理</a></li>
+                <li><a href="coach_management.html"><span>🏋️</span> 教练管理</a></li>
                 <li><a href="course_management.html" class="active"><span>📚</span> 课程管理</a></li>
                 <li><a href="student_management.html"><span>👨‍🎓</span> 学员管理</a></li>
                 <li><a href="payment_records.html"><span>💰</span> 缴费管理</a></li>
@@ -443,10 +444,10 @@
                 <div class="course-controls">
                     <div class="search-filters">
                         <input type="text" id="searchInput" placeholder="搜索课程..." class="form-control">
-                        <select id="institutionFilter" class="form-control">
-                            <option value="">全部机构</option>
-                            <option value="inst1">总部校区</option>
-                            <option value="inst2">东城校区</option>
+                        <select id="teacherFilter" class="form-control">
+                            <option value="">选择老师</option>
+                            <option value="teacher1">王教练</option>
+                            <option value="teacher2">李教练</option>
                         </select>
                         <select id="typeFilter" class="form-control">
                             <option value="">全部类型</option>
@@ -469,10 +470,6 @@
                         <h2 id="modalTitle">新增课程</h2>
                         <form id="courseForm">
                             <div class="form-group">
-                                <label for="className">班级名称</label>
-                                <input type="text" id="className" required>
-                            </div>
-                            <div class="form-group">
                                 <label for="courseName">课程名称</label>
                                 <input type="text" id="courseName" required>
                             </div>
@@ -490,7 +487,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="teacher">上课老师</label>
-                                <input type="text" id="teacher" required>
+                                <select id="teacher" required>
+                                    <option value="">选择老师</option>
+                                    <option value="teacher1">王教练</option>
+                                    <option value="teacher2">李教练</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="teacherFee">课酬单价（元）</label>
@@ -598,7 +599,6 @@
             if (courseId) {
                 const course = courses.find(c => c.id === courseId);
                 if (course) {
-                    document.getElementById('className').value = course.className;
                     document.getElementById('courseName').value = course.courseName;
                     document.getElementById('courseType').value = course.type;
                     document.getElementById('consumeHours').value = course.consumeHours;
@@ -620,7 +620,6 @@
             e.preventDefault();
             const formData = {
                 id: currentCourseId || `course${courses.length + 1}`,
-                className: document.getElementById('className').value,
                 courseName: document.getElementById('courseName').value,
                 type: document.getElementById('courseType').value,
                 consumeHours: parseInt(document.getElementById('consumeHours').value),
@@ -648,7 +647,6 @@
         const courses = [
             {
                 id: 'course1',
-                className: '瑜伽基础班',
                 courseName: '瑜伽基础课程',
                 type: 'one-on-one',
                 consumeHours: 1,
@@ -658,7 +656,6 @@
             },
             {
                 id: 'course2',
-                className: '高级瑜伽班',
                 courseName: '高级瑜伽课程',
                 type: 'group',
                 consumeHours: 2,
@@ -669,15 +666,19 @@
         ];
 
         function renderCourses() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const teacherTerm = document.getElementById('teacherFilter').value.toLowerCase();
+            const typeTerm = document.getElementById('typeFilter').value;
+            const filteredCourses = courses.filter(course =>
+                (course.courseName.toLowerCase().includes(searchTerm) ||
+                course.teacher.toLowerCase().includes(teacherTerm)) &&
+                (typeTerm === '' || course.type === typeTerm)
+            );
             const grid = document.getElementById('courseGrid');
-            grid.innerHTML = courses.map(course => `
+            grid.innerHTML = filteredCourses.map(course => `
                 <div class="course-card">
-                    <h3>${course.className}</h3>
+                    <h3>${course.courseName}</h3>
                     <div class="course-info">
-                        <div class="info-row">
-                            <span class="info-label">课程名称：</span>
-                            <span class="info-value">${course.courseName}</span>
-                        </div>
                         <div class="info-row">
                             <span class="info-label">课程类型：</span>
                             <span class="info-value">${getCourseTypeName(course.type)}</span>
