@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户管理 - 培训机构管理系统</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --dark: #34495e;
+            --light: #ecf0f1;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* 侧边栏样式 */
+        .sidebar {
+            width: 240px;
+            background-color: var(--dark);
+            color: white;
+            padding: 20px 0;
+            transition: all 0.3s;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .sidebar-menu a:hover, 
+        .sidebar-menu a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left: 4px solid var(--primary);
+        }
+
+        .sidebar-menu a.active {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .sidebar-menu i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* 主内容区样式 */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .content-panel {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* 表格样式 */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        .table th {
+            font-weight: 600;
+            color: var(--dark);
+            background-color: #f8f9fa;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* 按钮样式 */
+        .action-btn {
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin: 0 3px;
+        }
+
+        .action-btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .action-btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .action-btn:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+
+        /* 搜索框样式 */
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* 状态标签样式 */
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background-color: #d4edda;
+            color: #28a745;
+        }
+
+        .status-inactive {
+            background-color: #f8d7da;
+            color: #dc3545;
+        }
+
+        /* 模态框样式 */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .modal-close {
+            cursor: pointer;
+            font-size: 20px;
+            color: #999;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* 分页样式 */
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .pagination button {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .pagination button:hover {
+            background: #f8f9fa;
+        }
+
+        .pagination button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .pagination-info {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* 校区选择器样式 */
+        .campus-selector {
+            padding: 0 20px;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            position: relative;
+        }
+
+        .campus-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            cursor: pointer;
+            user-select: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .campus-header:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .campus-header span {
+            font-weight: 600;
+            color: white;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .campus-header span::before {
+            content: '🏢';
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .campus-header::after {
+            content: '▶';
+            font-size: 12px;
+            margin-left: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .campus-header.active::after {
+            transform: rotate(90deg);
+        }
+
+        .campus-list {
+            display: none;
+            list-style: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background-color: #2c3e50;
+            min-width: 160px;
+            border-radius: 0 4px 4px 0;
+            box-shadow: 4px 0 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            padding: 10px;
+        }
+
+        .campus-list.show {
+            display: block;
+        }
+
+        .campus-item {
+            padding: 8px 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .campus-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .campus-item.active {
+            background-color: var(--primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1 style="font-size: 20px;">培训机构管理系统</h1>
+                <p style="opacity: 0.7; margin-top: 5px; font-size: 12px;">核心业务管理平台</p>
+            </div>
+
+            <!-- 校区选择器 -->
+            <div class="campus-selector">
+                <div class="campus-header">
+                    <button class="btn btn-sm" style="background-color: var(--secondary); color: white; padding: 2px 8px; font-size: 12px; margin-right: 10px;" id="add-campus-btn">+</button>
+                    <span>校区选择</span>
+                </div>
+                <ul class="campus-list">
+                    <li class="campus-item active" data-campus="headquarters">总部校区</li>
+                    <li class="campus-item" data-campus="east">东城校区</li>
+                    <li class="campus-item" data-campus="west">西城校区</li>
+                    <li class="campus-item" data-campus="south">南城校区</li>
+                    <li class="campus-item" data-campus="north">北城校区</li>
+                </ul>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li><a href="homepage.html"><i>📊</i> 仪表盘</a></li>
+                <li><a href="user_management.html" class="active"><i>👥</i> 用户管理</a></li>
+                <li><a href="course_management.html"><i>📚</i> 课程管理</a></li>
+                <li><a href="student_management.html"><i>👨‍🎓</i> 学员管理</a></li>
+                <li><a href="payment_records.html"><i>💰</i> 缴费管理</a></li>
+                <li><a href="schedule_view.html"><i>📅</i> 课表管理</a></li>
+                <li><a href="attendance_management.html"><i>✅</i> 打卡与消课</a></li>
+                <li><a href="miniprogram_management.html"><i>📱</i> 小程序管理</a></li>
+                <li><a href="system_settings.html"><i>⚙️</i> 系统设置</a></li>
+            </ul>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <div class="content-panel">
+                <div class="header">
+                    <h1 class="page-title">用户管理 - <span id="current-campus">总部校区</span></h1>
+                    <button class="action-btn action-btn-primary" onclick="showAddUserModal()">
+                        <i>➕</i> 添加用户
+                    </button>
+                </div>
+
+                <!-- 搜索框 -->
+                <div class="search-box">
+                    <input type="text" class="search-input" id="searchInput" placeholder="搜索用户名、角色或状态...">
+                    <button class="action-btn action-btn-primary" onclick="searchUsers()">搜索</button>
+                </div>
+
+                <!-- 用户列表 -->
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>用户名</th>
+                            <th>角色</th>
+                            <th>所属校区</th>
+                            <th>最后登录时间</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <tr>
+                            <td>admin</td>
+                            <td>超级管理员</td>
+                            <td>总部</td>
+                            <td>2024-03-10 15:30:00</td>
+                            <td><span class="status-badge status-active">正常</span></td>
+                            <td>
+                                <button class="action-btn action-btn-primary" onclick="editUser('admin')">编辑</button>
+                                <button class="action-btn action-btn-danger" onclick="toggleUserStatus('admin')">禁用</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>manager1</td>
+                            <td>协同管理员</td>
+                            <td>东城校区</td>
+                            <td>2024-03-10 14:20:00</td>
+                            <td><span class="status-badge status-active">正常</span></td>
+                            <td>
+                                <button class="action-btn action-btn-primary" onclick="editUser('manager1')">编辑</button>
+                                <button class="action-btn action-btn-danger" onclick="toggleUserStatus('manager1')">禁用</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>teacher1</td>
+                            <td>校区管理员</td>
+                            <td>西城校区</td>
+                            <td>2024-03-10 12:15:00</td>
+                            <td><span class="status-badge status-inactive">已禁用</span></td>
+                            <td>
+                                <button class="action-btn action-btn-primary" onclick="editUser('teacher1')">编辑</button>
+                                <button class="action-btn action-btn-primary" onclick="toggleUserStatus('teacher1')">启用</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- 分页 -->
+                <div class="pagination">
+                    <span class="pagination-info">共 3 条记录</span>
+                    <button onclick="changePage(1)" class="active">1</button>
+                    <button onclick="changePage(2)">2</button>
+                    <button onclick="changePage(3)">3</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加/编辑用户模态框 -->
+    <div class="modal-backdrop" id="userModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">添加用户</h3>
+                <span class="modal-close" onclick="closeUserModal()">×</span>
+            </div>
+            <div class="modal-body">
+                <form id="userForm">
+                    <div class="form-group">
+                        <label for="username">用户名</label>
+                        <input type="text" id="username" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">密码</label>
+                        <input type="password" id="password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">角色</label>
+                        <select id="role" class="form-control" required>
+                            <option value="">请选择角色</option>
+                            <option value="admin">超级管理员</option>
+                            <option value="collab">协同管理员</option>
+                            <option value="campus">校区管理员</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="campus">所属校区</label>
+                        <select id="campus" class="form-control" required>
+                            <option value="">请选择校区</option>
+                            <option value="headquarters">总部</option>
+                            <option value="east">东城校区</option>
+                            <option value="west">西城校区</option>
+                            <option value="south">南城校区</option>
+                            <option value="north">北城校区</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="action-btn action-btn-light" onclick="closeUserModal()">取消</button>
+                <button class="action-btn action-btn-primary" onclick="saveUser()">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 显示添加用户模态框
+        function showAddUserModal() {
+            document.getElementById('modalTitle').textContent = '添加用户';
+            document.getElementById('userForm').reset();
+            document.getElementById('userModal').style.display = 'flex';
+        }
+
+        // 显示编辑用户模态框
+        function editUser(username) {
+            document.getElementById('modalTitle').textContent = '编辑用户';
+            // 这里可以根据username获取用户信息并填充表单
+            document.getElementById('username').value = username;
+            document.getElementById('userModal').style.display = 'flex';
+        }
+
+        // 关闭模态框
+        function closeUserModal() {
+            document.getElementById('userModal').style.display = 'none';
+        }
+
+        // 保存用户
+        function saveUser() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+            const campus = document.getElementById('campus').value;
+
+            if (!username || !password || !role || !campus) {
+                alert('请填写所有必填字段');
+                return;
+            }
+
+            // 这里可以添加保存用户的逻辑
+            alert('保存成功');
+            closeUserModal();
+        }
+
+        // 切换用户状态
+        function toggleUserStatus(username) {
+            const row = event.target.closest('tr');
+            const statusCell = row.querySelector('.status-badge');
+            const button = event.target;
+
+            if (statusCell.classList.contains('status-active')) {
+                statusCell.textContent = '已禁用';
+                statusCell.classList.remove('status-active');
+                statusCell.classList.add('status-inactive');
+                button.textContent = '启用';
+                button.classList.remove('action-btn-danger');
+                button.classList.add('action-btn-primary');
+            } else {
+                statusCell.textContent = '正常';
+                statusCell.classList.remove('status-inactive');
+                statusCell.classList.add('status-active');
+                button.textContent = '禁用';
+                button.classList.remove('action-btn-primary');
+                button.classList.add('action-btn-danger');
+            }
+        }
+
+        // 搜索用户
+        function searchUsers() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.getElementById('userTableBody').getElementsByTagName('tr');
+
+            for (let row of rows) {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            }
+        }
+
+        // 切换页面
+        function changePage(page) {
+            const buttons = document.querySelectorAll('.pagination button');
+            buttons.forEach(button => button.classList.remove('active'));
+            event.target.classList.add('active');
+            // 这里可以添加分页逻辑
+        }
+
+        // 监听搜索框输入
+        document.getElementById('searchInput').addEventListener('input', searchUsers);
+
+        // 点击模态框外部关闭
+        document.getElementById('userModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeUserModal();
+            }
+        });
+
+        // 校区选择器交互
+        const campusHeader = document.querySelector('.campus-header');
+        if (campusHeader) {
+            campusHeader.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.classList.toggle('active');
+                document.querySelector('.campus-list').classList.toggle('show');
+            });
+        }
+
+        // 校区选择
+        document.querySelectorAll('.campus-item').forEach(function(item) {
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.querySelectorAll('.campus-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                // 更新校区显示
+                const campusName = this.textContent;
+                document.getElementById('current-campus').textContent = campusName;
+                
+                // 关闭下拉菜单
+                document.querySelector('.campus-header').classList.remove('active');
+                document.querySelector('.campus-list').classList.remove('show');
+            });
+        });
+
+        // 点击其他区域关闭
+        document.addEventListener('click', function() {
+            const campusHeader = document.querySelector('.campus-header');
+            if (campusHeader) {
+                campusHeader.classList.remove('active');
+                const campusList = document.querySelector('.campus-list');
+                if (campusList) {
+                    campusList.classList.remove('show');
+                }
+            }
+        });
+
+        // 添加校区功能
+        const addCampusBtn = document.getElementById('add-campus-btn');
+        if (addCampusBtn) {
+            addCampusBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                // 创建模态框
+                const modal = document.createElement('div');
+                modal.classList.add('modal-backdrop');
+                
+                const modalContent = document.createElement('div');
+                modalContent.classList.add('modal-content');
+                
+                // 模态框头部
+                const modalHeader = document.createElement('div');
+                modalHeader.classList.add('modal-header');
+                
+                const modalTitle = document.createElement('div');
+                modalTitle.classList.add('modal-title');
+                modalTitle.textContent = '添加新校区';
+                
+                const modalClose = document.createElement('div');
+                modalClose.classList.add('modal-close');
+                modalClose.textContent = '×';
+                modalClose.addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+                
+                modalHeader.appendChild(modalTitle);
+                modalHeader.appendChild(modalClose);
+                
+                // 模态框内容
+                const modalBody = document.createElement('div');
+                modalBody.classList.add('modal-body');
+                
+                // 校区名称
+                const nameGroup = document.createElement('div');
+                nameGroup.classList.add('form-group');
+                
+                const nameLabel = document.createElement('label');
+                nameLabel.setAttribute('for', 'campusName');
+                nameLabel.textContent = '校区名称';
+                
+                const nameInput = document.createElement('input');
+                nameInput.setAttribute('type', 'text');
+                nameInput.setAttribute('id', 'campusName');
+                nameInput.classList.add('form-control');
+                nameInput.setAttribute('placeholder', '请输入校区名称');
+                
+                nameGroup.appendChild(nameLabel);
+                nameGroup.appendChild(nameInput);
+                
+                // 添加到模态框内容
+                modalBody.appendChild(nameGroup);
+                
+                // 模态框底部
+                const modalFooter = document.createElement('div');
+                modalFooter.classList.add('modal-footer');
+                
+                const cancelButton = document.createElement('button');
+                cancelButton.classList.add('action-btn', 'action-btn-light');
+                cancelButton.textContent = '取消';
+                cancelButton.addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+                
+                const confirmButton = document.createElement('button');
+                confirmButton.classList.add('action-btn', 'action-btn-primary');
+                confirmButton.textContent = '添加';
+                confirmButton.addEventListener('click', () => {
+                    const campusName = document.getElementById('campusName').value.trim();
+                    
+                    if (campusName) {
+                        // 创建新校区
+                        const campusList = document.querySelector('.campus-list');
+                        const newCampus = document.createElement('li');
+                        newCampus.classList.add('campus-item');
+                        newCampus.setAttribute('data-campus', campusName.toLowerCase().replace(/\s+/g, '-'));
+                        newCampus.textContent = campusName;
+                        
+                        // 添加事件监听器
+                        newCampus.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            document.querySelectorAll('.campus-item').forEach(i => i.classList.remove('active'));
+                            this.classList.add('active');
+                            
+                            document.getElementById('current-campus').textContent = this.textContent;
+                            
+                            document.querySelector('.campus-header').classList.remove('active');
+                            document.querySelector('.campus-list').classList.remove('show');
+                        });
+                        
+                        campusList.appendChild(newCampus);
+                        alert('新校区添加成功！');
+                        document.body.removeChild(modal);
+                    } else {
+                        alert('请输入校区名称');
+                    }
+                });
+                
+                modalFooter.appendChild(cancelButton);
+                modalFooter.appendChild(confirmButton);
+                
+                // 组装模态框
+                modalContent.appendChild(modalHeader);
+                modalContent.appendChild(modalBody);
+                modalContent.appendChild(modalFooter);
+                modal.appendChild(modalContent);
+                
+                // 显示模态框
+                document.body.appendChild(modal);
+                
+                // 自动聚焦输入框
+                setTimeout(() => {
+                    nameInput.focus();
+                }, 100);
+            });
+        }
+    </script>
+</body>
+</html> 

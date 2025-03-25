@@ -244,7 +244,7 @@
         /* 仪表盘统计 */
         .dashboard-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             padding: 10px;
         }
@@ -260,6 +260,11 @@
             height: 100%;
         }
 
+        /* 特殊宽度的统计卡片 */
+        .stat-card.wide {
+            grid-column: span 2;
+        }
+
         .stat-value {
             font-size: 28px;
             font-weight: 700;
@@ -271,6 +276,23 @@
             color: #777;
             font-size: 14px;
             margin-bottom: 5px;
+        }
+
+        /* 响应式布局调整 */
+        @media (max-width: 1200px) {
+            .dashboard-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-card.wide {
+                grid-column: span 1;
+            }
         }
 
         /* 用户信息和下拉菜单样式 */
@@ -510,38 +532,6 @@
             border-radius: 4px;
         }
 
-        /* 统计卡片样式 */
-        .dashboard-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 10px;
-        }
-
-        .stat-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-            height: 100%;
-        }
-
-        .stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            margin: 10px 0;
-            color: var(--primary);
-        }
-
-        .stat-title {
-            color: #777;
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-
         /* 状态标签样式 */
         .badge {
             display: inline-block;
@@ -605,15 +595,6 @@
             .sidebar {
                 width: 100%;
                 padding: 10px 0;
-            }
-
-            .dashboard-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .schedule {
-                grid-template-columns: 80px repeat(7, 1fr);
-                font-size: 12px;
             }
 
             .campus-selector {
@@ -755,7 +736,7 @@
 
             <ul class="sidebar-menu">
                 <li><a href="homepage.html" class="active"><i>📊</i> 仪表盘</a></li>
-                <li><a href="administration_management.html"><i>👥</i> 用户管理</a></li>
+                <li><a href="user_management.html"><i>👥</i> 用户管理</a></li>
                 <li><a href="course_management.html"><i>📚</i> 课程管理</a></li>
                 <li><a href="student_management.html"><i>👨‍🎓</i> 学员管理</a></li>
                 <li><a href="payment_records.html"><i>💰</i> 缴费管理</a></li>
@@ -848,12 +829,12 @@
                                     <div class="stat-value">28</div>
                                     <div style="font-size: 12px; color: #777;">新学员 <span style="color: var(--secondary);">12</span> | 续费 <span style="color: var(--secondary);">16</span></div>
                                 </div>
-                                <div class="stat-card" style="max-width: fit-content; grid-column: span 2;">
+                                <div class="stat-card wide">
                                     <div class="stat-title">本月缴费金额</div>
                                     <div class="stat-value">¥92,560</div>
                                     <div style="font-size: 12px; color: #777;">新学员 <span style="color: var(--secondary);">¥45,800</span> | 续费 <span style="color: var(--secondary);">¥46,760</span></div>
                                 </div>
-                                <div class="stat-card" style="margin-left: 0;">
+                                <div class="stat-card">
                                     <div class="stat-title">本月出勤率</div>
                                     <div class="stat-value">92.5%</div>
                                     <div style="font-size: 12px; color: #777;">较上月 <span style="color: var(--secondary);">+2.3%</span></div>
@@ -992,7 +973,7 @@
                                         </td>
                                         <td>18</td>
                                         <td>10</td>
-                                        <td>100</td>
+                                        <td>100.5</td>
                                         <td>全职</td>
                                         <td>1,800</td>
                                     </tr>
@@ -1005,7 +986,7 @@
                                         </td>
                                         <td>16</td>
                                         <td>12</td>
-                                        <td>110</td>
+                                        <td>110.50</td>
                                         <td>兼职</td>
                                         <td>1,760</td>
                                     </tr>
@@ -1018,7 +999,7 @@
                                         </td>
                                         <td>14</td>
                                         <td>7</td>
-                                        <td>130</td>
+                                        <td>130.123</td>
                                         <td>兼职</td>
                                         <td>1,820</td>
                                     </tr>
@@ -1590,5 +1571,46 @@
                 }, 100);
             });
         }
+
+        // 添加价格格式化函数
+        function formatPrice(price) {
+            // 如果是整数，添加.00
+            if (Number.isInteger(price)) {
+                return price.toFixed(2);
+            }
+            
+            // 如果小数位少于2位，补0
+            const strPrice = price.toString();
+            const decimalParts = strPrice.split('.');
+            if (decimalParts.length === 1) {
+                return price.toFixed(2);
+            }
+            
+            if (decimalParts[1].length === 1) {
+                return price.toFixed(2);
+            }
+            
+            // 如果小数位大于2位，保持原样
+            return price;
+        }
+
+        // 更新表格中的价格显示
+        function updatePriceDisplay() {
+            const rows = document.querySelectorAll('#coach-stats-body tr');
+            rows.forEach(row => {
+                const priceCell = row.cells[3]; // 课时费所在的列
+                if (priceCell) {
+                    const price = parseFloat(priceCell.textContent);
+                    if (!isNaN(price)) {
+                        priceCell.textContent = formatPrice(price);
+                    }
+                }
+            });
+        }
+
+        // 页面加载完成后执行价格格式化
+        document.addEventListener('DOMContentLoaded', function() {
+            updatePriceDisplay();
+        });
     </script>
 </body>
