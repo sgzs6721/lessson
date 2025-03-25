@@ -172,6 +172,7 @@
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 6px;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .campus-header span {
@@ -358,6 +359,28 @@
             border: 1px solid #ddd;
             border-radius: 4px;
         }
+
+        .course-info {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .course-type, .course-description {
+            margin-bottom: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .info-label {
+            color: #666;
+            font-weight: 500;
+        }
+        .info-value {
+            color: #333;
+        }
+        .course-description {
+            margin-bottom: 0;
+        }
     </style>
 </head>
 <body>
@@ -372,9 +395,9 @@
             <!-- 校区选择器 -->
             <div class="campus-selector">
                 <div class="campus-header">
-                    <button class="btn btn-sm" style="background-color: var(--secondary); color: white; padding: 2px 8px; font-size: 12px; margin-right: 10px;" id="add-campus-btn">+</button>
                     <span>校区选择</span>
                 </div>
+                <button class="btn btn-sm" style="background-color: var(--secondary); color: white; padding: 2px 8px; font-size: 12px; margin-right: 10px; position: absolute; left: 20px; top: 50%; transform: translateY(-50%);" id="add-campus-btn">+</button>
                 <ul class="campus-list">
                     <li class="campus-item active">总部校区</li>
                     <li class="campus-item">东城校区</li>
@@ -446,6 +469,10 @@
                         <h2 id="modalTitle">新增课程</h2>
                         <form id="courseForm">
                             <div class="form-group">
+                                <label for="className">班级名称</label>
+                                <input type="text" id="className" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="courseName">课程名称</label>
                                 <input type="text" id="courseName" required>
                             </div>
@@ -458,11 +485,16 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="institution">所属机构</label>
-                                <select id="institution" required>
-                                    <option value="inst1">总部校区</option>
-                                    <option value="inst2">东城校区</option>
-                                </select>
+                                <label for="consumeHours">每次消耗（课时）</label>
+                                <input type="number" id="consumeHours" required min="1" value="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="teacher">上课老师</label>
+                                <input type="text" id="teacher" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="teacherFee">课酬单价（元）</label>
+                                <input type="number" id="teacherFee" required min="0">
                             </div>
                             <div class="form-group">
                                 <label for="description">课程描述</label>
@@ -473,6 +505,33 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- 新增校区模态框 -->
+    <div id="campusModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCampusModal()">&times;</span>
+            <h2>新增校区</h2>
+            <form id="campusForm">
+                <div class="form-group">
+                    <label for="campusName">校区名称</label>
+                    <input type="text" id="campusName" required>
+                </div>
+                <div class="form-group">
+                    <label for="campusAddress">校区地址</label>
+                    <input type="text" id="campusAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="campusPhone">联系电话</label>
+                    <input type="tel" id="campusPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="campusManager">负责人</label>
+                    <input type="text" id="campusManager" required>
+                </div>
+                <button type="submit" class="btn btn-primary">保存</button>
+            </form>
         </div>
     </div>
 
@@ -537,12 +596,15 @@
             currentCourseId = courseId;
 
             if (courseId) {
-                // 在实际应用中，这里会从后端获取课程数据
-                if (courseId === 'course1') {
-                    document.getElementById('courseName').value = '瑜伽基础课程';
-                    document.getElementById('courseType').value = 'one-on-one';
-                    document.getElementById('institution').value = 'inst1';
-                    document.getElementById('description').value = '适合初学者的瑜伽基础课程，强调正确的姿势和呼吸方法。';
+                const course = courses.find(c => c.id === courseId);
+                if (course) {
+                    document.getElementById('className').value = course.className;
+                    document.getElementById('courseName').value = course.courseName;
+                    document.getElementById('courseType').value = course.type;
+                    document.getElementById('consumeHours').value = course.consumeHours;
+                    document.getElementById('teacher').value = course.teacher;
+                    document.getElementById('teacherFee').value = course.teacherFee;
+                    document.getElementById('description').value = course.description;
                 }
             } else {
                 document.getElementById('courseForm').reset();
@@ -557,14 +619,28 @@
         document.getElementById('courseForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = {
-                name: document.getElementById('courseName').value,
+                id: currentCourseId || `course${courses.length + 1}`,
+                className: document.getElementById('className').value,
+                courseName: document.getElementById('courseName').value,
                 type: document.getElementById('courseType').value,
-                institution: document.getElementById('institution').value,
+                consumeHours: parseInt(document.getElementById('consumeHours').value),
+                teacher: document.getElementById('teacher').value,
+                teacherFee: parseInt(document.getElementById('teacherFee').value),
                 description: document.getElementById('description').value
             };
 
-            // 在实际应用中，这里会发送到后端
-            alert(`课程数据：\n${JSON.stringify(formData, null, 2)}`);
+            if (currentCourseId) {
+                // 更新现有课程
+                const index = courses.findIndex(c => c.id === currentCourseId);
+                if (index !== -1) {
+                    courses[index] = formData;
+                }
+            } else {
+                // 添加新课程
+                courses.push(formData);
+            }
+
+            renderCourses();
             closeModal();
         });
 
@@ -572,16 +648,22 @@
         const courses = [
             {
                 id: 'course1',
-                name: '瑜伽基础课程',
+                className: '瑜伽基础班',
+                courseName: '瑜伽基础课程',
                 type: 'one-on-one',
-                institution: 'inst1',
+                consumeHours: 1,
+                teacher: '王教练',
+                teacherFee: 200,
                 description: '适合初学者的瑜伽基础课程'
             },
             {
                 id: 'course2',
-                name: '高级瑜伽课程',
+                className: '高级瑜伽班',
+                courseName: '高级瑜伽课程',
                 type: 'group',
-                institution: 'inst2',
+                consumeHours: 2,
+                teacher: '李教练',
+                teacherFee: 300,
                 description: '进阶瑜伽课程'
             }
         ];
@@ -590,8 +672,33 @@
             const grid = document.getElementById('courseGrid');
             grid.innerHTML = courses.map(course => `
                 <div class="course-card">
-                    <h3>${course.name}</h3>
-                    <p>${course.description}</p>
+                    <h3>${course.className}</h3>
+                    <div class="course-info">
+                        <div class="info-row">
+                            <span class="info-label">课程名称：</span>
+                            <span class="info-value">${course.courseName}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">课程类型：</span>
+                            <span class="info-value">${getCourseTypeName(course.type)}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">每次消耗：</span>
+                            <span class="info-value">${course.consumeHours}课时</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">上课老师：</span>
+                            <span class="info-value">${course.teacher}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">课酬单价：</span>
+                            <span class="info-value">${course.teacherFee}元</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">课程描述：</span>
+                            <span class="info-value">${course.description}</span>
+                        </div>
+                    </div>
                     <div class="course-actions">
                         <button class="btn btn-secondary" onclick="openModal('${course.id}')">编辑</button>
                         <button class="btn btn-primary" onclick="viewCourse('${course.id}')">查看</button>
@@ -600,8 +707,117 @@
             `).join('');
         }
 
+        // 获取课程类型名称
+        function getCourseTypeName(type) {
+            const typeMap = {
+                'one-on-one': '一对一',
+                'group': '小班课',
+                'lecture': '公开课'
+            };
+            return typeMap[type] || type;
+        }
+
+        // 添加新的样式
+        const style = document.createElement('style');
+        style.textContent = `
+            .course-info {
+                margin: 15px 0;
+                padding: 15px;
+                background-color: #f8f9fa;
+                border-radius: 4px;
+            }
+            .info-row {
+                margin-bottom: 8px;
+                font-size: 14px;
+                line-height: 1.5;
+                display: flex;
+                align-items: flex-start;
+            }
+            .info-label {
+                color: #666;
+                font-weight: 500;
+                min-width: 80px;
+            }
+            .info-value {
+                color: #333;
+                flex: 1;
+            }
+            .course-card {
+                padding: 20px;
+                margin-bottom: 20px;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .course-card h3 {
+                color: var(--dark);
+                margin-bottom: 15px;
+            }
+            .course-actions {
+                margin-top: 15px;
+                display: flex;
+                gap: 10px;
+                justify-content: flex-end;
+            }
+        `;
+        document.head.appendChild(style);
+
         // 初始化页面
         renderCourses();
+
+        // 新增校区相关功能
+        document.getElementById('add-campus-btn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            document.getElementById('campusModal').style.display = 'block';
+        });
+
+        function closeCampusModal() {
+            document.getElementById('campusModal').style.display = 'none';
+        }
+
+        // 表单提交处理
+        document.getElementById('campusForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const campusName = document.getElementById('campusName').value;
+            
+            // 创建新的校区选项
+            const campusList = document.querySelector('.campus-list');
+            const newCampusItem = document.createElement('li');
+            newCampusItem.className = 'campus-item';
+            newCampusItem.textContent = campusName;
+            
+            // 添加点击事件
+            newCampusItem.addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.querySelectorAll('.campus-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                // 更新校区显示
+                document.querySelector('.campus-header span').textContent = campusName;
+                
+                // 关闭下拉菜单
+                document.querySelector('.campus-header').classList.remove('active');
+                document.querySelector('.campus-list').classList.remove('show');
+            });
+            
+            // 添加到列表
+            campusList.appendChild(newCampusItem);
+            
+            // 关闭模态框
+            closeCampusModal();
+            
+            // 清空表单
+            this.reset();
+        });
+
+        // 点击模态框外部关闭
+        window.addEventListener('click', function(e) {
+            const campusModal = document.getElementById('campusModal');
+            if (e.target === campusModal) {
+                closeCampusModal();
+            }
+        });
     </script>
 </body>
 </html>
