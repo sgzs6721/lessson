@@ -722,7 +722,6 @@
             <!-- 校区选择器 -->
             <div class="campus-selector">
                 <div class="campus-header">
-                    <button class="btn btn-sm" style="background-color: var(--secondary); color: white; padding: 2px 8px; font-size: 12px; margin-right: 10px;" id="add-campus-btn">+</button>
                     <span>校区选择</span>
                 </div>
                 <ul class="campus-list">
@@ -736,8 +735,10 @@
             </div>
 
             <ul class="sidebar-menu">
+                <li><a href="campus_management.html"><i>🏢</i> 校区管理</a></li>
                 <li><a href="homepage.html" class="active"><i>📊</i> 仪表盘</a></li>
                 <li><a href="user_management.html"><i>👥</i> 用户管理</a></li>
+                <li><a href="coach_management.html"><i>🏋️</i> 教练管理</a></li>
                 <li><a href="course_management.html"><i>📚</i> 课程管理</a></li>
                 <li><a href="student_management.html"><i>👨‍🎓</i> 学员管理</a></li>
                 <li><a href="payment_records.html"><i>💰</i> 缴费管理</a></li>
@@ -801,6 +802,16 @@
                         <div class="card-body">
                             <div class="dashboard-stats">
                                 <div class="stat-card">
+                                    <div class="stat-title">总流水</div>
+                                    <div class="stat-value">¥358,645</div>
+                                    <div style="font-size: 12px; color: #777;">较上月 <span style="color: var(--secondary);">+8.5%</span></div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">总利润</div>
+                                    <div class="stat-value">¥176,290</div>
+                                    <div style="font-size: 12px; color: #777;">较上月 <span style="color: var(--secondary);">+6.2%</span></div>
+                                </div>
+                                <div class="stat-card">
                                     <div class="stat-title">总学员数</div>
                                     <div class="stat-value">147</div>
                                     <div style="font-size: 12px; color: #777;">较上月 <span style="color: var(--secondary);">+12%</span></div>
@@ -810,15 +821,25 @@
                                     <div class="stat-value">8</div>
                                     <div style="font-size: 12px; color: #777;">兼职 <span style="color: var(--secondary);">3</span> | 全职 <span style="color: var(--secondary);">5</span></div>
                                 </div>
-                                <div class="stat-card">
+                                <div class="stat-card week-data">
                                     <div class="stat-title">本周课时</div>
                                     <div class="stat-value">18/35</div>
                                     <div style="font-size: 12px; color: #777;">销课金额 <span style="color: var(--secondary);">¥12,800</span></div>
                                 </div>
-                                <div class="stat-card">
+                                <div class="stat-card week-data">
                                     <div class="stat-title">本周缴费学员</div>
                                     <div class="stat-value">7</div>
                                     <div style="font-size: 12px; color: #777;">新学员 <span style="color: var(--secondary);">3</span> | 续费 <span style="color: var(--secondary);">4</span></div>
+                                </div>
+                                <div class="stat-card week-data">
+                                    <div class="stat-title">本周缴费金额</div>
+                                    <div class="stat-value">¥28,760</div>
+                                    <div style="font-size: 12px; color: #777;">新学员 <span style="color: var(--secondary);">¥15,200</span> | 续费 <span style="color: var(--secondary);">¥13,560</span></div>
+                                </div>
+                                <div class="stat-card week-data">
+                                    <div class="stat-title">本周出勤率</div>
+                                    <div class="stat-value">94.2%</div>
+                                    <div style="font-size: 12px; color: #777;">较上周 <span style="color: var(--secondary);">+1.7%</span></div>
                                 </div>
                                 <div class="stat-card month-data" style="display: none;">
                                     <div class="stat-title">本月课时</div>
@@ -830,12 +851,12 @@
                                     <div class="stat-value">28</div>
                                     <div style="font-size: 12px; color: #777;">新学员 <span style="color: var(--secondary);">12</span> | 续费 <span style="color: var(--secondary);">16</span></div>
                                 </div>
-                                <div class="stat-card wide">
+                                <div class="stat-card month-data" style="display: none;">
                                     <div class="stat-title">本月缴费金额</div>
                                     <div class="stat-value">¥92,560</div>
                                     <div style="font-size: 12px; color: #777;">新学员 <span style="color: var(--secondary);">¥45,800</span> | 续费 <span style="color: var(--secondary);">¥46,760</span></div>
                                 </div>
-                                <div class="stat-card">
+                                <div class="stat-card month-data" style="display: none;">
                                     <div class="stat-title">本月出勤率</div>
                                     <div class="stat-value">92.5%</div>
                                     <div style="font-size: 12px; color: #777;">较上月 <span style="color: var(--secondary);">+2.3%</span></div>
