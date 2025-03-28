@@ -488,6 +488,9 @@
                                 <th>负责人</th>
                                 <th>联系电话</th>
                                 <th>地址</th>
+                                <th>月租金</th>
+                                <th>物业费</th>
+                                <th>固定水电费</th>
                                 <th>状态</th>
                                 <th>创建时间</th>
                                 <th>操作</th>
@@ -499,6 +502,9 @@
                                 <td>张明</td>
                                 <td>13800138001</td>
                                 <td>北京市朝阳区xxx街道xxx号</td>
+                                <td>¥15,000</td>
+                                <td>¥3,500</td>
+                                <td>¥2,800</td>
                                 <td><span class="campus-status status-active">正常</span></td>
                                 <td>2024-01-01</td>
                                 <td>
@@ -512,6 +518,9 @@
                                 <td>王芳</td>
                                 <td>13800138003</td>
                                 <td>北京市东城区xxx街道xxx号</td>
+                                <td>¥12,000</td>
+                                <td>¥2,800</td>
+                                <td>¥2,200</td>
                                 <td><span class="campus-status status-active">正常</span></td>
                                 <td>2024-01-15</td>
                                 <td>
@@ -538,6 +547,19 @@
                         <div class="form-group">
                             <label for="address">地址</label>
                             <input type="text" id="address" required>
+                        </div>
+                        <h4 style="font-size: 16px; font-weight: 600; margin: 20px 0 10px 0; color: var(--dark);">固定支出</h4>
+                        <div class="form-group">
+                            <label for="monthlyRent">月租金(元)</label>
+                            <input type="number" id="monthlyRent" placeholder="请输入月租金" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="propertyFee">物业费(元/月)</label>
+                            <input type="number" id="propertyFee" placeholder="请输入物业费" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="utilityFee">固定水电费(元/月)</label>
+                            <input type="number" id="utilityFee" placeholder="请输入固定水电费" min="0">
                         </div>
                         <div style="text-align: right;">
                             <button type="button" class="btn btn-sm" onclick="closeModal()">取消</button>
@@ -680,7 +702,10 @@
             const campusData = {
                 id: document.getElementById('campusId').value,
                 name: document.getElementById('campusName').value,
-                address: document.getElementById('address').value
+                address: document.getElementById('address').value,
+                monthlyRent: document.getElementById('monthlyRent').value,
+                propertyFee: document.getElementById('propertyFee').value,
+                utilityFee: document.getElementById('utilityFee').value
             };
             alert(`在实际应用中，这将${campusData.id ? '更新' : '添加'}校区:\n${JSON.stringify(campusData, null, 2)}`);
             closeModal();
