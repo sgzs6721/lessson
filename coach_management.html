@@ -629,6 +629,35 @@
                 width: 100%;
             }
         }
+
+        /* 教练类型标签样式 */
+        .coach-type-badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.35rem 1rem;
+            border-radius: 9999px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            margin-left: 0.5rem;
+        }
+        
+        .coach-type-fulltime {
+            background-color: #e6f3ff;
+            color: #1a73e8;
+            border: 1px solid #b3d7ff;
+        }
+        
+        .coach-type-parttime {
+            background-color: #f3e5f5;
+            color: #7b1fa2;
+            border: 1px solid #e1bee7;
+        }
+        
+        .coach-type-contract {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -661,7 +690,16 @@
                 <li><a href="coach_management.html" class="active"><span>🏋️</span> 教练管理</a></li>
                 <li><a href="course_management.html"><span>📚</span> 课程管理</a></li>
                 <li><a href="student_management.html"><span>👨‍🎓</span> 学员管理</a></li>
-                <li><a href="payment_records.html"><span>💰</span> 缴费管理</a></li>
+                <li>
+                    <a href="payment_records.html">
+                        <i class="fas fa-money-bill-wave"></i>缴费记录
+                    </a>
+                </li>
+                <li>
+                    <a href="expense_management.html">
+                        <i class="fas fa-receipt"></i>支出管理
+                    </a>
+                </li>
                 <li><a href="schedule_view.html"><span>📅</span> 课表管理</a></li>
                 <li><a href="attendance_management.html"><span>✅</span> 打卡与消课</a></li>
                 <li><a href="miniprogram_management.html"><span>📱</span> 小程序管理</a></li>
@@ -708,6 +746,12 @@
                             <option value="junior">初级教练</option>
                             <option value="senior">资深教练</option>
                             <option value="expert">专家教练</option>
+                        </select>
+                        <select id="typeFilter" class="border rounded-md px-4 py-2">
+                            <option value="">全部类型</option>
+                            <option value="fulltime">全职教练</option>
+                            <option value="parttime">兼职教练</option>
+                            <option value="contract">合同教练</option>
                         </select>
                     </div>
                     <button
@@ -760,6 +804,15 @@
                 </div>
                 
                 <div class="mb-4">
+                    <label for="type" class="block text-sm font-medium text-gray-700 mb-1">教练类型</label>
+                    <select id="type" name="type" class="w-full px-3 py-2 border rounded-md">
+                        <option value="fulltime">全职教练</option>
+                        <option value="parttime">兼职教练</option>
+                        <option value="contract">合同教练</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
                     <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">联系电话</label>
                     <input type="text" id="phone" name="phone" class="w-full px-3 py-2 border rounded-md">
                 </div>
@@ -770,13 +823,47 @@
                 </div>
                 
                 <div class="mb-4">
-                    <label for="teacherFee" class="block text-sm font-medium text-gray-700 mb-1">课时费用（元）</label>
-                    <input type="number" id="teacherFee" name="teacherFee" class="w-full px-3 py-2 border rounded-md" min="0">
+                    <label for="certifications" class="block text-sm font-medium text-gray-700 mb-1">持有证书（每行一个）</label>
+                    <textarea id="certifications" name="certifications" rows="3" class="w-full px-3 py-2 border rounded-md"></textarea>
                 </div>
                 
                 <div class="mb-4">
-                    <label for="certifications" class="block text-sm font-medium text-gray-700 mb-1">持有证书（每行一个）</label>
-                    <textarea id="certifications" name="certifications" rows="3" class="w-full px-3 py-2 border rounded-md"></textarea>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">工资构成</label>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="baseSalary" name="salaryComponents" value="baseSalary" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                    <label for="baseSalary" class="ml-2 text-sm font-medium text-gray-700">基本工资</label>
+                                </div>
+                                <input type="number" id="baseSalaryAmount" name="baseSalaryAmount" placeholder="金额" class="w-32 px-3 py-2 border rounded-md text-sm">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="hourlyRate" name="salaryComponents" value="hourlyRate" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                    <label for="hourlyRate" class="ml-2 text-sm font-medium text-gray-700">课时费</label>
+                                </div>
+                                <input type="number" id="hourlyRateAmount" name="hourlyRateAmount" placeholder="金额" class="w-32 px-3 py-2 border rounded-md text-sm">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="performanceBonus" name="salaryComponents" value="performanceBonus" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                    <label for="performanceBonus" class="ml-2 text-sm font-medium text-gray-700">绩效奖金</label>
+                                </div>
+                                <input type="number" id="performanceBonusAmount" name="performanceBonusAmount" placeholder="金额" class="w-32 px-3 py-2 border rounded-md text-sm">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="commission" name="salaryComponents" value="commission" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                    <label for="commission" class="ml-2 text-sm font-medium text-gray-700">提成</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="number" id="commissionRate" name="commissionRate" placeholder="比例" class="w-32 px-3 py-2 border rounded-md text-sm">
+                                    <span class="ml-1 text-sm text-gray-500">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="flex justify-end">
@@ -814,6 +901,15 @@
                 </div>
                 
                 <div class="mb-4">
+                    <label for="editType" class="block text-sm font-medium text-gray-700 mb-1">教练类型</label>
+                    <select id="editType" name="type" class="w-full px-3 py-2 border rounded-md">
+                        <option value="fulltime">全职教练</option>
+                        <option value="parttime">兼职教练</option>
+                        <option value="contract">合同教练</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
                     <label for="editPhone" class="block text-sm font-medium text-gray-700 mb-1">联系电话</label>
                     <input type="text" id="editPhone" name="phone" class="w-full px-3 py-2 border rounded-md">
                 </div>
@@ -824,13 +920,47 @@
                 </div>
                 
                 <div class="mb-4">
-                    <label for="editTeacherFee" class="block text-sm font-medium text-gray-700 mb-1">课时费用（元）</label>
-                    <input type="number" id="editTeacherFee" name="teacherFee" class="w-full px-3 py-2 border rounded-md" min="0">
+                    <label for="editCertifications" class="block text-sm font-medium text-gray-700 mb-1">持有证书（每行一个）</label>
+                    <textarea id="editCertifications" name="certifications" rows="3" class="w-full px-3 py-2 border rounded-md"></textarea>
                 </div>
                 
                 <div class="mb-4">
-                    <label for="editCertifications" class="block text-sm font-medium text-gray-700 mb-1">持有证书（每行一个）</label>
-                    <textarea id="editCertifications" name="certifications" rows="3" class="w-full px-3 py-2 border rounded-md"></textarea>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">工资构成</label>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="editBaseSalary" name="salaryComponents" value="baseSalary" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                    <label for="editBaseSalary" class="ml-2 text-sm font-medium text-gray-700">基本工资</label>
+                                </div>
+                                <input type="number" id="editBaseSalaryAmount" name="baseSalaryAmount" placeholder="金额" class="w-32 px-3 py-2 border rounded-md text-sm">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="editHourlyRate" name="salaryComponents" value="hourlyRate" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                    <label for="editHourlyRate" class="ml-2 text-sm font-medium text-gray-700">课时费</label>
+                                </div>
+                                <input type="number" id="editHourlyRateAmount" name="hourlyRateAmount" placeholder="金额" class="w-32 px-3 py-2 border rounded-md text-sm">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="editPerformanceBonus" name="salaryComponents" value="performanceBonus" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                    <label for="editPerformanceBonus" class="ml-2 text-sm font-medium text-gray-700">绩效奖金</label>
+                                </div>
+                                <input type="number" id="editPerformanceBonusAmount" name="performanceBonusAmount" placeholder="金额" class="w-32 px-3 py-2 border rounded-md text-sm">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="editCommission" name="salaryComponents" value="commission" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                    <label for="editCommission" class="ml-2 text-sm font-medium text-gray-700">提成</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="number" id="editCommissionRate" name="commissionRate" placeholder="比例" class="w-32 px-3 py-2 border rounded-md text-sm">
+                                    <span class="ml-1 text-sm text-gray-500">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="flex justify-end">
@@ -838,6 +968,71 @@
                     <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">保存</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- 教练详情模态框 -->
+    <div id="detailCoachModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">教练详情</h2>
+                <button class="close-modal text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">姓名</label>
+                        <p id="detailName" class="mt-1 text-sm text-gray-900"></p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">教练等级</label>
+                        <p id="detailLevel" class="mt-1 text-sm text-gray-900"></p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">教练类型</label>
+                        <p id="detailType" class="mt-1 text-sm text-gray-900"></p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">联系电话</label>
+                        <p id="detailPhone" class="mt-1 text-sm text-gray-900"></p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">教学经验</label>
+                        <p id="detailYearsExperience" class="mt-1 text-sm text-gray-900"></p>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="text-sm font-medium text-gray-500">持有证书</label>
+                    <div id="detailCertifications" class="mt-1 flex flex-wrap gap-2"></div>
+                </div>
+                
+                <div>
+                    <label class="text-sm font-medium text-gray-500">工资构成</label>
+                    <div id="detailSalary" class="mt-1 bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <div class="space-y-2">
+                            <div id="detailBaseSalary" class="hidden">
+                                <span class="text-sm font-medium text-gray-700">基本工资：</span>
+                                <span class="text-sm text-gray-900"></span>
+                            </div>
+                            <div id="detailHourlyRate" class="hidden">
+                                <span class="text-sm font-medium text-gray-700">课时费：</span>
+                                <span class="text-sm text-gray-900"></span>
+                            </div>
+                            <div id="detailPerformanceBonus" class="hidden">
+                                <span class="text-sm font-medium text-gray-700">绩效奖金：</span>
+                                <span class="text-sm text-gray-900"></span>
+                            </div>
+                            <div id="detailCommission" class="hidden">
+                                <span class="text-sm font-medium text-gray-700">提成：</span>
+                                <span class="text-sm text-gray-900"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -986,6 +1181,8 @@ const coachData = [
         name: "张教练",
         level: "senior",
         levelText: "资深教练",
+        type: "fulltime",
+        typeText: "全职教练",
         institution: "inst1",
         institutionName: "健身中心 A",
         phone: "13800138001",
@@ -993,13 +1190,20 @@ const coachData = [
         certifications: ["国家健身教练认证", "瑜伽教练资格证"],
         courses: ["yoga_basic", "yoga_advanced"],
         coursesText: ["基础瑜伽", "高级瑜伽"],
-        yearsExperience: 5
+        yearsExperience: 5,
+        salaryComponents: ["baseSalary", "hourlyRate", "performanceBonus"],
+        baseSalaryAmount: 5000,
+        hourlyRateAmount: 200,
+        performanceBonusAmount: 1000,
+        commissionRate: null
     },
     {
         id: "coach2",
         name: "李教练",
         level: "expert",
         levelText: "专家教练",
+        type: "parttime",
+        typeText: "兼职教练",
         institution: "inst1",
         institutionName: "健身中心 A",
         phone: "13900139001",
@@ -1007,13 +1211,20 @@ const coachData = [
         certifications: ["国际健身教练认证", "CrossFit L2 教练"],
         courses: ["fitness", "hiit"],
         coursesText: ["健身课程", "高强度间歇训练"],
-        yearsExperience: 8
+        yearsExperience: 8,
+        salaryComponents: ["baseSalary", "hourlyRate", "commission"],
+        baseSalaryAmount: 8000,
+        hourlyRateAmount: 300,
+        performanceBonusAmount: null,
+        commissionRate: 5
     },
     {
         id: "coach3",
         name: "王教练",
         level: "junior",
         levelText: "初级教练",
+        type: "contract",
+        typeText: "合同教练",
         institution: "inst2",
         institutionName: "健身中心 B",
         phone: "13700137001",
@@ -1021,7 +1232,12 @@ const coachData = [
         certifications: ["舞蹈教练证书", "普拉提初级证书"],
         courses: ["dance", "pilates"],
         coursesText: ["舞蹈课程", "普拉提"],
-        yearsExperience: 2
+        yearsExperience: 2,
+        salaryComponents: ["baseSalary", "hourlyRate"],
+        baseSalaryAmount: 3000,
+        hourlyRateAmount: 150,
+        performanceBonusAmount: null,
+        commissionRate: null
     }
 ];
 
@@ -1035,6 +1251,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 绑定筛选事件
     document.getElementById('levelFilter').addEventListener('change', filterCoaches);
+    document.getElementById('typeFilter').addEventListener('change', filterCoaches);
     
     // 绑定添加教练按钮事件
     document.getElementById('addCoachButton').addEventListener('click', function() {
@@ -1092,10 +1309,14 @@ function createCoachCard(coach) {
             <div>
                 <h3 class="text-lg font-semibold">${coach.name} 
                     <span class="coach-level-badge coach-level-${coach.level}">${coach.levelText}</span>
+                    <span class="coach-type-badge coach-type-${coach.type}">${coach.typeText}</span>
                 </h3>
             </div>
             <div class="coach-action-buttons">
-                <button class="edit-btn" onclick="openEditModal('${coach.id}')">
+                <button class="detail-btn" onclick="openDetailModal('${coach.id}')">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <button class="edit-btn" onclick="editCoach('${coach.id}')">
                     <i class="fas fa-edit"></i>
                 </button>
                 <button class="delete-btn" onclick="confirmDeleteCoach('${coach.id}')">
@@ -1107,7 +1328,6 @@ function createCoachCard(coach) {
         <div class="space-y-2">
             <p><i class="fas fa-phone"></i> ${coach.phone}</p>
             <p><i class="fas fa-clock"></i> ${coach.yearsExperience} 年教学经验</p>
-            <p><i class="fas fa-yen-sign"></i> ${coach.teacherFee || 0} 元/课时</p>
         </div>
         
         <div class="info-group">
@@ -1118,6 +1338,7 @@ function createCoachCard(coach) {
         </div>
     `;
     
+    
     return coachCard;
 }
 
@@ -1125,6 +1346,7 @@ function createCoachCard(coach) {
 function filterCoaches() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
     const levelFilter = document.getElementById('levelFilter').value;
+    const typeFilter = document.getElementById('typeFilter').value;
     
     const filteredCoaches = coachData.filter(coach => {
         // 搜索名称、邮箱和电话
@@ -1135,7 +1357,10 @@ function filterCoaches() {
         // 教练等级筛选
         const matchesLevel = levelFilter === '' || coach.level === levelFilter;
         
-        return matchesSearch && matchesLevel;
+        // 教练类型筛选
+        const matchesType = typeFilter === '' || coach.type === typeFilter;
+        
+        return matchesSearch && matchesLevel && matchesType;
     });
     
     renderCoachList(filteredCoaches);
@@ -1177,56 +1402,33 @@ function clearFormErrors(formId) {
 }
 
 // 打开编辑模态框
-function openEditModal(coachId) {
+function editCoach(coachId) {
     // 获取教练数据
     const coach = coachData.find(c => c.id === coachId);
     if (!coach) return;
     
     // 填充表单
     const form = document.getElementById('editCoachForm');
-    form.elements['coachId'].value = coach.id;
-    form.elements['name'].value = coach.name;
-    form.elements['level'].value = coach.level;
-    form.elements['phone'].value = coach.phone;
-    form.elements['yearsExperience'].value = coach.yearsExperience;
-    form.elements['teacherFee'].value = coach.teacherFee || '';
-    form.elements['certifications'].value = coach.certifications.join('\n');
+    document.getElementById('editCoachId').value = coach.id;
+    document.getElementById('editName').value = coach.name;
+    document.getElementById('editLevel').value = coach.level;
+    document.getElementById('editType').value = coach.type;
+    document.getElementById('editPhone').value = coach.phone;
+    document.getElementById('editYearsExperience').value = coach.yearsExperience;
+    document.getElementById('editCertifications').value = coach.certifications.join('\n');
+    
+    // 填充工资构成
+    document.getElementById('editBaseSalary').checked = coach.salaryComponents.includes('baseSalary');
+    document.getElementById('editBaseSalaryAmount').value = coach.baseSalaryAmount || '';
+    document.getElementById('editHourlyRate').checked = coach.salaryComponents.includes('hourlyRate');
+    document.getElementById('editHourlyRateAmount').value = coach.hourlyRateAmount || '';
+    document.getElementById('editPerformanceBonus').checked = coach.salaryComponents.includes('performanceBonus');
+    document.getElementById('editPerformanceBonusAmount').value = coach.performanceBonusAmount || '';
+    document.getElementById('editCommission').checked = coach.salaryComponents.includes('commission');
+    document.getElementById('editCommissionRate').value = coach.commissionRate || '';
     
     // 打开模态框
-    openModal('editCoachModal');
-}
-
-// 处理添加教练
-function handleAddCoach(e) {
-    e.preventDefault();
-    
-    // 表单验证
-    if (!validateCoachForm('addCoachForm')) return;
-    
-    // 获取表单数据
-    const form = e.target;
-    const newCoach = {
-        id: 'coach' + (coachData.length + 1),
-        name: form.elements['name'].value,
-        level: form.elements['level'].value,
-        levelText: getLevelText(form.elements['level'].value),
-        phone: form.elements['phone'].value,
-        yearsExperience: parseInt(form.elements['yearsExperience'].value),
-        teacherFee: parseInt(form.elements['teacherFee'].value),
-        certifications: form.elements['certifications'].value.split('\n').filter(cert => cert.trim() !== '')
-    };
-    
-    // 添加新教练
-    coachData.push(newCoach);
-    
-    // 重新渲染列表
-    renderCoachList(coachData);
-    
-    // 关闭模态框
-    closeAllModals();
-    
-    // 显示成功消息
-    showToast('添加教练成功');
+    document.getElementById('editCoachModal').style.display = 'block';
 }
 
 // 处理编辑教练
@@ -1250,11 +1452,23 @@ function handleEditCoach(e) {
         name: form.elements['name'].value,
         level: form.elements['level'].value,
         levelText: getLevelText(form.elements['level'].value),
+        type: form.elements['type'].value,
+        typeText: getTypeText(form.elements['type'].value),
         phone: form.elements['phone'].value,
         yearsExperience: parseInt(form.elements['yearsExperience'].value),
-        teacherFee: parseInt(form.elements['teacherFee'].value),
-        certifications: form.elements['certifications'].value.split('\n').filter(cert => cert.trim() !== '')
+        certifications: form.elements['certifications'].value.split('\n').filter(cert => cert.trim() !== ''),
+        salaryComponents: [],
+        baseSalaryAmount: form.elements['baseSalary'].checked ? parseInt(form.elements['baseSalaryAmount'].value) : null,
+        hourlyRateAmount: form.elements['hourlyRate'].checked ? parseInt(form.elements['hourlyRateAmount'].value) : null,
+        performanceBonusAmount: form.elements['performanceBonus'].checked ? parseInt(form.elements['performanceBonusAmount'].value) : null,
+        commissionRate: form.elements['commission'].checked ? parseInt(form.elements['commissionRate'].value) : null
     };
+    
+    // 添加启用的工资项
+    if (form.elements['baseSalary'].checked) updatedCoach.salaryComponents.push('baseSalary');
+    if (form.elements['hourlyRate'].checked) updatedCoach.salaryComponents.push('hourlyRate');
+    if (form.elements['performanceBonus'].checked) updatedCoach.salaryComponents.push('performanceBonus');
+    if (form.elements['commission'].checked) updatedCoach.salaryComponents.push('commission');
     
     // 更新数据
     coachData[coachIndex] = updatedCoach;
@@ -1329,6 +1543,17 @@ function getLevelText(level) {
     };
     
     return levelMap[level] || '教练';
+}
+
+// 获取类型文本
+function getTypeText(type) {
+    const typeMap = {
+        'fulltime': '全职教练',
+        'parttime': '兼职教练',
+        'contract': '合同教练'
+    };
+    
+    return typeMap[type] || type;
 }
 
 // 获取机构名称
@@ -1435,6 +1660,56 @@ function showToast(message) {
     setTimeout(() => {
         toast.classList.add('translate-y-full');
     }, 3000);
+}
+
+// 打开详情模态框
+function openDetailModal(coachId) {
+    // 获取教练数据
+    const coach = coachData.find(c => c.id === coachId);
+    if (!coach) return;
+    
+    // 填充基本信息
+    document.getElementById('detailName').textContent = coach.name;
+    document.getElementById('detailLevel').textContent = coach.levelText;
+    document.getElementById('detailType').textContent = coach.typeText;
+    document.getElementById('detailPhone').textContent = coach.phone;
+    document.getElementById('detailYearsExperience').textContent = `${coach.yearsExperience} 年`;
+    
+    // 填充证书信息
+    const certificationsContainer = document.getElementById('detailCertifications');
+    certificationsContainer.innerHTML = coach.certifications.map(cert => 
+        `<span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-md text-sm">${cert}</span>`
+    ).join('');
+    
+    // 填充工资构成信息
+    const salaryComponents = {
+        baseSalary: { element: 'detailBaseSalary', label: '基本工资', value: coach.baseSalaryAmount, suffix: '元' },
+        hourlyRate: { element: 'detailHourlyRate', label: '课时费', value: coach.hourlyRateAmount, suffix: '元/课时' },
+        performanceBonus: { element: 'detailPerformanceBonus', label: '绩效奖金', value: coach.performanceBonusAmount, suffix: '元' },
+        commission: { element: 'detailCommission', label: '提成', value: coach.commissionRate, suffix: '%' }
+    };
+    
+    // 重置所有工资项为隐藏状态
+    Object.values(salaryComponents).forEach(component => {
+        const element = document.getElementById(component.element);
+        element.classList.add('hidden');
+    });
+    
+    // 显示已启用的工资项
+    if (coach.salaryComponents && coach.salaryComponents.length > 0) {
+        coach.salaryComponents.forEach(component => {
+            const salaryComponent = salaryComponents[component];
+            if (salaryComponent && salaryComponent.value !== null) {
+                const element = document.getElementById(salaryComponent.element);
+                const valueSpan = element.querySelector('span:last-child');
+                valueSpan.textContent = `${salaryComponent.value}${salaryComponent.suffix}`;
+                element.classList.remove('hidden');
+            }
+        });
+    }
+    
+    // 打开模态框
+    openModal('detailCoachModal');
 }
 </script>
 </body>

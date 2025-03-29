@@ -378,6 +378,164 @@
                 gap: 10px;
             }
         }
+
+        /* 选项管理样式 */
+        .option-list {
+            margin-bottom: 15px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            margin-bottom: 8px;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .option-item:hover {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+        }
+
+        .option-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            width: 30px;
+        }
+
+        .option-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.1);
+            outline: none;
+        }
+
+        .option-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 13px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            min-width: 60px;
+            justify-content: center;
+            color: white;
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-sm i {
+            font-size: 12px;
+        }
+
+        .btn-sm span {
+            font-size: 12px;
+        }
+
+        .add-option {
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-option:hover {
+            background-color: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        .add-option i {
+            font-size: 14px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .card-actions .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .card-actions .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .card-actions .btn i {
+            font-size: 14px;
+        }
+
+        /* 滚动条样式 */
+        .option-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .option-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .option-list::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .option-list::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
     </style>
 </head>
 <body>
@@ -409,7 +567,16 @@
                 <li><a href="coach_management.html"><i>🏋️</i> 教练管理</a></li>
                 <li><a href="course_management.html"><i>📚</i> 课程管理</a></li>
                 <li><a href="student_management.html"><i>👨‍🎓</i> 学员管理</a></li>
-                <li><a href="payment_records.html"><i>💰</i> 缴费管理</a></li>
+                <li>
+                    <a href="payment_records.html">
+                        <i class="fas fa-money-bill-wave"></i>缴费记录
+                    </a>
+                </li>
+                <li>
+                    <a href="expense_management.html">
+                        <i class="fas fa-receipt"></i>支出管理
+                    </a>
+                </li>
                 <li><a href="schedule_view.html"><i>📅</i> 课表管理</a></li>
                 <li><a href="attendance_management.html"><i>✅</i> 打卡与消课</a></li>
                 <li><a href="miniprogram_management.html"><i>📱</i> 小程序管理</a></li>
@@ -433,10 +600,9 @@
             <!-- 设置选项卡 -->
             <div class="tabs">
                 <div class="tab active" data-tab="basic">基础设置</div>
-                <div class="tab" data-tab="security">安全设置</div>
-                <div class="tab" data-tab="notification">通知设置</div>
+                <div class="tab" data-tab="salary">工资设置</div>
+                <div class="tab" data-tab="options">选项管理</div>
                 <div class="tab" data-tab="backup">数据备份</div>
-                <div class="tab" data-tab="advanced">高级设置</div>
             </div>
 
             <!-- 基础设置 -->
@@ -446,26 +612,12 @@
                         <div class="card-title">机构信息</div>
                     </div>
                     <div class="form-group">
-                        <label for="institution-name">机构名称</label>
-                        <input type="text" id="institution-name" value="培训机构管理系统">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="institution-phone">联系电话</label>
-                            <input type="tel" id="institution-phone" value="010-12345678">
-                        </div>
-                        <div class="form-group">
-                            <label for="institution-email">邮箱地址</label>
-                            <input type="email" id="institution-email" value="contact@example.com">
-                        </div>
+                        <label for="institution-title">主页标题</label>
+                        <input type="text" id="institution-title" value="培训机构管理系统">
                     </div>
                     <div class="form-group">
-                        <label for="institution-address">总部地址</label>
-                        <input type="text" id="institution-address" value="北京市朝阳区xxx街道xxx号">
-                    </div>
-                    <div class="form-group">
-                        <label for="institution-description">机构简介</label>
-                        <textarea id="institution-description" rows="4">培训机构管理系统是一家专注于提供高质量教育培训的机构，成立于2020年，目前在全国拥有多个校区。</textarea>
+                        <label for="institution-subtitle">主页副标题</label>
+                        <input type="text" id="institution-subtitle" value="核心业务管理平台">
                     </div>
                     <div style="text-align: right; margin-top: 20px;">
                         <button class="btn btn-secondary">保存设置</button>
@@ -513,45 +665,94 @@
                 </div>
             </div>
             
-            <!-- 安全设置 -->
-            <div id="security" class="tab-content">
+            <!-- 工资设置 -->
+            <div id="salary" class="tab-content">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">密码策略</div>
+                        <div class="card-title">记薪周期设置</div>
                     </div>
                     <div class="form-group">
-                        <label>密码强度要求</label>
+                        <label for="salary-cycle">记薪周期</label>
+                        <select id="salary-cycle">
+                            <option value="monthly" selected>按月记薪</option>
+                            <option value="biweekly">双周记薪</option>
+                            <option value="weekly">按周记薪</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="salary-date">发薪日期</label>
+                        <input type="number" id="salary-date" value="5" min="1" max="31">
+                        <p style="font-size: 12px; color: #666; margin-top: 5px;">每月几号发放工资（1-31）</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="salary-period">计薪周期</label>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="period-start">开始日期</label>
+                                <input type="number" id="period-start" value="1" min="1" max="31">
+                            </div>
+                            <div class="form-group">
+                                <label for="period-end">结束日期</label>
+                                <input type="number" id="period-end" value="31" min="1" max="31">
+                            </div>
+                        </div>
+                        <p style="font-size: 12px; color: #666; margin-top: 5px;">每月计薪的起止日期（1-31）</p>
+                    </div>
+                    <div style="text-align: right; margin-top: 20px;">
+                        <button class="btn btn-secondary">保存设置</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">工资项目设置</div>
+                    </div>
+                    <div class="form-group">
+                        <label>基本工资项</label>
                         <div style="display: flex; align-items: center; margin-bottom: 10px;">
                             <label class="switch" style="margin-right: 10px;">
                                 <input type="checkbox" checked>
                                 <span class="slider"></span>
                             </label>
-                            <span>要求包含大小写字母</span>
+                            <span>基本工资</span>
                         </div>
                         <div style="display: flex; align-items: center; margin-bottom: 10px;">
                             <label class="switch" style="margin-right: 10px;">
                                 <input type="checkbox" checked>
                                 <span class="slider"></span>
                             </label>
-                            <span>要求包含数字</span>
+                            <span>课时费</span>
                         </div>
                         <div style="display: flex; align-items: center; margin-bottom: 10px;">
                             <label class="switch" style="margin-right: 10px;">
                                 <input type="checkbox" checked>
                                 <span class="slider"></span>
                             </label>
-                            <span>要求包含特殊字符</span>
+                            <span>绩效奖金</span>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="min-password-length">最小密码长度</label>
-                            <input type="number" id="min-password-length" value="8" min="6" max="20">
+                    <div class="form-group">
+                        <label>扣除项目</label>
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <label class="switch" style="margin-right: 10px;">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span>社保扣除</span>
                         </div>
-                        <div class="form-group">
-                            <label for="password-expiry">密码过期时间（天）</label>
-                            <input type="number" id="password-expiry" value="90" min="30" max="365">
-                            <p style="font-size: 12px; color: #666; margin-top: 5px;">设置为0表示永不过期</p>
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <label class="switch" style="margin-right: 10px;">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span>公积金扣除</span>
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <label class="switch" style="margin-right: 10px;">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span>个人所得税</span>
                         </div>
                     </div>
                     <div style="text-align: right; margin-top: 20px;">
@@ -561,40 +762,60 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">登录安全</div>
+                        <div class="card-title">工资计算规则</div>
                     </div>
                     <div class="form-group">
-                        <label>双因素认证</label>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <span>启用双因素认证</span>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="login-attempts">最大登录尝试次数</label>
-                            <input type="number" id="login-attempts" value="5" min="3" max="10">
-                        </div>
-                        <div class="form-group">
-                            <label for="lockout-duration">账户锁定时长（分钟）</label>
-                            <input type="number" id="lockout-duration" value="30" min="5" max="1440">
-                        </div>
+                        <label for="organization-select">选择机构</label>
+                        <select id="organization-select" style="margin-bottom: 20px;">
+                            <option value="all">所有机构通用规则</option>
+                            <option value="headquarters">总部校区</option>
+                            <option value="east">东城校区</option>
+                            <option value="west">西城校区</option>
+                            <option value="south">南城校区</option>
+                            <option value="north">北城校区</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>会话设置</label>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="session-timeout">会话超时时间（分钟）</label>
-                                <input type="number" id="session-timeout" value="30" min="5" max="180">
-                            </div>
-                            <div class="form-group">
-                                <label for="concurrent-sessions">允许并发登录会话数</label>
-                                <input type="number" id="concurrent-sessions" value="1" min="1" max="5">
-                            </div>
-                        </div>
+                        <label for="overtime-rate">加班工资计算倍率</label>
+                        <select id="overtime-rate">
+                            <option value="1.5">1.5倍（工作日加班）</option>
+                            <option value="2">2倍（周末加班）</option>
+                            <option value="3">3倍（法定节假日加班）</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="attendance-deduction">缺勤扣款规则</label>
+                        <select id="attendance-deduction">
+                            <option value="daily">按天扣款</option>
+                            <option value="hourly" selected>按小时扣款</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bonus-rules">奖金计算规则</label>
+                        <select id="bonus-rules">
+                            <option value="fixed">固定金额</option>
+                            <option value="percentage" selected>按比例计算</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="salary-base">基本工资计算基数</label>
+                        <input type="number" id="salary-base" value="5000" min="0" step="100">
+                        <p style="font-size: 12px; color: #666; margin-top: 5px;">设置该机构的基本工资计算基数</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="performance-rules">绩效计算规则</label>
+                        <select id="performance-rules">
+                            <option value="standard">标准绩效</option>
+                            <option value="custom">自定义绩效</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="commission-rules">提成计算规则</label>
+                        <select id="commission-rules">
+                            <option value="fixed">固定提成</option>
+                            <option value="tiered">阶梯提成</option>
+                            <option value="percentage">比例提成</option>
+                        </select>
                     </div>
                     <div style="text-align: right; margin-top: 20px;">
                         <button class="btn btn-secondary">保存设置</button>
@@ -602,119 +823,182 @@
                 </div>
             </div>
             
-            <!-- 通知设置 -->
-            <div id="notification" class="tab-content">
+            <!-- 选项管理 -->
+            <div id="options" class="tab-content">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">系统通知</div>
+                        <div class="card-title">教练相关选项</div>
+                        <div class="card-actions">
+                            <button class="btn" onclick="saveAllOptions()">
+                                <i class="fas fa-save"></i> 保存设置
+                            </button>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>通知渠道</label>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>系统内通知</span>
+                        <label>教练类型选项</label>
+                        <div class="option-list" id="coachTypeOptions">
+                            <div class="option-item">
+                                <input type="text" value="全职教练" class="option-input">
+                                <div class="option-actions">
+                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                        <i class="fas fa-edit"></i>
+                                        <span>编辑</span>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                        <i class="fas fa-trash"></i>
+                                        <span>删除</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="option-item">
+                                <input type="text" value="兼职教练" class="option-input">
+                                <div class="option-actions">
+                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                        <i class="fas fa-edit"></i>
+                                        <span>编辑</span>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                        <i class="fas fa-trash"></i>
+                                        <span>删除</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="option-item">
+                                <input type="text" value="合同教练" class="option-input">
+                                <div class="option-actions">
+                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                        <i class="fas fa-edit"></i>
+                                        <span>编辑</span>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                        <i class="fas fa-trash"></i>
+                                        <span>删除</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>电子邮件通知</span>
-                        </div>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <span>短信通知</span>
-                        </div>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>微信推送</span>
-                        </div>
+                        <button class="btn btn-sm btn-secondary add-option" data-target="coachTypeOptions">
+                            <i class="fas fa-plus"></i> 添加教练类型
+                        </button>
                     </div>
-                    <div style="text-align: right; margin-top: 20px;">
-                        <button class="btn btn-secondary">保存设置</button>
+
+                    <div class="form-group">
+                        <label>教练等级选项</label>
+                        <div class="option-list" id="coachLevelOptions">
+                            <div class="option-item">
+                                <input type="text" value="初级教练" class="option-input">
+                                <div class="option-actions">
+                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                        <i class="fas fa-edit"></i>
+                                        <span>编辑</span>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                        <i class="fas fa-trash"></i>
+                                        <span>删除</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="option-item">
+                                <input type="text" value="资深教练" class="option-input">
+                                <div class="option-actions">
+                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                        <i class="fas fa-edit"></i>
+                                        <span>编辑</span>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                        <i class="fas fa-trash"></i>
+                                        <span>删除</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="option-item">
+                                <input type="text" value="专家教练" class="option-input">
+                                <div class="option-actions">
+                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                        <i class="fas fa-edit"></i>
+                                        <span>编辑</span>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                        <i class="fas fa-trash"></i>
+                                        <span>删除</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-secondary add-option" data-target="coachLevelOptions">
+                            <i class="fas fa-plus"></i> 添加教练等级
+                        </button>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">通知事件</div>
-                    </div>
-                    <div class="form-group">
-                        <label>学员相关</label>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>新学员注册</span>
-                        </div>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>学员课程即将到期（提前7天）</span>
-                        </div>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>学员课时不足提醒（少于5课时）</span>
+                        <div class="card-title">课程相关选项</div>
+                        <div class="card-actions">
+                            <button class="btn" onclick="saveAllOptions()">
+                                <i class="fas fa-save"></i> 保存设置
+                            </button>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>课程相关</label>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>课程预约提醒（提前24小时）</span>
+                        <label>课程类型选项</label>
+                        <div class="option-list" id="courseTypeOptions">
+                            <div class="option-item">
+                                <input type="text" value="一对一课程" class="option-input">
+                                <div class="option-actions">
+                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                        <i class="fas fa-edit"></i>
+                                        <span>编辑</span>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                        <i class="fas fa-trash"></i>
+                                        <span>删除</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="option-item">
+                                <input type="text" value="一对二课程" class="option-input">
+                                <div class="option-actions">
+                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                        <i class="fas fa-edit"></i>
+                                        <span>编辑</span>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                        <i class="fas fa-trash"></i>
+                                        <span>删除</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="option-item">
+                                <input type="text" value="小班课程" class="option-input">
+                                <div class="option-actions">
+                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                        <i class="fas fa-edit"></i>
+                                        <span>编辑</span>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                        <i class="fas fa-trash"></i>
+                                        <span>删除</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="option-item">
+                                <input type="text" value="大班课程" class="option-input">
+                                <div class="option-actions">
+                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                        <i class="fas fa-edit"></i>
+                                        <span>编辑</span>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                        <i class="fas fa-trash"></i>
+                                        <span>删除</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>课程变更通知</span>
-                        </div>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>课程取消通知</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>财务相关</label>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>新订单支付成功</span>
-                        </div>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>退款处理通知</span>
-                        </div>
-                    </div>
-                    <div style="text-align: right; margin-top: 20px;">
-                        <button class="btn btn-secondary">保存设置</button>
+                        <button class="btn btn-sm btn-secondary add-option" data-target="courseTypeOptions">
+                            <i class="fas fa-plus"></i> 添加课程类型
+                        </button>
                     </div>
                 </div>
             </div>
@@ -826,88 +1110,6 @@
                     </table>
                 </div>
             </div>
-            
-            <!-- 高级设置 -->
-            <div id="advanced" class="tab-content">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">系统性能</div>
-                    </div>
-                    <div class="form-group">
-                        <label>缓存设置</label>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>启用系统缓存</span>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="cache-duration">缓存持续时间（分钟）</label>
-                            <input type="number" id="cache-duration" value="60" min="15" max="1440">
-                        </div>
-                        <div class="form-group">
-                            <label for="max-cache-size">最大缓存大小（MB）</label>
-                            <input type="number" id="max-cache-size" value="500" min="100" max="2000">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="max-upload-size">最大上传文件大小（MB）</label>
-                        <input type="number" id="max-upload-size" value="50" min="1" max="500">
-                    </div>
-                    <div style="text-align: right; margin-top: 20px;">
-                        <button class="btn">清除缓存</button>
-                        <button class="btn btn-secondary" style="margin-left: 10px;">保存设置</button>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">日志设置</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="log-level">日志级别</label>
-                        <select id="log-level">
-                            <option value="error">错误</option>
-                            <option value="warning">警告</option>
-                            <option value="info" selected>信息</option>
-                            <option value="debug">调试</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="log-retention">日志保留时间（天）</label>
-                        <input type="number" id="log-retention" value="30" min="7" max="365">
-                    </div>
-                    <div style="text-align: right; margin-top: 20px;">
-                        <button class="btn">下载日志</button>
-                        <button class="btn btn-danger" style="margin-left: 10px;">清除日志</button>
-                        <button class="btn btn-secondary" style="margin-left: 10px;">保存设置</button>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">系统维护</div>
-                    </div>
-                    <div style="display: flex; align-items: center; margin-bottom: 20px;">
-                        <label class="switch" style="margin-right: 10px;">
-                            <input type="checkbox">
-                            <span class="slider"></span>
-                        </label>
-                        <span>启用维护模式</span>
-                        <p style="font-size: 12px; color: #666; margin-left: 15px;">开启后，除管理员外所有用户将无法访问系统</p>
-                    </div>
-                    <div class="form-group">
-                        <label for="maintenance-message">维护提示信息</label>
-                        <textarea id="maintenance-message" rows="3">系统正在进行维护升级，预计将在1小时内完成。给您带来的不便，敬请谅解。</textarea>
-                    </div>
-                    <div style="text-align: right; margin-top: 20px;">
-                        <button class="btn btn-secondary">保存设置</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <script>
@@ -973,25 +1175,6 @@
             });
         });
         
-        // 清除缓存按钮
-        document.querySelector('.card:nth-child(1) button.btn:not(.btn-secondary)').addEventListener('click', function() {
-            if (confirm('确定要清除系统缓存吗？')) {
-                alert('系统缓存已清除！');
-            }
-        });
-        
-        // 下载日志按钮
-        document.querySelector('.card:nth-child(2) button.btn:not(.btn-secondary):not(.btn-danger)').addEventListener('click', function() {
-            alert('系统日志已开始下载...');
-        });
-        
-        // 清除日志按钮
-        document.querySelector('.card:nth-child(2) button.btn-danger').addEventListener('click', function() {
-            if (confirm('确定要清除所有系统日志吗？此操作不可恢复！')) {
-                alert('系统日志已清除！');
-            }
-        });
-        
         // 创建备份按钮
         document.querySelector('#backup .card:nth-child(1) + .card button.btn-primary').addEventListener('click', function() {
             alert('系统开始创建备份，请稍候...');
@@ -1016,6 +1199,157 @@
                 }
             });
         });
+
+        // 保存所有选项
+        function saveAllOptions() {
+            const allOptions = {};
+            document.querySelectorAll('.option-list').forEach(list => {
+                const listId = list.id;
+                allOptions[listId] = Array.from(list.querySelectorAll('.option-input')).map(input => input.value);
+            });
+            
+            localStorage.setItem('systemOptions', JSON.stringify(allOptions));
+            
+            // 显示保存成功提示
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = '选项设置已保存';
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 2000);
+        }
+
+        // 加载保存的选项设置
+        function loadSavedOptions() {
+            const savedOptions = localStorage.getItem('systemOptions');
+            if (savedOptions) {
+                const options = JSON.parse(savedOptions);
+                Object.entries(options).forEach(([listId, values]) => {
+                    const list = document.getElementById(listId);
+                    if (list) {
+                        list.innerHTML = values.map(value => `
+                            <div class="option-item">
+                                <input type="text" value="${value}" class="option-input">
+                                <div class="option-actions">
+                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                        <i class="fas fa-edit"></i>
+                                        <span>编辑</span>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                        <i class="fas fa-trash"></i>
+                                        <span>删除</span>
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                });
+            }
+        }
+
+        // 页面加载时加载保存的选项
+        document.addEventListener('DOMContentLoaded', loadSavedOptions);
+
+        // 删除选项
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.delete-option')) {
+                const optionItem = e.target.closest('.option-item');
+                optionItem.style.animation = 'slideOut 0.3s ease forwards';
+                
+                setTimeout(() => {
+                    optionItem.remove();
+                }, 300);
+            }
+        });
+
+        // 编辑选项
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.edit-option')) {
+                const input = e.target.closest('.option-item').querySelector('.option-input');
+                input.focus();
+                input.select(); // 选中文本内容
+            }
+        });
+
+        // 添加选项
+        document.querySelectorAll('.add-option').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const targetList = document.getElementById(targetId);
+                
+                const newOption = document.createElement('div');
+                newOption.className = 'option-item';
+                newOption.style.animation = 'slideIn 0.3s ease forwards';
+                newOption.innerHTML = `
+                    <input type="text" class="option-input" placeholder="输入选项">
+                    <div class="option-actions">
+                        <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                            <i class="fas fa-edit"></i>
+                            <span>编辑</span>
+                        </button>
+                        <button class="btn btn-sm btn-danger delete-option" title="删除">
+                            <i class="fas fa-trash"></i>
+                            <span>删除</span>
+                        </button>
+                    </div>
+                `;
+                
+                targetList.appendChild(newOption);
+                newOption.querySelector('.option-input').focus();
+            });
+        });
+
+        // 添加动画样式
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes slideOut {
+                from {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(20px);
+                }
+            }
+
+            .toast {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: #28a745;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 4px;
+                animation: fadeIn 0.3s ease forwards;
+                z-index: 1000;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
