@@ -518,6 +518,28 @@
             font-size: 14px;
         }
 
+        /* 两列布局样式 */
+        .options-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .options-column {
+            flex: 1;
+            min-width: calc(50% - 10px);
+        }
+
+        @media (max-width: 768px) {
+            .options-container {
+                flex-direction: column;
+            }
+            
+            .options-column {
+                width: 100%;
+            }
+        }
+
         /* 滚动条样式 */
         .option-list::-webkit-scrollbar {
             width: 8px;
@@ -604,13 +626,19 @@
                     <div class="card-header">
                         <div class="card-title">机构信息</div>
                     </div>
-                    <div class="form-group">
-                        <label for="institution-title">主页标题</label>
-                        <input type="text" id="institution-title" value="培训机构管理系统">
-                    </div>
-                    <div class="form-group">
-                        <label for="institution-subtitle">主页副标题</label>
-                        <input type="text" id="institution-subtitle" value="核心业务管理平台">
+                    <div class="options-container">
+                        <div class="options-column">
+                            <div class="form-group">
+                                <label for="institution-title">主页标题</label>
+                                <input type="text" id="institution-title" value="培训机构管理系统">
+                            </div>
+                        </div>
+                        <div class="options-column">
+                            <div class="form-group">
+                                <label for="institution-subtitle">主页副标题</label>
+                                <input type="text" id="institution-subtitle" value="核心业务管理平台">
+                            </div>
+                        </div>
                     </div>
                     <div style="text-align: right; margin-top: 20px;">
                         <button class="btn btn-secondary">保存设置</button>
@@ -621,35 +649,37 @@
                     <div class="card-header">
                         <div class="card-title">系统显示设置</div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="system-logo">系统Logo</label>
-                            <input type="file" id="system-logo">
-                            <p style="font-size: 12px; color: #666; margin-top: 5px;">推荐尺寸: 200x50px, 支持PNG, JPG格式</p>
+                    <div class="options-container">
+                        <div class="options-column">
+                            <div class="form-group">
+                                <label for="system-logo">系统Logo</label>
+                                <input type="file" id="system-logo">
+                                <p style="font-size: 12px; color: #666; margin-top: 5px;">推荐尺寸: 200x50px, 支持PNG, JPG格式</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="system-theme">系统主题</label>
+                                <select id="system-theme">
+                                    <option value="default" selected>默认蓝色</option>
+                                    <option value="green">绿色主题</option>
+                                    <option value="purple">紫色主题</option>
+                                    <option value="orange">橙色主题</option>
+                                    <option value="dark">深色模式</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="system-favicon">系统图标</label>
-                            <input type="file" id="system-favicon">
-                            <p style="font-size: 12px; color: #666; margin-top: 5px;">推荐尺寸: 32x32px, 支持ICO, PNG格式</p>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="system-theme">系统主题</label>
-                            <select id="system-theme">
-                                <option value="default" selected>默认蓝色</option>
-                                <option value="green">绿色主题</option>
-                                <option value="purple">紫色主题</option>
-                                <option value="orange">橙色主题</option>
-                                <option value="dark">深色模式</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="system-language">系统语言</label>
-                            <select id="system-language">
-                                <option value="zh_CN" selected>简体中文</option>
-                                <option value="en_US">English</option>
-                            </select>
+                        <div class="options-column">
+                            <div class="form-group">
+                                <label for="system-favicon">系统图标</label>
+                                <input type="file" id="system-favicon">
+                                <p style="font-size: 12px; color: #666; margin-top: 5px;">推荐尺寸: 32x32px, 支持ICO, PNG格式</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="system-language">系统语言</label>
+                                <select id="system-language">
+                                    <option value="zh_CN" selected>简体中文</option>
+                                    <option value="en_US">English</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div style="text-align: right; margin-top: 20px;">
@@ -664,32 +694,33 @@
                     <div class="card-header">
                         <div class="card-title">记薪周期设置</div>
                     </div>
-                    <div class="form-group">
-                        <label for="salary-cycle">记薪周期</label>
-                        <select id="salary-cycle">
-                            <option value="monthly" selected>按月记薪</option>
-                            <option value="biweekly">双周记薪</option>
-                            <option value="weekly">按周记薪</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="salary-date">发薪日期</label>
-                        <input type="number" id="salary-date" value="5" min="1" max="31">
-                        <p style="font-size: 12px; color: #666; margin-top: 5px;">每月几号发放工资（1-31）</p>
-                    </div>
-                    <div class="form-group">
-                        <label for="salary-period">计薪周期</label>
-                        <div class="form-row">
+                    <div class="options-container">
+                        <div class="options-column">
                             <div class="form-group">
-                                <label for="period-start">开始日期</label>
+                                <label for="salary-cycle">记薪周期</label>
+                                <select id="salary-cycle">
+                                    <option value="monthly" selected>按月记薪</option>
+                                    <option value="biweekly">双周记薪</option>
+                                    <option value="weekly">按周记薪</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="salary-date">发薪日期</label>
+                                <input type="number" id="salary-date" value="5" min="1" max="31">
+                                <p style="font-size: 12px; color: #666; margin-top: 5px;">每月几号发放工资（1-31）</p>
+                            </div>
+                        </div>
+                        <div class="options-column">
+                            <div class="form-group">
+                                <label for="period-start">计薪周期开始日期</label>
                                 <input type="number" id="period-start" value="1" min="1" max="31">
                             </div>
                             <div class="form-group">
-                                <label for="period-end">结束日期</label>
+                                <label for="period-end">计薪周期结束日期</label>
                                 <input type="number" id="period-end" value="31" min="1" max="31">
+                                <p style="font-size: 12px; color: #666; margin-top: 5px;">每月计薪的起止日期（1-31）</p>
                             </div>
                         </div>
-                        <p style="font-size: 12px; color: #666; margin-top: 5px;">每月计薪的起止日期（1-31）</p>
                     </div>
                     <div style="text-align: right; margin-top: 20px;">
                         <button class="btn btn-secondary">保存设置</button>
@@ -700,52 +731,58 @@
                     <div class="card-header">
                         <div class="card-title">工资项目设置</div>
                     </div>
-                    <div class="form-group">
-                        <label>基本工资项</label>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>基本工资</span>
+                    <div class="options-container">
+                        <div class="options-column">
+                            <div class="form-group">
+                                <label>基本工资项</label>
+                                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                    <label class="switch" style="margin-right: 10px;">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                    <span>基本工资</span>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                    <label class="switch" style="margin-right: 10px;">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                    <span>课时费</span>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                    <label class="switch" style="margin-right: 10px;">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                    <span>绩效奖金</span>
+                                </div>
+                            </div>
                         </div>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>课时费</span>
-                        </div>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>绩效奖金</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>扣除项目</label>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>社保扣除</span>
-                        </div>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>公积金扣除</span>
-                        </div>
-                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <label class="switch" style="margin-right: 10px;">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                            <span>个人所得税</span>
+                        <div class="options-column">
+                            <div class="form-group">
+                                <label>扣除项目</label>
+                                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                    <label class="switch" style="margin-right: 10px;">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                    <span>社保扣除</span>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                    <label class="switch" style="margin-right: 10px;">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                    <span>公积金扣除</span>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                    <label class="switch" style="margin-right: 10px;">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                    <span>个人所得税</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div style="text-align: right; margin-top: 20px;">
@@ -768,47 +805,53 @@
                             <option value="north">北城校区</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="overtime-rate">加班工资计算倍率</label>
-                        <select id="overtime-rate">
-                            <option value="1.5">1.5倍（工作日加班）</option>
-                            <option value="2">2倍（周末加班）</option>
-                            <option value="3">3倍（法定节假日加班）</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="attendance-deduction">缺勤扣款规则</label>
-                        <select id="attendance-deduction">
-                            <option value="daily">按天扣款</option>
-                            <option value="hourly" selected>按小时扣款</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="bonus-rules">奖金计算规则</label>
-                        <select id="bonus-rules">
-                            <option value="fixed">固定金额</option>
-                            <option value="percentage" selected>按比例计算</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="salary-base">基本工资计算基数</label>
-                        <input type="number" id="salary-base" value="5000" min="0" step="100">
-                        <p style="font-size: 12px; color: #666; margin-top: 5px;">设置该机构的基本工资计算基数</p>
-                    </div>
-                    <div class="form-group">
-                        <label for="performance-rules">绩效计算规则</label>
-                        <select id="performance-rules">
-                            <option value="standard">标准绩效</option>
-                            <option value="custom">自定义绩效</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="commission-rules">提成计算规则</label>
-                        <select id="commission-rules">
-                            <option value="fixed">固定提成</option>
-                            <option value="tiered">阶梯提成</option>
-                            <option value="percentage">比例提成</option>
-                        </select>
+                    <div class="options-container">
+                        <div class="options-column">
+                            <div class="form-group">
+                                <label for="overtime-rate">加班工资计算倍率</label>
+                                <select id="overtime-rate">
+                                    <option value="1.5">1.5倍（工作日加班）</option>
+                                    <option value="2">2倍（周末加班）</option>
+                                    <option value="3">3倍（法定节假日加班）</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="attendance-deduction">缺勤扣款规则</label>
+                                <select id="attendance-deduction">
+                                    <option value="daily">按天扣款</option>
+                                    <option value="hourly" selected>按小时扣款</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="bonus-rules">奖金计算规则</label>
+                                <select id="bonus-rules">
+                                    <option value="fixed">固定金额</option>
+                                    <option value="percentage" selected>按比例计算</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="options-column">
+                            <div class="form-group">
+                                <label for="salary-base">基本工资计算基数</label>
+                                <input type="number" id="salary-base" value="5000" min="0" step="100">
+                                <p style="font-size: 12px; color: #666; margin-top: 5px;">设置该机构的基本工资计算基数</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="performance-rules">绩效计算规则</label>
+                                <select id="performance-rules">
+                                    <option value="standard">标准绩效</option>
+                                    <option value="custom">自定义绩效</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="commission-rules">提成计算规则</label>
+                                <select id="commission-rules">
+                                    <option value="fixed">固定提成</option>
+                                    <option value="tiered">阶梯提成</option>
+                                    <option value="percentage">比例提成</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div style="text-align: right; margin-top: 20px;">
                         <button class="btn btn-secondary">保存设置</button>
@@ -827,100 +870,107 @@
                             </button>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>教练类型选项</label>
-                        <div class="option-list" id="coachTypeOptions">
-                            <div class="option-item">
-                                <input type="text" value="全职教练" class="option-input">
-                                <div class="option-actions">
-                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
-                                        <i class="fas fa-edit"></i>
-                                        <span>编辑</span>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
-                                        <i class="fas fa-trash"></i>
-                                        <span>删除</span>
-                                    </button>
+                    
+                    <div class="options-container">
+                        <div class="options-column">
+                            <div class="form-group">
+                                <label>教练类型选项</label>
+                                <div class="option-list" id="coachTypeOptions">
+                                    <div class="option-item">
+                                        <input type="text" value="全职教练" class="option-input">
+                                        <div class="option-actions">
+                                            <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                                <i class="fas fa-edit"></i>
+                                                <span>编辑</span>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                                <i class="fas fa-trash"></i>
+                                                <span>删除</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="option-item">
+                                        <input type="text" value="兼职教练" class="option-input">
+                                        <div class="option-actions">
+                                            <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                                <i class="fas fa-edit"></i>
+                                                <span>编辑</span>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                                <i class="fas fa-trash"></i>
+                                                <span>删除</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="option-item">
+                                        <input type="text" value="合同教练" class="option-input">
+                                        <div class="option-actions">
+                                            <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                                <i class="fas fa-edit"></i>
+                                                <span>编辑</span>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                                <i class="fas fa-trash"></i>
+                                                <span>删除</span>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="option-item">
-                                <input type="text" value="兼职教练" class="option-input">
-                                <div class="option-actions">
-                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
-                                        <i class="fas fa-edit"></i>
-                                        <span>编辑</span>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
-                                        <i class="fas fa-trash"></i>
-                                        <span>删除</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="option-item">
-                                <input type="text" value="合同教练" class="option-input">
-                                <div class="option-actions">
-                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
-                                        <i class="fas fa-edit"></i>
-                                        <span>编辑</span>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
-                                        <i class="fas fa-trash"></i>
-                                        <span>删除</span>
-                                    </button>
-                                </div>
+                                <button class="btn btn-sm btn-secondary add-option" data-target="coachTypeOptions">
+                                    <i class="fas fa-plus"></i> 添加教练类型
+                                </button>
                             </div>
                         </div>
-                        <button class="btn btn-sm btn-secondary add-option" data-target="coachTypeOptions">
-                            <i class="fas fa-plus"></i> 添加教练类型
-                        </button>
-                    </div>
 
-                    <div class="form-group">
-                        <label>教练等级选项</label>
-                        <div class="option-list" id="coachLevelOptions">
-                            <div class="option-item">
-                                <input type="text" value="初级教练" class="option-input">
-                                <div class="option-actions">
-                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
-                                        <i class="fas fa-edit"></i>
-                                        <span>编辑</span>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
-                                        <i class="fas fa-trash"></i>
-                                        <span>删除</span>
-                                    </button>
+                        <div class="options-column">
+                            <div class="form-group">
+                                <label>教练等级选项</label>
+                                <div class="option-list" id="coachLevelOptions">
+                                    <div class="option-item">
+                                        <input type="text" value="初级教练" class="option-input">
+                                        <div class="option-actions">
+                                            <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                                <i class="fas fa-edit"></i>
+                                                <span>编辑</span>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                                <i class="fas fa-trash"></i>
+                                                <span>删除</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="option-item">
+                                        <input type="text" value="资深教练" class="option-input">
+                                        <div class="option-actions">
+                                            <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                                <i class="fas fa-edit"></i>
+                                                <span>编辑</span>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                                <i class="fas fa-trash"></i>
+                                                <span>删除</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="option-item">
+                                        <input type="text" value="专家教练" class="option-input">
+                                        <div class="option-actions">
+                                            <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                                <i class="fas fa-edit"></i>
+                                                <span>编辑</span>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                                <i class="fas fa-trash"></i>
+                                                <span>删除</span>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="option-item">
-                                <input type="text" value="资深教练" class="option-input">
-                                <div class="option-actions">
-                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
-                                        <i class="fas fa-edit"></i>
-                                        <span>编辑</span>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
-                                        <i class="fas fa-trash"></i>
-                                        <span>删除</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="option-item">
-                                <input type="text" value="专家教练" class="option-input">
-                                <div class="option-actions">
-                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
-                                        <i class="fas fa-edit"></i>
-                                        <span>编辑</span>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
-                                        <i class="fas fa-trash"></i>
-                                        <span>删除</span>
-                                    </button>
-                                </div>
+                                <button class="btn btn-sm btn-secondary add-option" data-target="coachLevelOptions">
+                                    <i class="fas fa-plus"></i> 添加教练等级
+                                </button>
                             </div>
                         </div>
-                        <button class="btn btn-sm btn-secondary add-option" data-target="coachLevelOptions">
-                            <i class="fas fa-plus"></i> 添加教练等级
-                        </button>
                     </div>
                 </div>
 
@@ -933,65 +983,80 @@
                             </button>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>课程类型选项</label>
-                        <div class="option-list" id="courseTypeOptions">
-                            <div class="option-item">
-                                <input type="text" value="一对一课程" class="option-input">
-                                <div class="option-actions">
-                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
-                                        <i class="fas fa-edit"></i>
-                                        <span>编辑</span>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
-                                        <i class="fas fa-trash"></i>
-                                        <span>删除</span>
-                                    </button>
+                    <div class="options-container">
+                        <div class="options-column">
+                            <div class="form-group">
+                                <label>课程类型选项</label>
+                                <div class="option-list" id="courseTypeOptions">
+                                    <div class="option-item">
+                                        <input type="text" value="一对一课程" class="option-input">
+                                        <div class="option-actions">
+                                            <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                                <i class="fas fa-edit"></i>
+                                                <span>编辑</span>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                                <i class="fas fa-trash"></i>
+                                                <span>删除</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="option-item">
+                                        <input type="text" value="一对二课程" class="option-input">
+                                        <div class="option-actions">
+                                            <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                                <i class="fas fa-edit"></i>
+                                                <span>编辑</span>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                                <i class="fas fa-trash"></i>
+                                                <span>删除</span>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="option-item">
-                                <input type="text" value="一对二课程" class="option-input">
-                                <div class="option-actions">
-                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
-                                        <i class="fas fa-edit"></i>
-                                        <span>编辑</span>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
-                                        <i class="fas fa-trash"></i>
-                                        <span>删除</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="option-item">
-                                <input type="text" value="小班课程" class="option-input">
-                                <div class="option-actions">
-                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
-                                        <i class="fas fa-edit"></i>
-                                        <span>编辑</span>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
-                                        <i class="fas fa-trash"></i>
-                                        <span>删除</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="option-item">
-                                <input type="text" value="大班课程" class="option-input">
-                                <div class="option-actions">
-                                    <button class="btn btn-sm btn-warning edit-option" title="编辑">
-                                        <i class="fas fa-edit"></i>
-                                        <span>编辑</span>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-option" title="删除">
-                                        <i class="fas fa-trash"></i>
-                                        <span>删除</span>
-                                    </button>
-                                </div>
+                                <button class="btn btn-sm btn-secondary add-option" data-target="courseTypeOptions">
+                                    <i class="fas fa-plus"></i> 添加课程类型
+                                </button>
                             </div>
                         </div>
-                        <button class="btn btn-sm btn-secondary add-option" data-target="courseTypeOptions">
-                            <i class="fas fa-plus"></i> 添加课程类型
-                        </button>
+                        
+                        <div class="options-column">
+                            <div class="form-group">
+                                <label>课程难度选项</label>
+                                <div class="option-list" id="courseLevelOptions">
+                                    <div class="option-item">
+                                        <input type="text" value="初级课程" class="option-input">
+                                        <div class="option-actions">
+                                            <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                                <i class="fas fa-edit"></i>
+                                                <span>编辑</span>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                                <i class="fas fa-trash"></i>
+                                                <span>删除</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="option-item">
+                                        <input type="text" value="中级课程" class="option-input">
+                                        <div class="option-actions">
+                                            <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                                <i class="fas fa-edit"></i>
+                                                <span>编辑</span>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                                <i class="fas fa-trash"></i>
+                                                <span>删除</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-secondary add-option" data-target="courseLevelOptions">
+                                    <i class="fas fa-plus"></i> 添加课程难度
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1009,38 +1074,42 @@
                         </label>
                         <span>启用自动备份</span>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="backup-frequency">备份频率</label>
-                            <select id="backup-frequency">
-                                <option value="daily">每日备份</option>
-                                <option value="weekly" selected>每周备份</option>
-                                <option value="monthly">每月备份</option>
-                            </select>
+                    <div class="options-container">
+                        <div class="options-column">
+                            <div class="form-group">
+                                <label for="backup-frequency">备份频率</label>
+                                <select id="backup-frequency">
+                                    <option value="daily">每日备份</option>
+                                    <option value="weekly" selected>每周备份</option>
+                                    <option value="monthly">每月备份</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="backup-time">备份时间</label>
+                                <input type="time" id="backup-time" value="03:00">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="backup-time">备份时间</label>
-                            <input type="time" id="backup-time" value="03:00">
+                        <div class="options-column">
+                            <div class="form-group">
+                                <label for="retention-period">保留期限（天）</label>
+                                <input type="number" id="retention-period" value="30" min="7" max="365">
+                            </div>
+                            <div class="form-group">
+                                <label for="backup-storage">存储位置</label>
+                                <select id="backup-storage">
+                                    <option value="local" selected>本地存储</option>
+                                    <option value="cloud">云存储</option>
+                                </select>
+                            </div>
+                            <div class="form-group cloud-settings" style="display: none;">
+                                <label for="cloud-provider">云服务提供商</label>
+                                <select id="cloud-provider">
+                                    <option value="aliyun">阿里云OSS</option>
+                                    <option value="tencent">腾讯云COS</option>
+                                    <option value="aws">亚马逊S3</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="retention-period">保留期限（天）</label>
-                        <input type="number" id="retention-period" value="30" min="7" max="365">
-                    </div>
-                    <div class="form-group">
-                        <label for="backup-storage">存储位置</label>
-                        <select id="backup-storage">
-                            <option value="local" selected>本地存储</option>
-                            <option value="cloud">云存储</option>
-                        </select>
-                    </div>
-                    <div class="form-group cloud-settings" style="display: none;">
-                        <label for="cloud-provider">云服务提供商</label>
-                        <select id="cloud-provider">
-                            <option value="aliyun">阿里云OSS</option>
-                            <option value="tencent">腾讯云COS</option>
-                            <option value="aws">亚马逊S3</option>
-                        </select>
                     </div>
                     <div style="text-align: right; margin-top: 20px;">
                         <button class="btn btn-secondary">保存设置</button>
@@ -1239,6 +1308,41 @@
                         `).join('');
                     }
                 });
+            }
+
+            // 确保初始化courseLevelOptions如果它是空的
+            if (!document.querySelector('#courseLevelOptions .option-item')) {
+                const courseLevelOptions = document.getElementById('courseLevelOptions');
+                if (courseLevelOptions) {
+                    courseLevelOptions.innerHTML = `
+                        <div class="option-item">
+                            <input type="text" value="初级课程" class="option-input">
+                            <div class="option-actions">
+                                <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                    <i class="fas fa-edit"></i>
+                                    <span>编辑</span>
+                                </button>
+                                <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                    <i class="fas fa-trash"></i>
+                                    <span>删除</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="option-item">
+                            <input type="text" value="中级课程" class="option-input">
+                            <div class="option-actions">
+                                <button class="btn btn-sm btn-warning edit-option" title="编辑">
+                                    <i class="fas fa-edit"></i>
+                                    <span>编辑</span>
+                                </button>
+                                <button class="btn btn-sm btn-danger delete-option" title="删除">
+                                    <i class="fas fa-trash"></i>
+                                    <span>删除</span>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
             }
         }
 
