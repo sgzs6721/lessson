@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>培训机构小程序 - 管理端原型</title>
+    <style>
+        :root {
+            --primary: #5a67d8;
+            --secondary: #9f7aea;
+            --light-bg: #f8fafc;
+            --text-color: #333333;
+            --light-text: #666666;
+            --border-color: #eaeaea;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .desc {
+            color: var(--light-text);
+            font-size: 14px;
+        }
+        
+        .row {
+            display: flex;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+        
+        .miniapp-page {
+            flex: 1;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            overflow: hidden;
+            position: relative;
+            height: 500px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .page-content {
+            padding: 15px;
+            height: calc(100% - 50px);
+            overflow-y: auto;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+        
+        .list {
+            list-style: none;
+        }
+        
+        .list-item {
+            border-bottom: 1px solid #f0f0f0;
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .list-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-main {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .item-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .item-desc {
+            font-size: 12px;
+            color: var(--light-text);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 8px 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 6px;
+            font-size: 13px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .action-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            background-color: white;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 8px 0;
+            font-size: 12px;
+            color: var(--light-text);
+        }
+        
+        .tab-item.active {
+            color: var(--primary);
+        }
+        
+        .icon {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+        
+        .stats-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .stat-item {
+            flex: 1;
+            min-width: 100px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: var(--light-text);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>培训机构小程序 - 管理端原型</h1>
+        <p class="desc">管理端可以查看机构运营数据、管理课程和学员</p>
+    </div>
+    
+    <!-- 第一行页面 -->
+    <div class="row">
+        <!-- 数据概览页面 -->
+        <div class="miniapp-page">
+            <div class="page-header">数据概览</div>
+            <div class="page-content">
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-value">358</div>
+                        <div class="stat-label">今日打卡</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">¥28,500</div>
+                        <div class="stat-label">今日收入</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">45</div>
+                        <div class="stat-label">今日课程</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">89%</div>
+                        <div class="stat-label">出勤率</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">校区数据</div>
+                    <ul class="list">
+                        <li class="list-item">
+                            <div class="item-main">
+                                <div class="item-title">总部校区</div>
+                                <div class="item-desc">学员: 120 | 今日收入: ¥12,000</div>
+                            </div>
+                            <button class="btn">详情</button>
+                        </li>
+                        <li class="list-item">
+                            <div class="item-main">
+                                <div class="item-title">东城校区</div>
+                                <div class="item-desc">学员: 85 | 今日收入: ¥8,500</div>
+                            </div>
+                            <button class="btn">详情</button>
+                        </li>
+                        <li class="list-item">
+                            <div class="item-main">
+                                <div class="item-title">西城校区</div>
+                                <div class="item-desc">学员: 65 | 今日收入: ¥6,000</div>
+                            </div>
+                            <button class="btn">详情</button>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">待处理事项</div>
+                    <ul class="list">
+                        <li class="list-item">
+                            <div class="item-main">
+                                <div class="item-title">3个请假申请</div>
+                                <div class="item-desc">教练2人, 学员1人</div>
+                            </div>
+                            <button class="btn">处理</button>
+                        </li>
+                        <li class="list-item">
+                            <div class="item-main">
+                                <div class="item-title">2个续费提醒</div>
+                                <div class="item-desc">学员课时即将用完</div>
+                            </div>
+                            <button class="btn">处理</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="action-bar">
+                <div class="tab-item active">
+                    <span class="icon">📊</span>
+                    数据
+                </div>
+                <div class="tab-item">
+                    <span class="icon">📚</span>
+                    课程
+                </div>
+                <div class="tab-item">
+                    <span class="icon">👥</span>
+                    学员
+                </div>
+                <div class="tab-item">
+                    <span class="icon">👤</span>
+                    我的
+                </div>
+            </div>
+        </div>
+        
+        <!-- 课程管理页面 -->
+        <div class="miniapp-page">
+            <div class="page-header">课程管理</div>
+            <div class="page-content">
+                <div class="card">
+                    <div class="card-title">今日课程</div>
+                    <ul class="list">
+                        <li class="list-item">
+                            <div class="item-main">
+                                <div class="item-title">游泳初级班</div>
+                                <div class="item-desc">15:00-16:00 | 王教练</div>
+                            </div>
+                            <button class="btn">详情</button>
+                        </li>
+                        <li class="list-item">
+                            <div class="item-main">
+                                <div class="item-title">游泳中级班</div>
+                                <div class="item-desc">16:30-18:00 | 李教练</div>
+                            </div>
+                            <button class="btn">详情</button>
+                        </li>
+                        <li class="list-item">
+                            <div class="item-main">
+                                <div class="item-title">游泳高级班</div>
+                                <div class="item-desc">18:30-20:00 | 张教练</div>
+                            </div>
+                            <button class="btn">详情</button>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">添加新课程</div>
+                    <div style="margin-top: 10px;">
+                        <div style="margin-bottom: 10px;">
+                            <div style="font-size: 13px; margin-bottom: 5px;">课程名称</div>
+                            <input type="text" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color);">
+                        </div>
+                        
+                        <div style="margin-bottom: 10px;">
+                            <div style="font-size: 13px; margin-bottom: 5px;">选择教练</div>
+                            <select style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color);">
+                                <option>王教练</option>
+                                <option>李教练</option>
+                                <option>张教练</option>
+                            </select>
+                        </div>
+                        
+                        <div style="margin-bottom: 10px;">
+                            <div style="font-size: 13px; margin-bottom: 5px;">上课时间</div>
+                            <input type="time" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color);">
+                        </div>
+                        
+                        <button class="btn" style="width: 100%;">创建课程</button>
+                    </div>
+                </div>
+            </div>
+            <div class="action-bar">
+                <div class="tab-item">
+                    <span class="icon">📊</span>
+                    数据
+                </div>
+                <div class="tab-item active">
+                    <span class="icon">📚</span>
+                    课程
+                </div>
+                <div class="tab-item">
+                    <span class="icon">👥</span>
+                    学员
+                </div>
+                <div class="tab-item">
+                    <span class="icon">👤</span>
+                    我的
+                </div>
+            </div>
+        </div>
+        
+        <!-- 学员管理页面 -->
+        <div class="miniapp-page">
+            <div class="page-header">学员管理</div>
+            <div class="page-content">
+                <div class="card">
+                    <div class="card-title">学员搜索</div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <input type="text" placeholder="姓名/手机号" style="flex: 1; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color);">
+                        <button class="btn">搜索</button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">新注册学员 (3)</div>
+                    <ul class="list">
+                        <li class="list-item">
+                            <div class="item-main">
+                                <div class="item-title">张小明</div>
+                                <div class="item-desc">手机: 138****1234 | 游泳初级班</div>
+                            </div>
+                            <button class="btn">详情</button>
+                        </li>
+                        <li class="list-item">
+                            <div class="item-main">
+                                <div class="item-title">李小红</div>
+                                <div class="item-desc">手机: 139****5678 | 游泳中级班</div>
+                            </div>
+                            <button class="btn">详情</button>
+                        </li>
+                        <li class="list-item">
+                            <div class="item-main">
+                                <div class="item-title">王小刚</div>
+                                <div class="item-desc">手机: 137****9012 | 游泳高级班</div>
+                            </div>
+                            <button class="btn">详情</button>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">添加学员</div>
+                    <button class="btn" style="width: 100%;">+ 新建学员档案</button>
+                </div>
+            </div>
+            <div class="action-bar">
+                <div class="tab-item">
+                    <span class="icon">📊</span>
+                    数据
+                </div>
+                <div class="tab-item">
+                    <span class="icon">📚</span>
+                    课程
+                </div>
+                <div class="tab-item active">
+                    <span class="icon">👥</span>
+                    学员
+                </div>
+                <div class="tab-item">
+                    <span class="icon">👤</span>
+                    我的
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
