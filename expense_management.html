@@ -63,7 +63,6 @@
             margin-bottom: 20px;
             color: rgba(255, 255, 255, 0.7);
             position: relative;
-            z-index: 1000;
         }
 
         .campus-header {
@@ -105,7 +104,7 @@
         }
 
         .campus-header.active::after {
-            transform: rotate(90deg);
+            transform: rotate(-90deg);
         }
 
         .campus-header.active {
@@ -117,13 +116,10 @@
             display: none;
             list-style: none;
             position: absolute;
-            left: 100%;
-            top: 0;
             background-color: #2c3e50;
             min-width: 160px;
-            border-radius: 0 4px 4px 0;
-            box-shadow: 4px 0 8px rgba(0,0,0,0.2);
-            z-index: 1001;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
             padding: 10px;
         }
 
@@ -889,33 +885,66 @@
             const campusHeader = document.querySelector('.campus-header');
             const campusList = document.querySelector('.campus-list');
             
-            campusHeader.addEventListener('click', function(e) {
-                e.stopPropagation();
-                this.classList.toggle('active');
-                campusList.classList.toggle('show');
-            });
-            
-            // 点击校区项更新选中状态
-            document.querySelectorAll('.campus-item').forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    document.querySelectorAll('.campus-item').forEach(el => {
-                        el.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                    campusHeader.querySelector('span').textContent = this.textContent;
-                    campusList.classList.remove('show');
-                    campusHeader.classList.remove('active');
-                });
-            });
-            
-            // 点击页面其他区域关闭校区下拉
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.campus-selector')) {
-                    campusList.classList.remove('show');
-                    campusHeader.classList.remove('active');
+            if (campusHeader && campusList) {
+                // 从原位置移除校区列表，将其附加到body末尾以确保它在最上层
+                document.body.appendChild(campusList);
+                
+                // 设置校区下拉菜单位置的函数
+                function positionCampusList() {
+                    const rect = campusHeader.getBoundingClientRect();
+                    campusList.style.position = 'absolute';
+                    campusList.style.top = rect.top + 'px';
+                    campusList.style.left = '270px';
+                    campusList.style.zIndex = '10000';
                 }
-            });
+                
+                campusHeader.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    
+                    if (!campusList.classList.contains('show')) {
+                        positionCampusList();
+                    }
+                    
+                    campusList.classList.toggle('show');
+                });
+                
+                // 监听窗口尺寸变化，重新定位下拉菜单
+                window.addEventListener('resize', function() {
+                    if (campusList.classList.contains('show')) {
+                        positionCampusList();
+                    }
+                });
+                
+                // 监听滚动事件，重新定位下拉菜单
+                document.addEventListener('scroll', function() {
+                    if (campusList.classList.contains('show')) {
+                        positionCampusList();
+                    }
+                });
+                
+                // 点击校区项更新选中状态
+                document.querySelectorAll('.campus-item').forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        document.querySelectorAll('.campus-item').forEach(el => {
+                            el.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                        campusHeader.querySelector('span').textContent = this.textContent;
+                        campusList.classList.remove('show');
+                        campusHeader.classList.remove('active');
+                    });
+                });
+                
+                // 点击页面其他区域关闭校区下拉
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.campus-selector') && !e.target.closest('.campus-list')) {
+                        campusList.classList.remove('show');
+                        campusHeader.classList.remove('active');
+                    }
+                });
+            }
         });
     </script>
 </body>
