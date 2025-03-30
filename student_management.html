@@ -356,6 +356,37 @@
             transition: all 0.3s ease;
         }
 
+        .campus-header span {
+            font-weight: 600;
+            color: white;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .campus-header span::before {
+            content: '🏢';
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .campus-header::after {
+            content: '▶';
+            font-size: 12px;
+            margin-left: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .campus-header.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .campus-header.active::after {
+            transform: rotate(-90deg);
+        }
+
         .campus-list {
             display: none;
             list-style: none;
@@ -368,6 +399,10 @@
             box-shadow: 4px 0 8px rgba(0,0,0,0.2);
             z-index: 1000;
             padding: 10px;
+        }
+
+        .campus-list.show {
+            display: block;
         }
 
         .campus-item {
@@ -403,11 +438,12 @@
                     <span>校区选择</span>
                 </div>
                 <ul class="campus-list">
-                    <li class="campus-item active">总部校区</li>
-                    <li class="campus-item">东城校区</li>
-                    <li class="campus-item">西城校区</li>
-                    <li class="campus-item">南城校区</li>
-                    <li class="campus-item">北城校区</li>
+                    <li class="campus-item active" data-campus="headquarters">总部校区</li>
+                    <li class="campus-item" data-campus="east">东城校区</li>
+                    <li class="campus-item" data-campus="west">西城校区</li>
+                    <li class="campus-item" data-campus="south">南城校区</li>
+                    <li class="campus-item" data-campus="north">北城校区</li>
+                    <li class="campus-item" data-campus="tianjiao">天骄校区</li>
                 </ul>
             </div>
 
@@ -644,32 +680,80 @@
             // 这里添加分页逻辑
         }
 
-        // 校区选择器交互
-        document.querySelector('.campus-header').addEventListener('click', function() {
-            document.querySelector('.campus-list').style.display = 
-                document.querySelector('.campus-list').style.display === 'block' ? 'none' : 'block';
+        // 校区选择器相关事件
+        document.querySelector('.campus-header').addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('active');
+            document.querySelector('.campus-list').classList.toggle('show');
         });
 
         // 选择校区
         document.querySelectorAll('.campus-item').forEach(item => {
-            item.addEventListener('click', function() {
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
                 document.querySelectorAll('.campus-item').forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
-                document.getElementById('current-campus').textContent = this.textContent;
-                document.querySelector('.campus-list').style.display = 'none';
+                
+                // 更新校区显示
+                const campusName = this.textContent;
+                document.querySelector('.campus-header span').textContent = campusName;
+                
+                // 关闭下拉菜单
+                document.querySelector('.campus-header').classList.remove('active');
+                document.querySelector('.campus-list').classList.remove('show');
             });
         });
 
         // 点击其他区域关闭校区选择器
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.campus-selector')) {
-                document.querySelector('.campus-list').style.display = 'none';
+                document.querySelector('.campus-list').classList.remove('show');
+                document.querySelector('.campus-header').classList.remove('active');
             }
         });
 
         // 初始化页面
         document.addEventListener('DOMContentLoaded', function() {
             // 这里可以添加页面初始化逻辑，比如加载默认数据等
+            
+            // 校区选择器交互功能
+            const campusHeader = document.querySelector('.campus-header');
+            const campusList = document.querySelector('.campus-list');
+            
+            if (campusHeader && campusList) {
+                campusHeader.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    campusList.classList.toggle('show');
+                });
+                
+                // 点击校区项更新选中状态
+                document.querySelectorAll('.campus-item').forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        document.querySelectorAll('.campus-item').forEach(el => {
+                            el.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                        
+                        // 更新校区显示
+                        const campusName = this.textContent;
+                        campusHeader.querySelector('span').textContent = campusName;
+                        
+                        // 关闭下拉菜单
+                        campusList.classList.remove('show');
+                        campusHeader.classList.remove('active');
+                    });
+                });
+                
+                // 点击页面其他区域关闭校区下拉
+                document.addEventListener('click', function(event) {
+                    if (!event.target.closest('.campus-selector')) {
+                        campusList.classList.remove('show');
+                        campusHeader.classList.remove('active');
+                    }
+                });
+            }
         });
     </script>
 </body>

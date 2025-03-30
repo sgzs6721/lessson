@@ -673,6 +673,7 @@
                     <li class="campus-item" data-campus="west">西城校区</li>
                     <li class="campus-item" data-campus="south">南城校区</li>
                     <li class="campus-item" data-campus="north">北城校区</li>
+                    <li class="campus-item" data-campus="tianjiao">天骄校区</li>
                 </ul>
             </div>
 
@@ -1299,14 +1300,49 @@
             // 可以重新从服务器获取数据或者直接添加一条新记录到现有表格
         }
 
-        // 校区选择器交互
-        document.querySelectorAll('.campus-item').forEach(item => {
-            item.addEventListener('click', function() {
-                // 移除其他项的 active 类
-                document.querySelectorAll('.campus-item').forEach(i => i.classList.remove('active'));
-                // 添加当前项的 active 类
-                this.classList.add('active');
-            });
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 缴费记录表格初始化
+            loadPaymentRecords();
+            
+            // 校区选择器交互功能
+            const campusHeader = document.querySelector('.campus-header');
+            const campusList = document.querySelector('.campus-list');
+            
+            if (campusHeader && campusList) {
+                campusHeader.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    campusList.classList.toggle('show');
+                });
+                
+                // 点击校区项更新选中状态
+                document.querySelectorAll('.campus-item').forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        document.querySelectorAll('.campus-item').forEach(el => {
+                            el.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                        
+                        // 更新校区显示
+                        const campusName = this.textContent;
+                        campusHeader.querySelector('span').textContent = campusName;
+                        
+                        // 关闭下拉菜单
+                        campusList.classList.remove('show');
+                        campusHeader.classList.remove('active');
+                    });
+                });
+                
+                // 点击页面其他区域关闭校区下拉
+                document.addEventListener('click', function(event) {
+                    if (!event.target.closest('.campus-selector')) {
+                        campusList.classList.remove('show');
+                        campusHeader.classList.remove('active');
+                    }
+                });
+            }
         });
     </script>
 </body>

@@ -1636,6 +1636,40 @@
         // 页面加载完成后执行价格格式化
         document.addEventListener('DOMContentLoaded', function() {
             updatePriceDisplay();
+            
+            // 校区选择器交互功能
+            const campusHeader = document.querySelector('.campus-header');
+            const campusList = document.querySelector('.campus-list');
+            
+            if (campusHeader && campusList) {
+                campusHeader.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    campusList.classList.toggle('show');
+                });
+                
+                // 点击校区项更新选中状态
+                document.querySelectorAll('.campus-item').forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        document.querySelectorAll('.campus-item').forEach(el => {
+                            el.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                        campusHeader.querySelector('span').textContent = this.textContent;
+                        campusList.classList.remove('show');
+                        campusHeader.classList.remove('active');
+                    });
+                });
+                
+                // 点击页面其他区域关闭校区下拉
+                document.addEventListener('click', function(event) {
+                    if (!event.target.closest('.campus-selector')) {
+                        campusList.classList.remove('show');
+                        campusHeader.classList.remove('active');
+                    }
+                });
+            }
         });
     </script>
 </body>
