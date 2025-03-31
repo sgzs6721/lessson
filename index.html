@@ -103,9 +103,9 @@
         }
 
         .auth-buttons .btn {
-            padding: 8px 16px;
+            padding: 10px 20px;
             margin-left: 10px;
-            border-radius: 30px;
+            border-radius: 8px;
             font-weight: 500;
             text-decoration: none;
             transition: all 0.3s;
@@ -118,6 +118,7 @@
             background-color: var(--accent);
             color: white;
             box-shadow: 0 4px 15px rgba(255, 120, 70, 0.3);
+            border-radius: 8px;
         }
 
         .btn-primary:hover {
@@ -130,6 +131,7 @@
             border: 1px solid white;
             color: white;
             background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
         }
 
         .btn-outline:hover {
@@ -194,10 +196,30 @@
         }
 
         .hero-buttons .btn {
-            padding: 12px 24px;
-            font-size: 16px;
+            padding: 15px 32px;
+            font-size: 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
 
+        .btn {
+            text-decoration: none;
+        }
+
+        .hero:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: white;
+            border-radius: 50% 50% 0 0;
+        }
+
+        /* 运动培训项目展示 */
         .hero:after {
             content: '';
             position: absolute;
@@ -233,9 +255,10 @@
 
         .section-title {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 0;
             position: relative;
             z-index: 2;
+            padding: 40px 20px 20px;
         }
 
         .section-title h3 {
@@ -264,153 +287,100 @@
             margin: 0 auto;
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+        .features-container {
+            background: linear-gradient(to bottom, rgba(38, 208, 206, 0.3) 0%, rgba(38, 208, 206, 0.1) 50%, rgba(255, 255, 255, 0.8) 100%);
             max-width: 1200px;
             margin: 0 auto;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
             position: relative;
             z-index: 2;
         }
 
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
         .feature-card {
             background: linear-gradient(145deg, #ffffff, #f0f7f7);
-            border-radius: 16px;
-            padding: 35px 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: transform 0.5s, box-shadow 0.5s;
-            position: relative;
-            overflow: hidden;
+            padding: 30px;
+            border-radius: 20px;
             text-align: center;
-        }
-
-        .feature-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent), var(--primary));
-            transform: translateX(-100%);
-            transition: transform 0.5s ease;
-        }
-
-        .feature-card:hover::after {
-            transform: translateX(0);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s;
+            position: relative;
+            top: 0;
         }
 
         .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
         }
 
         .feature-icon {
-            font-size: 50px;
-            color: var(--accent);
-            margin: 0 auto 25px;
-            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+            height: 64px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 70px;
-        }
-
-        .feature-card:hover .feature-icon {
-            transform: scale(1.1);
+            justify-content: center;
         }
 
         .feature-card h4 {
-            font-size: 22px;
-            margin-bottom: 15px;
             color: var(--dark);
-            font-weight: 600;
+            font-size: 20px;
+            margin-bottom: 10px;
         }
 
         .feature-card p {
             color: var(--secondary);
-            line-height: 1.6;
             font-size: 15px;
-            margin: 0 auto;
-            max-width: 280px;
+            line-height: 1.6;
         }
 
-        /* 关于我们 */
-        .about {
-            padding: 80px 5% !important; 
-            background-color: #f5f9fd !important;
-            color: var(--dark) !important;
-            position: relative;
-            overflow: hidden;
+        .gradient-bg {
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
         }
 
-        .about:before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: white;
-            border-radius: 0 0 50% 50%;
-            z-index: 1;
-        }
-
-        /* 联系我们 */
-        .contact {
-            padding: 80px 5% !important;
-            background-color: white !important;
-            color: var(--dark) !important;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .contact:before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: #f5f9fd;
-            border-radius: 0 0 50% 50%;
-            z-index: 1;
-        }
-
-        /* 页脚 */
+        /* 页脚样式 */
         footer {
-            background-color: #1a252f;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M0 77.18l5.66-5.66 2.82 2.82L2.83 80H0v-2.82zM0 2.8l5.66 5.66 2.82-2.82L2.83 0H0v2.82zM77.18 80l-5.66-5.66 2.82-2.82L80 77.17V80h-2.82zM80 2.82l-5.66 5.66-2.82-2.82L77.18 0H80v2.82zM40 37.2l5.66-5.66 2.82 2.82L42.83 40l5.65 5.65-2.82 2.82L40 42.83l-5.65 5.65-2.82-2.82L37.17 40l-5.66-5.66 2.82-2.82L40 37.18z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            color: white;
-            padding: 40px 5%;
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 30px 5%;
             text-align: center;
-            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
         }
-
+        
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-bottom: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
         }
-
+        
         .footer-links a {
-            color: #ecf0f1;
+            color: white;
             text-decoration: none;
-            padding: 5px 10px;
-            transition: all 0.3s;
+            font-weight: 500;
+            transition: color 0.3s;
         }
-
+        
         .footer-links a:hover {
             color: var(--accent);
         }
-
+        
         .copyright {
-            color: rgba(255, 255, 255, 0.7);
             font-size: 14px;
+            margin: 0;
         }
-
+        
         /* 响应式调整 */
         @media (max-width: 768px) {
             .navbar {
@@ -451,6 +421,7 @@
         </div>
         <div class="nav-links">
             <a href="#features">功能特色</a>
+            <a href="#pricing">价格方案</a>
             <a href="#about">关于我们</a>
             <a href="#contact">联系我们</a>
         </div>
@@ -462,68 +433,441 @@
 
     <!-- 英雄区域 -->
     <section class="hero">
-        <h2>专业培训机构管理解决方案</h2>
+        <h2>智能培训管理系统<br>提升您的机构运营效率</h2>
         <p>一站式管理学员、课程、教师和财务，提升培训机构运营效率，让您专注于教学质量</p>
         <div class="hero-buttons">
             <a href="register.html" class="btn btn-primary">免费注册</a>
-            <a href="#features" class="btn btn-outline">了解更多</a>
+            <a href="#features" class="btn btn-outline" style="margin-left: 40px;">了解更多</a>
+        </div>
+    </section>
+
+    <!-- 校外培训项目展示 -->
+    <section style="padding: 50px 5% 50px; background: white; position: relative; z-index: 3;">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h3 style="font-size: 26px; color: var(--dark); margin-bottom: 15px;">适用于各类校外培训机构</h3>
+            <p style="color: var(--secondary); max-width: 700px; margin: 0 auto;">我们的系统可以灵活适应各种类型的培训机构需求，从学科教育到艺术培训和体育教学</p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 1200px; margin: 0 auto;">
+            <!-- 运动培训 - 合并后的运动类别 (放在第一位) -->
+            <div style="display: flex; flex-direction: column; align-items: center; width: 150px; height: 150px; margin-bottom: 20px; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.zIndex='10';" onmouseout="this.style.transform='scale(1)'; this.style.zIndex='1';">
+                <div style="width: 150px; height: 120px; border-radius: 15px 15px 0 0; background: linear-gradient(135deg, #5dade2, #85c1e9); display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(0,0,0,0.12); position: relative; overflow: hidden;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+                        <!-- 背景图形 -->
+                        <circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.1)"/>
+                        <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-dasharray="5 3"/>
+                        
+                        <!-- 乒乓球拍 -->
+                        <path d="M30 25l-15 15c0 0 5 10 15 10s15-10 15-10l-15-15z" fill="#E53935" stroke="white" stroke-width="1"/>
+                        <circle cx="30" cy="25" r="8" fill="#f5f5f5" stroke="#E53935" stroke-width="1"/>
+                        <line x1="30" y1="25" x2="15" y2="40" stroke="#f5f5f5" stroke-width="2"/>
+                        
+                        <!-- 篮球 -->
+                        <circle cx="70" cy="35" r="10" fill="#FF9800" stroke="#E65100" stroke-width="1"/>
+                        <path d="M62 30c5 5 11 5 16 0M62 40c5-5 11-5 16 0M70 25v20" stroke="#E65100" stroke-width="1.5" fill="none"/>
+                        
+                        <!-- 健身人像 -->
+                        <circle cx="50" cy="65" r="7" fill="#f5f5f5"/>
+                        <path d="M50 72v10M40 77h20M45 82l-10 5M55 82l10 5" stroke="#f5f5f5" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M36 65h28" stroke="#f5f5f5" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div style="width: 150px; height: 30px; background-color: #3498db; color: white; padding: 0; display: flex; justify-content: center; align-items: center; text-align: center; border-radius: 0 0 15px 15px;">
+                    <h4 style="margin: 0; font-size: 16px;">运动培训</h4>
+                </div>
+            </div>
+            
+            <!-- 学科培训 (数学+英语合并) -->
+            <div style="display: flex; flex-direction: column; align-items: center; width: 150px; height: 150px; margin-bottom: 20px; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.zIndex='10';" onmouseout="this.style.transform='scale(1)'; this.style.zIndex='1';">
+                <div style="width: 150px; height: 120px; border-radius: 15px 15px 0 0; background: linear-gradient(135deg, #7fb3d5, #a9cce3); display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(0,0,0,0.12); position: relative; overflow: hidden;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+                        <!-- 开放书本 -->
+                        <path d="M20 30v50l30-5V25L20 30z" fill="#f5f5f5" stroke="#1565C0" stroke-width="1.5"/>
+                        <path d="M80 30v50l-30-5V25L80 30z" fill="#e3f2fd" stroke="#1565C0" stroke-width="1.5"/>
+                        <path d="M50 25v50" stroke="#1565C0" stroke-width="1.5"/>
+                        
+                        <!-- 左侧数学符号 -->
+                        <text x="30" y="40" font-family="Arial" font-size="10" fill="#1565C0" font-weight="bold">∑</text>
+                        <text x="30" y="55" font-family="Arial" font-size="6" fill="#1565C0">y=2x+1</text>
+                        <text x="30" y="65" font-family="Arial" font-size="10" fill="#1565C0">π</text>
+                        
+                        <!-- 右侧英语元素 -->
+                        <circle cx="62" cy="42" r="5" fill="#42A5F5"/>
+                        <text x="62" y="45" font-family="Arial" font-size="7" text-anchor="middle" fill="white" font-weight="bold">A</text>
+                        <circle cx="73" cy="42" r="5" fill="#42A5F5"/>
+                        <text x="73" y="45" font-family="Arial" font-size="7" text-anchor="middle" fill="white" font-weight="bold">B</text>
+                        <circle cx="67" cy="55" r="5" fill="#42A5F5"/>
+                        <text x="67" y="58" font-family="Arial" font-size="7" text-anchor="middle" fill="white" font-weight="bold">C</text>
+                        
+                        <!-- 铅笔和计算器 -->
+                        <path d="M20 75l10-3M80 75l-10-3" stroke="#1565C0" stroke-width="1"/>
+                        <rect x="35" y="70" width="8" height="10" rx="1" fill="#bbdefb" stroke="#1565C0" stroke-width="0.5"/>
+                        <rect x="60" y="68" width="10" height="12" rx="1" fill="#bbdefb" stroke="#1565C0" stroke-width="0.5"/>
+                        <line x1="61" y1="71" x2="69" y2="71" stroke="#1565C0" stroke-width="0.5"/>
+                        <line x1="61" y1="74" x2="69" y2="74" stroke="#1565C0" stroke-width="0.5"/>
+                        <line x1="61" y1="77" x2="69" y2="77" stroke="#1565C0" stroke-width="0.5"/>
+                    </svg>
+                </div>
+                <div style="width: 150px; height: 30px; background-color: #2980b9; color: white; padding: 0; display: flex; justify-content: center; align-items: center; text-align: center; border-radius: 0 0 15px 15px;">
+                    <h4 style="margin: 0; font-size: 16px;">学科培训</h4>
+                </div>
+            </div>
+
+            <!-- 艺术培训 (音乐+绘画合并) -->
+            <div style="display: flex; flex-direction: column; align-items: center; width: 150px; height: 150px; margin-bottom: 20px; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.zIndex='10';" onmouseout="this.style.transform='scale(1)'; this.style.zIndex='1';">
+                <div style="width: 150px; height: 120px; border-radius: 15px 15px 0 0; background: linear-gradient(135deg, #f1948a, #f5b7b1); display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(0,0,0,0.12); position: relative; overflow: hidden;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+                        <!-- 背景 -->
+                        <rect x="20" y="20" width="60" height="60" rx="3" fill="rgba(255,255,255,0.1)"/>
+                        
+                        <!-- 左侧音乐元素 -->
+                        <line x1="25" y1="30" x2="45" y2="30" stroke="white" stroke-width="1"/>
+                        <line x1="25" y1="35" x2="45" y2="35" stroke="white" stroke-width="1"/>
+                        <line x1="25" y1="40" x2="45" y2="40" stroke="white" stroke-width="1"/>
+                        <line x1="25" y1="45" x2="45" y2="45" stroke="white" stroke-width="1"/>
+                        <line x1="25" y1="50" x2="45" y2="50" stroke="white" stroke-width="1"/>
+                        
+                        <!-- 音符 -->
+                        <circle cx="30" cy="40" r="3" fill="white"/>
+                        <path d="M33 40v-12" stroke="white" stroke-width="1.5"/>
+                        <path d="M33 28c0 0 2 0 3 1s0 3-2 3-3-2-2-3 3-1 3-1" fill="white"/>
+                        
+                        <circle cx="42" cy="35" r="3" fill="white"/>
+                        <path d="M45 35v-12" stroke="white" stroke-width="1.5"/>
+                        <path d="M45 23c0 0 2 0 3 1s0 3-2 3-3-2-2-3 3-1 3-1" fill="white"/>
+                        
+                        <!-- 右侧绘画元素 -->
+                        <path d="M55 25c10 0 20 10 20 25s-10 25-20 25" fill="none" stroke="white" stroke-width="1.5"/>
+                        
+                        <!-- 调色板 -->
+                        <path d="M65 60c-3 3-10 0-15-5s-8-12-5-15 10 0 15 5 8 12 5 15z" fill="#FCE4EC" stroke="white" stroke-width="1"/>
+                        <circle cx="55" cy="50" r="3" fill="#FF5252"/>
+                        <circle cx="60" cy="55" r="3" fill="#FFEB3B"/>
+                        <circle cx="65" cy="50" r="3" fill="#66BB6A"/>
+                        
+                        <!-- 画笔 -->
+                        <path d="M65 30l5-5 2 2-5 5-3 1z" fill="#ffffff" stroke="#C2185B" stroke-width="1"/>
+                    </svg>
+                </div>
+                <div style="width: 150px; height: 30px; background-color: #e74c3c; color: white; padding: 0; display: flex; justify-content: center; align-items: center; text-align: center; border-radius: 0 0 15px 15px;">
+                    <h4 style="margin: 0; font-size: 16px;">艺术培训</h4>
+                </div>
+            </div>
+
+            <!-- 编程培训 -->
+            <div style="display: flex; flex-direction: column; align-items: center; width: 150px; height: 150px; margin-bottom: 20px; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.zIndex='10';" onmouseout="this.style.transform='scale(1)'; this.style.zIndex='1';">
+                <div style="width: 150px; height: 120px; border-radius: 15px 15px 0 0; background: linear-gradient(135deg, #aab7b8, #cacfd2); display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(0,0,0,0.12); position: relative; overflow: hidden;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+                        <!-- 电脑屏幕 -->
+                        <rect x="20" y="20" width="60" height="40" rx="2" fill="#f5f5f5" stroke="#cfd8dc" stroke-width="1.5"/>
+                        <rect x="24" y="24" width="52" height="32" fill="#263238"/>
+                        <rect x="35" y="60" width="30" height="4" fill="#cfd8dc"/>
+                        <rect x="30" y="64" width="40" height="6" rx="2" fill="#eceff1"/>
+                        <rect x="45" y="70" width="10" height="5" fill="#cfd8dc"/>
+                        <rect x="30" y="75" width="40" height="2" rx="1" fill="#eceff1"/>
+                        
+                        <!-- 代码行 -->
+                        <text x="28" y="30" font-family="monospace" font-size="3.5" fill="#4caf50">function hello() {</text>
+                        <text x="30" y="36" font-family="monospace" font-size="3.5" fill="#2196f3">  console.log("Hello");</text>
+                        <text x="28" y="42" font-family="monospace" font-size="3.5" fill="#4caf50">}</text>
+                        <text x="28" y="48" font-family="monospace" font-size="3.5" fill="#ff9800">hello();</text>
+                        
+                        <!-- 编程符号 -->
+                        <text x="65" y="35" font-family="monospace" font-size="8" fill="#f44336">{}</text>
+                        <text x="65" y="45" font-family="monospace" font-size="8" fill="#ffeb3b">;</text>
+                        <text x="55" y="53" font-family="monospace" font-size="5" fill="#03a9f4">while()</text>
+                    </svg>
+                </div>
+                <div style="width: 150px; height: 30px; background-color: #7f8c8d; color: white; padding: 0; display: flex; justify-content: center; align-items: center; text-align: center; border-radius: 0 0 15px 15px;">
+                    <h4 style="margin: 0; font-size: 16px;">编程培训</h4>
+                </div>
+            </div>
+
+            <!-- 演讲口才 -->
+            <div style="display: flex; flex-direction: column; align-items: center; width: 150px; height: 150px; margin-bottom: 20px; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.zIndex='10';" onmouseout="this.style.transform='scale(1)'; this.style.zIndex='1';">
+                <div style="width: 150px; height: 120px; border-radius: 15px 15px 0 0; background: linear-gradient(135deg, #bb8fce, #d2b4de); display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(0,0,0,0.12); position: relative; overflow: hidden;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+                        <!-- 讲台/舞台 -->
+                        <rect x="15" y="65" width="70" height="15" rx="2" fill="#ede7f6" stroke="#7b1fa2" stroke-width="1"/>
+                        <rect x="25" y="60" width="50" height="5" fill="#d1c4e9"/>
+                        
+                        <!-- 麦克风 -->
+                        <rect x="48" y="35" width="4" height="20" fill="#e1bee7"/>
+                        <path d="M48 35a5 8 0 1 1 4 0" fill="#ce93d8"/>
+                        <path d="M50 55v10M45 62h10" stroke="#e1bee7" stroke-width="2"/>
+                        
+                        <!-- 演讲者 -->
+                        <circle cx="50" cy="40" r="8" fill="#f5f5f5"/>
+                        <path d="M50 48v10M43 53h14M40 58c-5 5 0 10 10 10s15-5 10-10" fill="none" stroke="#f5f5f5" stroke-width="2" stroke-linecap="round"/>
+                        
+                        <!-- 文本气泡 -->
+                        <path d="M65 35c5-8-5-15-15-10-10-5-20 2-15 10-5 0-5 10 5 10h20c10 0 10-10 5-10z" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                        <text x="50" y="38" font-family="Arial" font-size="5" text-anchor="middle" fill="white">A! B! C!</text>
+                        
+                        <!-- 听众 -->
+                        <circle cx="30" cy="80" r="3" fill="#f3e5f5"/>
+                        <circle cx="40" cy="80" r="3" fill="#f3e5f5"/>
+                        <circle cx="50" cy="80" r="3" fill="#f3e5f5"/>
+                        <circle cx="60" cy="80" r="3" fill="#f3e5f5"/>
+                        <circle cx="70" cy="80" r="3" fill="#f3e5f5"/>
+                    </svg>
+                </div>
+                <div style="width: 150px; height: 30px; background-color: #9b59b6; color: white; padding: 0; display: flex; justify-content: center; align-items: center; text-align: center; border-radius: 0 0 15px 15px;">
+                    <h4 style="margin: 0; font-size: 16px;">演讲口才</h4>
+                </div>
+            </div>
+
+            <!-- 思维培训 -->
+            <div style="display: flex; flex-direction: column; align-items: center; width: 150px; height: 150px; margin-bottom: 20px; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.zIndex='10';" onmouseout="this.style.transform='scale(1)'; this.style.zIndex='1';">
+                <div style="width: 150px; height: 120px; border-radius: 15px 15px 0 0; background: linear-gradient(135deg, #73c6b6, #a3e4d7); display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(0,0,0,0.12); position: relative; overflow: hidden;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+                        <!-- 大脑轮廓 -->
+                        <path d="M50 20c-15 0-25 10-25 25 0 10 5 20 25 30 20-10 25-20 25-30 0-15-10-25-25-25z" fill="none" stroke="white" stroke-width="2"/>
+                        
+                        <!-- 大脑纹路 -->
+                        <path d="M30 40c0 0 5-5 10-5s10 5 10 0-5-10 0-10" stroke="white" stroke-width="1.5" fill="none"/>
+                        <path d="M70 40c0 0-5-5-10-5s-10 5-10 0 5-10 0-10" stroke="white" stroke-width="1.5" fill="none"/>
+                        <path d="M40 60c0 0 5 5 10 0s5-10 10-5" stroke="white" stroke-width="1.5" fill="none"/>
+                        
+                        <!-- 思维节点 -->
+                        <circle cx="35" cy="35" r="3" fill="#E0F2F1"/>
+                        <circle cx="50" cy="25" r="3" fill="#E0F2F1"/>
+                        <circle cx="65" cy="35" r="3" fill="#E0F2F1"/>
+                        <circle cx="40" cy="50" r="3" fill="#E0F2F1"/>
+                        <circle cx="60" cy="50" r="3" fill="#E0F2F1"/>
+                        <circle cx="50" cy="65" r="3" fill="#E0F2F1"/>
+                        
+                        <!-- 连接线 -->
+                        <line x1="35" y1="35" x2="50" y2="25" stroke="#B2DFDB" stroke-width="1"/>
+                        <line x1="50" y1="25" x2="65" y2="35" stroke="#B2DFDB" stroke-width="1"/>
+                        <line x1="35" y1="35" x2="40" y2="50" stroke="#B2DFDB" stroke-width="1"/>
+                        <line x1="65" y1="35" x2="60" y2="50" stroke="#B2DFDB" stroke-width="1"/>
+                        <line x1="40" y1="50" x2="50" y2="65" stroke="#B2DFDB" stroke-width="1"/>
+                        <line x1="60" y1="50" x2="50" y2="65" stroke="#B2DFDB" stroke-width="1"/>
+                        <line x1="40" y1="50" x2="60" y2="50" stroke="#B2DFDB" stroke-width="1"/>
+                        
+                        <!-- 闪光点 -->
+                        <circle cx="50" cy="40" r="6" fill="rgba(255,255,255,0.2)"/>
+                        <path d="M50 37v6M47 40h6" stroke="white" stroke-width="1.5"/>
+                    </svg>
+                </div>
+                <div style="width: 150px; height: 30px; background-color: #16a085; color: white; padding: 0; display: flex; justify-content: center; align-items: center; text-align: center; border-radius: 0 0 15px 15px;">
+                    <h4 style="margin: 0; font-size: 16px;">思维培训</h4>
+                </div>
+            </div>
+
+            <!-- 国学培训 -->
+            <div style="display: flex; flex-direction: column; align-items: center; width: 150px; height: 150px; margin-bottom: 20px; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.zIndex='10';" onmouseout="this.style.transform='scale(1)'; this.style.zIndex='1';">
+                <div style="width: 150px; height: 120px; border-radius: 15px 15px 0 0; background: linear-gradient(135deg, #f0b27a, #f5cba7); display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(0,0,0,0.12); position: relative; overflow: hidden;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+                        <!-- 卷轴背景 -->
+                        <path d="M25 20c0 0-5 0-5 5v50c0 0 0 5 5 5h50c0 0 5 0 5-5V25c0 0 0-5-5-5h-7l2-7h-10l2 7h-25l2-7h-10l2 7z" fill="#FBE9E7" stroke="#FF5722" stroke-width="1.5"/>
+                        
+                        <!-- 右侧卷曲效果 -->
+                        <path d="M80 25v50c2-2 5-5 5-25s-3-23-5-25z" fill="#FBE9E7" stroke="#FF5722" stroke-width="1.5"/>
+                        
+                        <!-- 左侧卷曲效果 -->
+                        <path d="M20 25v50c-2-2-5-5-5-25s3-23 5-25z" fill="#FBE9E7" stroke="#FF5722" stroke-width="1.5"/>
+                        
+                        <!-- 中国传统文字 -->
+                        <text x="35" y="38" font-family="KaiTi, SimSun" font-size="16" fill="#BF360C">国学</text>
+                        <text x="65" y="38" font-family="KaiTi, SimSun" font-size="16" fill="#BF360C">经典</text>
+                        
+                        <!-- 书法笔触 -->
+                        <path d="M35 45c0 0 5 0 15 5s15 5 15 0" stroke="#BF360C" stroke-width="2" fill="none"/>
+                        <path d="M35 55c0 0 5 0 15 5s15 5 15 0" stroke="#BF360C" stroke-width="2" fill="none"/>
+                        <path d="M35 65c0 0 5 0 15 5s15 5 15 0" stroke="#BF360C" stroke-width="2" fill="none"/>
+                        
+                        <!-- 印章 -->
+                        <rect x="55" y="60" width="15" height="15" fill="#FF5722" stroke="#BF360C" stroke-width="1"/>
+                        <text x="62.5" y="71.5" font-family="KaiTi, SimSun" font-size="11" fill="white" text-anchor="middle">印</text>
+                    </svg>
+                </div>
+                <div style="width: 150px; height: 30px; background-color: #d35400; color: white; padding: 0; display: flex; justify-content: center; align-items: center; text-align: center; border-radius: 0 0 15px 15px;">
+                    <h4 style="margin: 0; font-size: 16px;">国学培训</h4>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- 功能区域 -->
-    <section class="features" id="features">
+    <section class="features" id="features" style="padding: 40px 5% 60px;">
         <div class="section-title">
             <h3>核心功能</h3>
             <p>我们的系统提供全方位的培训机构管理功能</p>
         </div>
-        <div class="features-grid">
-            <div class="feature-card" style="border-bottom: 4px solid #4CAF50; background: linear-gradient(145deg, #ffffff, #f0f7f2);">
-                <div class="feature-icon">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiM0Q0FGNTAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSI0IiB5PSI0IiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHJ4PSIyIi8+PHJlY3QgeD0iMTAiIHk9IjEwIiB3aWR0aD0iOCIgaGVpZ2h0PSIyOCIgZmlsbD0icmdiYSg3NiwgMTc1LCA4MCwgMC4yKSIvPjxyZWN0IHg9IjIwIiB5PSIyMCIgd2lkdGg9IjgiIGhlaWdodD0iMTgiIGZpbGw9InJnYmEoNzYsIDE3NSwgODAsIDAuNikiLz48cmVjdCB4PSIzMCIgeT0iMTUiIHdpZHRoPSI4IiBoZWlnaHQ9IjIzIiBmaWxsPSJyZ2JhKDc2LCAxNzUsIDgwLCAxKSIvPjwvZz48L3N2Zz4=" alt="学员管理" style="width: 48px; height: 48px;">
+        <div class="features-container">
+            <div class="features-grid">
+                <div class="feature-card" style="border-bottom: 4px solid #4CAF50; background: linear-gradient(145deg, #ffffff, #f0f7f2);">
+                    <div class="feature-icon">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiM0Q0FGNTAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSI0IiB5PSI0IiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHJ4PSIyIi8+PHJlY3QgeD0iMTAiIHk9IjEwIiB3aWR0aD0iOCIgaGVpZ2h0PSIyOCIgZmlsbD0icmdiYSg3NiwgMTc1LCA4MCwgMC4yKSIvPjxyZWN0IHg9IjIwIiB5PSIyMCIgd2lkdGg9IjgiIGhlaWdodD0iMTgiIGZpbGw9InJnYmEoNzYsIDE3NSwgODAsIDAuNikiLz48cmVjdCB4PSIzMCIgeT0iMTUiIHdpZHRoPSI4IiBoZWlnaHQ9IjIzIiBmaWxsPSJyZ2JhKDc2LCAxNzUsIDgwLCAxKSIvPjwvZz48L3N2Zz4=" alt="学员管理" style="width: 48px; height: 48px;">
+                    </div>
+                    <h4>学员管理</h4>
+                    <p>全面记录学员信息、学习进度和成绩，实现个性化教学跟踪</p>
                 </div>
-                <h4>学员管理</h4>
-                <p>全面记录学员信息、学习进度和成绩，实现个性化教学跟踪</p>
+                <div class="feature-card" style="border-bottom: 4px solid #FF5722; background: linear-gradient(145deg, #ffffff, #fff5f2);">
+                    <div class="feature-icon">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiNGRjU3MjIiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSI2IiB5PSI4IiB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHJ4PSIyIi8+PHJlY3QgeD0iMTIiIHk9IjQiIHdpZHRoPSIyNCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0icmdiYSgyNTUsIDg3LCAzNCwgMC4yKSIvPjxsaW5lIHgxPSIxMiIgeTE9IjIwIiB4Mj0iMzYiIHkyPSIyMCIvPjxsaW5lIHgxPSIxMiIgeTE9IjI4IiB4Mj0iMzYiIHkyPSIyOCIvPjxsaW5lIHgxPSIxMiIgeTE9IjM2IiB4Mj0iMzYiIHkyPSIzNiIvPjx0ZXh0IHg9IjI0IiB5PSIxNyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4IiBmaWxsPSIjRkY1NzIyIiBzdHJva2U9Im5vbmUiPjE3PC90ZXh0PjwvZz48L3N2Zz4=" alt="课程排班" style="width: 48px; height: 48px;">
+                    </div>
+                    <h4>课程排班</h4>
+                    <p>智能排课系统，自动处理教师、教室和时间的冲突</p>
+                </div>
+                <div class="feature-card" style="border-bottom: 4px solid #FFC107; background: linear-gradient(145deg, #ffffff, #fffbf0);">
+                    <div class="feature-icon">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiNGRkMxMDciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMzQgMjJjMCA5Ljk0LTEwIDE4LTEwIDE4cy0xMC04LjA2LTEwLTE4YTEwIDEwIDAgMCAxIDIwIDB6IiBmaWxsPSJyZ2JhKDI1NSwgMTkzLCA3LCAwLjIpIi8+PHRleHQgeD0iMjQiIHk9IjI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEyIiBmaWxsPSIjRkZDMTA3IiBzdHJva2U9Im5vbmUiPiQ8L3RleHQ+PC9nPjwvc3ZnPg==" alt="财务管理" style="width: 48px; height: 48px;">
+                    </div>
+                    <h4>财务管理</h4>
+                    <p>自动生成财务报表，清晰记录每一笔收入和支出</p>
+                </div>
+                <div class="feature-card" style="border-bottom: 4px solid #2196F3; background: linear-gradient(145deg, #ffffff, #f0f7ff);">
+                    <div class="feature-icon">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiMyMTk2RjMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48Y2lyY2xlIGN4PSIyNCIgY3k9IjE2IiByPSI4IiBmaWxsPSJyZ2JhKDMzLCAxNTAsIDI0MywgMC4yKSIvPjxwYXRoIGQ9Ik04IDQwYzAtOCA4LTEyIDE2LTEyczE2IDQgMTYgMTIiLz48cmVjdCB4PSIyMCIgeT0iMTQiIHdpZHRoPSI4IiBoZWlnaHQ9IjQiIGZpbGw9InJnYmEoMzMsIDE1MCwgMjQzLCAwLjYpIi8+PC9nPjwvc3ZnPg==" alt="教师管理" style="width: 48px; height: 48px;">
+                    </div>
+                    <h4>教师管理</h4>
+                    <p>管理教师信息、课程安排和教学评估</p>
+                </div>
+                <div class="feature-card" style="border-bottom: 4px solid #9C27B0; background: linear-gradient(145deg, #ffffff, #f7f0ff);">
+                    <div class="feature-icon">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiM5QzI3QjAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSIxMiIgeT0iNiIgd2lkdGg9IjI0IiBoZWlnaHQ9IjM2IiByeD0iMiIvPjxyZWN0IHg9IjE2IiB5PSIxMCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjI0IiByeD0iMSIgZmlsbD0icmdiYSgxNTYsIDM5LCAxNzYsIDAuMikiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjM2IiByPSIyIiBmaWxsPSJyZ2JhKDE1NiwgMzksIDE3NiwgMC44KSIvPjwvZz48L3N2Zz4=" alt="小程序支持" style="width: 48px; height: 48px;">
+                    </div>
+                    <h4>小程序支持</h4>
+                    <p>配套小程序让家长随时查看学员进度和课程安排</p>
+                </div>
+                <div class="feature-card" style="border-bottom: 4px solid #E91E63; background: linear-gradient(145deg, #ffffff, #fff0f5);">
+                    <div class="feature-icon">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiNFOTFFNjMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSI0IiB5PSI0IiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHJ4PSIyIi8+PHBhdGggZD0iTTQgMTZoNDBNNCAxNmwxMiAxMk0yMCAyOGwxMCAtMTJNMzAgMTZsMTAgMTIiIHN0cm9rZT0iI0U5MUU2MyIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMzAgMTZsNCAxMiIgc3Ryb2tlPSIjRTkxRTYzIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsbD0icmdiYSgyMzMsIDMwLCA5OSwgMC4yKSIvPjwvZz48L3N2Zz4=" alt="数据分析" style="width: 48px; height: 48px;">
+                    </div>
+                    <h4>数据分析</h4>
+                    <p>多维度数据分析，帮助机构优化运营策略</p>
+                </div>
             </div>
-            <div class="feature-card" style="border-bottom: 4px solid #FF5722; background: linear-gradient(145deg, #ffffff, #fff5f2);">
-                <div class="feature-icon">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiNGRjU3MjIiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSI2IiB5PSI4IiB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHJ4PSIyIi8+PHJlY3QgeD0iMTIiIHk9IjQiIHdpZHRoPSIyNCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0icmdiYSgyNTUsIDg3LCAzNCwgMC4yKSIvPjxsaW5lIHgxPSIxMiIgeTE9IjIwIiB4Mj0iMzYiIHkyPSIyMCIvPjxsaW5lIHgxPSIxMiIgeTE9IjI4IiB4Mj0iMzYiIHkyPSIyOCIvPjxsaW5lIHgxPSIxMiIgeTE9IjM2IiB4Mj0iMzYiIHkyPSIzNiIvPjx0ZXh0IHg9IjI0IiB5PSIxNyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4IiBmaWxsPSIjRkY1NzIyIiBzdHJva2U9Im5vbmUiPjE3PC90ZXh0PjwvZz48L3N2Zz4=" alt="课程排班" style="width: 48px; height: 48px;">
+        </div>
+    </section>
+
+    <!-- 价格方案 -->
+    <section class="pricing" id="pricing" style="padding: 40px 5%; background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(239, 247, 255, 1) 100%); color: var(--dark); position: relative;">
+        <div class="section-title">
+            <h3>价格方案</h3>
+            <p>选择适合您培训机构规模的解决方案</p>
+        </div>
+        <div style="max-width: 1200px; margin: 0 auto; padding: 40px 0;">
+            <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
+                <!-- 入门版 -->
+                <div style="flex: 1; min-width: 300px; max-width: 350px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 20px 40px rgba(0, 0, 0, 0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 40px rgba(0, 0, 0, 0.08)';">
+                    <div style="background: linear-gradient(45deg, #26d0ce, #1a2980); padding: 30px 20px; text-align: center; color: white;">
+                        <h4 style="font-size: 24px; font-weight: 600; margin-bottom: 15px;">入门版</h4>
+                        <div style="font-size: 48px; font-weight: 700; margin-bottom: 10px;">
+                            ¥299<span style="font-size: 16px; font-weight: 400; opacity: 0.8;">/月</span>
+                        </div>
+                        <p style="font-size: 14px; opacity: 0.8;">适合小型培训机构</p>
+                    </div>
+                    <div style="padding: 30px;">
+                        <ul style="list-style-type: none; padding: 0; margin: 0 0 30px;">
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--success); margin-right: 10px;">✓</span> 最多管理100名学员
+                            </li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--success); margin-right: 10px;">✓</span> 基础版学员管理
+                            </li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--success); margin-right: 10px;">✓</span> 基础版排课系统
+                            </li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--success); margin-right: 10px;">✓</span> 教师管理
+                            </li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--secondary); margin-right: 10px;">×</span> <span style="color: var(--secondary);">小程序支持</span>
+                            </li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--secondary); margin-right: 10px;">×</span> <span style="color: var(--secondary);">高级数据分析</span>
+                            </li>
+                        </ul>
+                        <a href="register.html" style="display: block; text-align: center; padding: 12px; background: var(--primary); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;" onmouseover="this.style.background='#2980b9'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='var(--primary)'; this.style.transform='translateY(0)';">开始使用</a>
+                    </div>
                 </div>
-                <h4>课程排班</h4>
-                <p>智能排课系统，自动处理教师、教室和时间的冲突</p>
+
+                <!-- 标准版 -->
+                <div style="flex: 1; min-width: 300px; max-width: 350px; background: white; border-radius: 20px; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15); overflow: hidden; position: relative; transform: scale(1.05); z-index: 2; transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-10px) scale(1.05)'; this.style.boxShadow='0 25px 50px rgba(0, 0, 0, 0.2)';" onmouseout="this.style.transform='scale(1.05)'; this.style.boxShadow='0 15px 50px rgba(0, 0, 0, 0.15)';">
+                    <div style="position: absolute; top: 20px; right: -35px; background: var(--accent); color: white; transform: rotate(45deg); padding: 5px 40px; font-size: 14px; font-weight: 600;">推荐</div>
+                    <div style="background: linear-gradient(45deg, #ff7846, #ff4757); padding: 30px 20px; text-align: center; color: white;">
+                        <h4 style="font-size: 24px; font-weight: 600; margin-bottom: 15px;">标准版</h4>
+                        <div style="font-size: 48px; font-weight: 700; margin-bottom: 10px;">
+                            ¥699<span style="font-size: 16px; font-weight: 400; opacity: 0.8;">/月</span>
+                        </div>
+                        <p style="font-size: 14px; opacity: 0.8;">适合中型培训机构</p>
+                    </div>
+                    <div style="padding: 30px;">
+                        <ul style="list-style-type: none; padding: 0; margin: 0 0 30px;">
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--success); margin-right: 10px;">✓</span> 最多管理500名学员
+                            </li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--success); margin-right: 10px;">✓</span> 高级版学员管理
+                            </li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--success); margin-right: 10px;">✓</span> 高级版排课系统
+                            </li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--success); margin-right: 10px;">✓</span> 教师管理
+                            </li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--success); margin-right: 10px;">✓</span> 小程序支持
+                            </li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--secondary); margin-right: 10px;">×</span> <span style="color: var(--secondary);">高级数据分析</span>
+                            </li>
+                        </ul>
+                        <a href="register.html" style="display: block; text-align: center; padding: 12px; background: var(--accent); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s; box-shadow: 0 5px 15px rgba(255, 120, 70, 0.3);" onmouseover="this.style.background='#ff6a2e'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(255, 120, 70, 0.4)';" onmouseout="this.style.background='var(--accent)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(255, 120, 70, 0.3)';">开始使用</a>
+                    </div>
+                </div>
+
+                <!-- 企业版 -->
+                <div style="flex: 1; min-width: 300px; max-width: 350px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 20px 40px rgba(0, 0, 0, 0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 40px rgba(0, 0, 0, 0.08)';">
+                    <div style="background: linear-gradient(45deg, #4a69bd, #1e3799); padding: 30px 20px; text-align: center; color: white;">
+                        <h4 style="font-size: 24px; font-weight: 600; margin-bottom: 15px;">企业版</h4>
+                        <div style="font-size: 48px; font-weight: 700; margin-bottom: 10px;">
+                            ¥1599<span style="font-size: 16px; font-weight: 400; opacity: 0.8;">/月</span>
+                        </div>
+                        <p style="font-size: 14px; opacity: 0.8;">适合大型培训机构</p>
+                    </div>
+                    <div style="padding: 30px;">
+                        <ul style="list-style-type: none; padding: 0; margin: 0 0 30px;">
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--success); margin-right: 10px;">✓</span> 学员人数无限制
+                            </li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--success); margin-right: 10px;">✓</span> 高级版学员管理
+                            </li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--success); margin-right: 10px;">✓</span> 高级版排课系统
+                            </li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--success); margin-right: 10px;">✓</span> 教师管理
+                            </li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--success); margin-right: 10px;">✓</span> 小程序支持
+                            </li>
+                            <li style="padding: 10px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; align-items: center;">
+                                <span style="color: var(--success); margin-right: 10px;">✓</span> 高级数据分析
+                            </li>
+                        </ul>
+                        <a href="register.html" style="display: block; text-align: center; padding: 12px; background: var(--dark); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;" onmouseover="this.style.background='#1e272e'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='var(--dark)'; this.style.transform='translateY(0)';">开始使用</a>
+                    </div>
+                </div>
             </div>
-            <div class="feature-card" style="border-bottom: 4px solid #FFC107; background: linear-gradient(145deg, #ffffff, #fffbf0);">
-                <div class="feature-icon">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiNGRkMxMDciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMzQgMjJjMCA5Ljk0LTEwIDE4LTEwIDE4cy0xMC04LjA2LTEwLTE4YTEwIDEwIDAgMCAxIDIwIDB6IiBmaWxsPSJyZ2JhKDI1NSwgMTkzLCA3LCAwLjIpIi8+PHRleHQgeD0iMjQiIHk9IjI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEyIiBmaWxsPSIjRkZDMTA3IiBzdHJva2U9Im5vbmUiPiQ8L3RleHQ+PC9nPjwvc3ZnPg==" alt="财务管理" style="width: 48px; height: 48px;">
-                </div>
-                <h4>财务管理</h4>
-                <p>自动生成财务报表，清晰记录每一笔收入和支出</p>
-            </div>
-            <div class="feature-card" style="border-bottom: 4px solid #2196F3; background: linear-gradient(145deg, #ffffff, #f0f7ff);">
-                <div class="feature-icon">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiMyMTk2RjMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48Y2lyY2xlIGN4PSIyNCIgY3k9IjE2IiByPSI4IiBmaWxsPSJyZ2JhKDMzLCAxNTAsIDI0MywgMC4yKSIvPjxwYXRoIGQ9Ik04IDQwYzAtOCA4LTEyIDE2LTEyczE2IDQgMTYgMTIiLz48cmVjdCB4PSIyMCIgeT0iMTQiIHdpZHRoPSI4IiBoZWlnaHQ9IjQiIGZpbGw9InJnYmEoMzMsIDE1MCwgMjQzLCAwLjYpIi8+PC9nPjwvc3ZnPg==" alt="教师管理" style="width: 48px; height: 48px;">
-                </div>
-                <h4>教师管理</h4>
-                <p>管理教师信息、课程安排和教学评估</p>
-            </div>
-            <div class="feature-card" style="border-bottom: 4px solid #9C27B0; background: linear-gradient(145deg, #ffffff, #f7f0ff);">
-                <div class="feature-icon">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiM5QzI3QjAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSIxMiIgeT0iNiIgd2lkdGg9IjI0IiBoZWlnaHQ9IjM2IiByeD0iMiIvPjxyZWN0IHg9IjE2IiB5PSIxMCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjI0IiByeD0iMSIgZmlsbD0icmdiYSgxNTYsIDM5LCAxNzYsIDAuMikiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjM2IiByPSIyIiBmaWxsPSJyZ2JhKDE1NiwgMzksIDE3NiwgMC44KSIvPjwvZz48L3N2Zz4=" alt="小程序支持" style="width: 48px; height: 48px;">
-                </div>
-                <h4>小程序支持</h4>
-                <p>配套小程序让家长随时查看学员进度和课程安排</p>
-            </div>
-            <div class="feature-card" style="border-bottom: 4px solid #E91E63; background: linear-gradient(145deg, #ffffff, #fff0f5);">
-                <div class="feature-icon">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiNFOTFFNjMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSI0IiB5PSI0IiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHJ4PSIyIi8+PHBhdGggZD0iTTQgMTZoNDBNNCAxNmwxMiAxMk0yMCAyOGwxMCAtMTJNMzAgMTZsMTAgMTIiIHN0cm9rZT0iI0U5MUU2MyIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMzAgMTZsNCAxMiIgc3Ryb2tlPSIjRTkxRTYzIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsbD0icmdiYSgyMzMsIDMwLCA5OSwgMC4yKSIvPjwvZz48L3N2Zz4=" alt="数据分析" style="width: 48px; height: 48px;">
-                </div>
-                <h4>数据分析</h4>
-                <p>多维度数据分析，帮助机构优化运营策略</p>
+            
+            <!-- 定制版 -->
+            <div style="margin-top: 60px; text-align: center; padding: 30px; background: rgba(255, 255, 255, 0.8); border-radius: 15px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);">
+                <h4 style="font-size: 22px; margin-bottom: 15px; color: var(--dark);">需要定制解决方案？</h4>
+                <p style="color: var(--secondary); margin-bottom: 20px;">
+                    针对特殊需求，我们提供完全定制化的解决方案，满足您的独特需求
+                </p>
+                <a href="#contact" style="display: inline-block; padding: 12px 30px; background: transparent; color: var(--primary); text-decoration: none; border: 2px solid var(--primary); border-radius: 8px; font-weight: 600; transition: all 0.3s;" onmouseover="this.style.background='var(--primary)'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='var(--primary)';">联系我们获取报价</a>
             </div>
         </div>
     </section>
 
     <!-- 关于我们 -->
-    <section class="about" id="about" style="padding: 80px 5%; background-color: #f5f9fd; color: var(--dark);">
+    <section class="about" id="about" style="padding: 80px 5%; background: linear-gradient(to bottom, rgba(38, 208, 206, 0.15) 0%, rgba(26, 41, 128, 0.08) 50%, rgba(242, 245, 248, 0.9) 100%); color: var(--dark);">
         <div class="section-title">
             <h3>关于我们</h3>
             <p>专业的培训管理解决方案提供商</p>
@@ -551,7 +895,7 @@
     </section>
 
     <!-- 联系我们 -->
-    <section class="contact" id="contact" style="padding: 80px 5%; background-color: white; color: var(--dark);">
+    <section class="contact" id="contact" style="padding: 80px 5%; background: linear-gradient(to bottom, rgba(26, 41, 128, 0.1) 0%, rgba(26, 41, 128, 0.2) 30%, rgba(26, 41, 128, 0.35) 70%, rgba(26, 41, 128, 0.45) 100%); color: var(--dark);">
         <div class="section-title">
             <h3>联系我们</h3>
             <p>随时为您提供专业咨询</p>
@@ -583,15 +927,16 @@
     </section>
 
     <!-- 页脚 -->
-    <footer>
-        <div class="footer-links">
-            <a href="#features">功能</a>
-            <a href="#about">关于</a>
-            <a href="#contact">联系</a>
-            <a href="login.html">登录</a>
-            <a href="register.html">注册</a>
+    <footer style="background: var(--dark); color: rgba(255, 255, 255, 0.8); padding: 30px 5%; text-align: center;">
+        <div class="footer-links" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px;">
+            <a href="#features" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;">功能</a>
+            <a href="#pricing" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;">价格</a>
+            <a href="#about" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;">关于</a>
+            <a href="#contact" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;">联系</a>
+            <a href="login.html" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;">登录</a>
+            <a href="register.html" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;">注册</a>
         </div>
-        <p class="copyright">© 2025 培训机构管理系统. 保留所有权利.</p>
+        <p class="copyright" style="font-size: 14px; margin: 0;">© 2025 培训机构管理系统. 保留所有权利.</p>
     </footer>
 </body>
 </html>
