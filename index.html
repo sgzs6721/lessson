@@ -6,12 +6,14 @@
     <title>培训机构管理系统 - 专业培训管理解决方案</title>
     <style>
         :root {
-            --primary: #4a6cf7;
-            --secondary: #6c757d;
-            --success: #28a745;
-            --dark: #343a40;
-            --light: #f8f9fa;
-            --border: #e9ecef;
+            --primary: #3498db;
+            --secondary: #7f8c8d;
+            --success: #2ecc71;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --border: #dcdde1;
+            --accent: #ff7846;
+            --highlight: rgba(52, 152, 219, 0.1);
         }
 
         * {
@@ -22,18 +24,23 @@
         }
 
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: white;
             min-height: 100vh;
         }
 
         /* 导航栏 */
         .navbar {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(90deg, rgba(26, 41, 128, 0.95) 0%, rgba(143, 45, 86, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
             padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 10;
         }
 
         .logo {
@@ -44,11 +51,18 @@
         .logo img {
             height: 40px;
             margin-right: 10px;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: rotate(5deg);
         }
 
         .logo h1 {
             font-size: 20px;
-            color: var(--dark);
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .nav-links {
@@ -57,75 +71,126 @@
         }
 
         .nav-links a {
-            color: var(--dark);
+            color: white;
             text-decoration: none;
             font-weight: 500;
             padding: 8px 12px;
             border-radius: 5px;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover:before {
+            width: 100%;
         }
 
         .nav-links a:hover {
-            color: var(--primary);
-            background-color: rgba(74, 108, 247, 0.1);
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
 
         .auth-buttons .btn {
             padding: 8px 16px;
             margin-left: 10px;
-            border-radius: 5px;
+            border-radius: 30px;
             font-weight: 500;
             text-decoration: none;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
 
         .btn-primary {
-            background-color: var(--primary);
+            background-color: var(--accent);
             color: white;
+            box-shadow: 0 4px 15px rgba(255, 120, 70, 0.3);
         }
 
         .btn-primary:hover {
-            background-color: #3a5de4;
-            box-shadow: 0 2px 10px rgba(74, 108, 247, 0.3);
+            background-color: #ff6a2e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 120, 70, 0.4);
         }
 
         .btn-outline {
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            background-color: transparent;
+            border: 1px solid white;
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         .btn-outline:hover {
-            background-color: rgba(74, 108, 247, 0.1);
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
         }
 
         /* 英雄区域 */
         .hero {
-            padding: 80px 5%;
+            background: linear-gradient(to bottom, #1a2980 0%, #26d0ce 100%);
+            position: relative;
+            color: white;
+            padding: 100px 5% 150px;
             text-align: center;
-            max-width: 1200px;
-            margin: 0 auto;
+            margin-bottom: -50px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(26, 41, 128, 0.4) 0%, rgba(52, 152, 219, 0.1) 100%);
+            z-index: 1;
         }
 
         .hero h2 {
-            font-size: 36px;
-            color: var(--dark);
+            font-size: 38px;
             margin-bottom: 20px;
             line-height: 1.3;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(to bottom, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
         }
 
         .hero p {
             font-size: 18px;
-            color: var(--secondary);
             max-width: 700px;
             margin: 0 auto 40px;
             line-height: 1.6;
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
         }
 
         .hero-buttons {
             display: flex;
             justify-content: center;
             gap: 20px;
+            position: relative;
+            z-index: 2;
         }
 
         .hero-buttons .btn {
@@ -133,21 +198,64 @@
             font-size: 16px;
         }
 
+        .hero:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: white;
+            border-radius: 50% 50% 0 0;
+        }
+
         /* 功能区域 */
         .features {
-            padding: 60px 5%;
+            padding: 80px 5% 60px;
             background-color: white;
+            background-image: linear-gradient(to bottom, rgba(38, 208, 206, 0.15) 0%, rgba(38, 208, 206, 0.05) 150px, rgba(255, 255, 255, 1) 300px);
+            color: var(--dark);
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 -10px 30px rgba(26, 41, 128, 0.03);
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background-image: linear-gradient(to bottom, rgba(42, 55, 146, 0.1), transparent);
+            opacity: 0.5;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 2;
         }
 
         .section-title h3 {
-            font-size: 28px;
+            font-size: 32px;
             color: var(--dark);
             margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent);
         }
 
         .section-title p {
@@ -162,44 +270,122 @@
             gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
 
         .feature-card {
-            background-color: var(--light);
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
+            background: linear-gradient(145deg, #ffffff, #f0f7f7);
+            border-radius: 16px;
+            padding: 35px 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.5s, box-shadow 0.5s;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .feature-card:hover::after {
+            transform: translateX(0);
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
 
         .feature-icon {
-            font-size: 40px;
-            color: var(--primary);
-            margin-bottom: 20px;
+            font-size: 50px;
+            color: var(--accent);
+            margin: 0 auto 25px;
+            transition: transform 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70px;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
         }
 
         .feature-card h4 {
-            font-size: 20px;
-            color: var(--dark);
+            font-size: 22px;
             margin-bottom: 15px;
+            color: var(--dark);
+            font-weight: 600;
         }
 
         .feature-card p {
             color: var(--secondary);
             line-height: 1.6;
+            font-size: 15px;
+            margin: 0 auto;
+            max-width: 280px;
+        }
+
+        /* 关于我们 */
+        .about {
+            padding: 80px 5% !important; 
+            background-color: #f5f9fd !important;
+            color: var(--dark) !important;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about:before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: white;
+            border-radius: 0 0 50% 50%;
+            z-index: 1;
+        }
+
+        /* 联系我们 */
+        .contact {
+            padding: 80px 5% !important;
+            background-color: white !important;
+            color: var(--dark) !important;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact:before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: #f5f9fd;
+            border-radius: 0 0 50% 50%;
+            z-index: 1;
         }
 
         /* 页脚 */
         footer {
-            background-color: var(--dark);
+            background-color: #1a252f;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M0 77.18l5.66-5.66 2.82 2.82L2.83 80H0v-2.82zM0 2.8l5.66 5.66 2.82-2.82L2.83 0H0v2.82zM77.18 80l-5.66-5.66 2.82-2.82L80 77.17V80h-2.82zM80 2.82l-5.66 5.66-2.82-2.82L77.18 0H80v2.82zM40 37.2l5.66-5.66 2.82 2.82L42.83 40l5.65 5.65-2.82 2.82L40 42.83l-5.65 5.65-2.82-2.82L37.17 40l-5.66-5.66 2.82-2.82L40 37.18z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             color: white;
             padding: 40px 5%;
             text-align: center;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .footer-links {
@@ -210,12 +396,14 @@
         }
 
         .footer-links a {
-            color: white;
+            color: #ecf0f1;
             text-decoration: none;
+            padding: 5px 10px;
+            transition: all 0.3s;
         }
 
         .footer-links a:hover {
-            text-decoration: underline;
+            color: var(--accent);
         }
 
         .copyright {
@@ -258,7 +446,7 @@
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="logo">
-            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2Ij48cmVjdCB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgZmlsbD0iIzRhNmNmNyIvPjxjaXJjbGUgY3g9IjEyOCIgY3k9IjEyOCIgcj0iODAiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMTQiIGZpbGw9Im5vbmUiLz48cGF0aCBkPSJNMTI4IDQ4djYwTTEyOCAxNjh2NjBNNDggMTI4aDYwTTE2OCAxMjhoNjAiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjx0ZXh0IHg9IjEyOCIgeT0iMTQwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7mjqXlj5blj6PkvpnkuLo8L3RleHQ+PC9zdmc+" alt="培训机构Logo" style="width:40px;">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2Ij48cmVjdCB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgZmlsbD0iI2U2N2UyMiIvPjxjaXJjbGUgY3g9IjEyOCIgY3k9IjEyOCIgcj0iODAiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMTQiIGZpbGw9Im5vbmUiLz48cGF0aCBkPSJNMTI4IDQ4djYwTTEyOCAxNjh2NjBNNDggMTI4aDYwTTE2OCAxMjhoNjAiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjx0ZXh0IHg9IjEyOCIgeT0iMTQwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7mjqXlj5blj6PkvpnkuLo8L3RleHQ+PC9zdmc+" alt="培训机构Logo" style="width:40px;">
             <h1>培训机构管理系统</h1>
         </div>
         <div class="nav-links">
@@ -289,33 +477,45 @@
             <p>我们的系统提供全方位的培训机构管理功能</p>
         </div>
         <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
+            <div class="feature-card" style="border-bottom: 4px solid #4CAF50; background: linear-gradient(145deg, #ffffff, #f0f7f2);">
+                <div class="feature-icon">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiM0Q0FGNTAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSI0IiB5PSI0IiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHJ4PSIyIi8+PHJlY3QgeD0iMTAiIHk9IjEwIiB3aWR0aD0iOCIgaGVpZ2h0PSIyOCIgZmlsbD0icmdiYSg3NiwgMTc1LCA4MCwgMC4yKSIvPjxyZWN0IHg9IjIwIiB5PSIyMCIgd2lkdGg9IjgiIGhlaWdodD0iMTgiIGZpbGw9InJnYmEoNzYsIDE3NSwgODAsIDAuNikiLz48cmVjdCB4PSIzMCIgeT0iMTUiIHdpZHRoPSI4IiBoZWlnaHQ9IjIzIiBmaWxsPSJyZ2JhKDc2LCAxNzUsIDgwLCAxKSIvPjwvZz48L3N2Zz4=" alt="学员管理" style="width: 48px; height: 48px;">
+                </div>
                 <h4>学员管理</h4>
                 <p>全面记录学员信息、学习进度和成绩，实现个性化教学跟踪</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">📅</div>
+            <div class="feature-card" style="border-bottom: 4px solid #FF5722; background: linear-gradient(145deg, #ffffff, #fff5f2);">
+                <div class="feature-icon">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiNGRjU3MjIiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSI2IiB5PSI4IiB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHJ4PSIyIi8+PHJlY3QgeD0iMTIiIHk9IjQiIHdpZHRoPSIyNCIgaGVpZ2h0PSI4IiByeD0iMiIgZmlsbD0icmdiYSgyNTUsIDg3LCAzNCwgMC4yKSIvPjxsaW5lIHgxPSIxMiIgeTE9IjIwIiB4Mj0iMzYiIHkyPSIyMCIvPjxsaW5lIHgxPSIxMiIgeTE9IjI4IiB4Mj0iMzYiIHkyPSIyOCIvPjxsaW5lIHgxPSIxMiIgeTE9IjM2IiB4Mj0iMzYiIHkyPSIzNiIvPjx0ZXh0IHg9IjI0IiB5PSIxNyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI4IiBmaWxsPSIjRkY1NzIyIiBzdHJva2U9Im5vbmUiPjE3PC90ZXh0PjwvZz48L3N2Zz4=" alt="课程排班" style="width: 48px; height: 48px;">
+                </div>
                 <h4>课程排班</h4>
                 <p>智能排课系统，自动处理教师、教室和时间的冲突</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">💰</div>
+            <div class="feature-card" style="border-bottom: 4px solid #FFC107; background: linear-gradient(145deg, #ffffff, #fffbf0);">
+                <div class="feature-icon">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiNGRkMxMDciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMzQgMjJjMCA5Ljk0LTEwIDE4LTEwIDE4cy0xMC04LjA2LTEwLTE4YTEwIDEwIDAgMCAxIDIwIDB6IiBmaWxsPSJyZ2JhKDI1NSwgMTkzLCA3LCAwLjIpIi8+PHRleHQgeD0iMjQiIHk9IjI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEyIiBmaWxsPSIjRkZDMTA3IiBzdHJva2U9Im5vbmUiPiQ8L3RleHQ+PC9nPjwvc3ZnPg==" alt="财务管理" style="width: 48px; height: 48px;">
+                </div>
                 <h4>财务管理</h4>
                 <p>自动生成财务报表，清晰记录每一笔收入和支出</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">👨‍🏫</div>
+            <div class="feature-card" style="border-bottom: 4px solid #2196F3; background: linear-gradient(145deg, #ffffff, #f0f7ff);">
+                <div class="feature-icon">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiMyMTk2RjMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48Y2lyY2xlIGN4PSIyNCIgY3k9IjE2IiByPSI4IiBmaWxsPSJyZ2JhKDMzLCAxNTAsIDI0MywgMC4yKSIvPjxwYXRoIGQ9Ik04IDQwYzAtOCA4LTEyIDE2LTEyczE2IDQgMTYgMTIiLz48cmVjdCB4PSIyMCIgeT0iMTQiIHdpZHRoPSI4IiBoZWlnaHQ9IjQiIGZpbGw9InJnYmEoMzMsIDE1MCwgMjQzLCAwLjYpIi8+PC9nPjwvc3ZnPg==" alt="教师管理" style="width: 48px; height: 48px;">
+                </div>
                 <h4>教师管理</h4>
                 <p>管理教师信息、课程安排和教学评估</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">📱</div>
+            <div class="feature-card" style="border-bottom: 4px solid #9C27B0; background: linear-gradient(145deg, #ffffff, #f7f0ff);">
+                <div class="feature-icon">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiM5QzI3QjAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSIxMiIgeT0iNiIgd2lkdGg9IjI0IiBoZWlnaHQ9IjM2IiByeD0iMiIvPjxyZWN0IHg9IjE2IiB5PSIxMCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjI0IiByeD0iMSIgZmlsbD0icmdiYSgxNTYsIDM5LCAxNzYsIDAuMikiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjM2IiByPSIyIiBmaWxsPSJyZ2JhKDE1NiwgMzksIDE3NiwgMC44KSIvPjwvZz48L3N2Zz4=" alt="小程序支持" style="width: 48px; height: 48px;">
+                </div>
                 <h4>小程序支持</h4>
                 <p>配套小程序让家长随时查看学员进度和课程安排</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">📈</div>
+            <div class="feature-card" style="border-bottom: 4px solid #E91E63; background: linear-gradient(145deg, #ffffff, #fff0f5);">
+                <div class="feature-icon">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9Im5vbmUiLz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiNFOTFFNjMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSI0IiB5PSI0IiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHJ4PSIyIi8+PHBhdGggZD0iTTQgMTZoNDBNNCAxNmwxMiAxMk0yMCAyOGwxMCAtMTJNMzAgMTZsMTAgMTIiIHN0cm9rZT0iI0U5MUU2MyIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMzAgMTZsNCAxMiIgc3Ryb2tlPSIjRTkxRTYzIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsbD0icmdiYSgyMzMsIDMwLCA5OSwgMC4yKSIvPjwvZz48L3N2Zz4=" alt="数据分析" style="width: 48px; height: 48px;">
+                </div>
                 <h4>数据分析</h4>
                 <p>多维度数据分析，帮助机构优化运营策略</p>
             </div>
@@ -323,7 +523,7 @@
     </section>
 
     <!-- 关于我们 -->
-    <section class="about" id="about" style="padding: 80px 5%; background-color: white;">
+    <section class="about" id="about" style="padding: 80px 5%; background-color: #f5f9fd; color: var(--dark);">
         <div class="section-title">
             <h3>关于我们</h3>
             <p>专业的培训管理解决方案提供商</p>
@@ -334,16 +534,16 @@
                 我们的团队由教育专家和技术精英组成，致力于为培训机构提供最专业的管理工具。
             </p>
             <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 200px;">
-                    <h4 style="color: var(--primary);">10年+</h4>
+                <div style="flex: 1; min-width: 200px; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); transform: translateY(0); transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <h4 style="color: var(--accent); font-size: 36px; margin-bottom: 10px;">10年+</h4>
                     <p style="color: var(--secondary);">行业经验</p>
                 </div>
-                <div style="flex: 1; min-width: 200px;">
-                    <h4 style="color: var(--primary);">1000+</h4>
+                <div style="flex: 1; min-width: 200px; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); transform: translateY(0); transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <h4 style="color: var(--accent); font-size: 36px; margin-bottom: 10px;">1000+</h4>
                     <p style="color: var(--secondary);">合作机构</p>
                 </div>
-                <div style="flex: 1; min-width: 200px;">
-                    <h4 style="color: var(--primary);">24/7</h4>
+                <div style="flex: 1; min-width: 200px; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); transform: translateY(0); transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <h4 style="color: var(--accent); font-size: 36px; margin-bottom: 10px;">24/7</h4>
                     <p style="color: var(--secondary);">技术支持</p>
                 </div>
             </div>
@@ -351,32 +551,32 @@
     </section>
 
     <!-- 联系我们 -->
-    <section class="contact" id="contact" style="padding: 80px 5%; background-color: var(--light);">
+    <section class="contact" id="contact" style="padding: 80px 5%; background-color: white; color: var(--dark);">
         <div class="section-title">
             <h3>联系我们</h3>
             <p>随时为您提供专业咨询</p>
         </div>
-        <div style="max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+        <div style="max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-bottom: 4px solid var(--accent);">
             <form style="display: grid; gap: 20px;">
                 <div>
                     <label style="display: block; margin-bottom: 8px; color: var(--dark); font-weight: 600;">您的姓名</label>
-                    <input type="text" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 5px;" placeholder="请输入姓名">
+                    <input type="text" style="width: 100%; padding: 12px; background: #f5f9fd; border: 1px solid var(--border); border-radius: 8px; color: var(--dark);" placeholder="请输入姓名">
                 </div>
                 <div>
                     <label style="display: block; margin-bottom: 8px; color: var(--dark); font-weight: 600;">电子邮箱</label>
-                    <input type="email" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 5px;" placeholder="请输入邮箱">
+                    <input type="email" style="width: 100%; padding: 12px; background: #f5f9fd; border: 1px solid var(--border); border-radius: 8px; color: var(--dark);" placeholder="请输入邮箱">
                 </div>
                 <div>
                     <label style="display: block; margin-bottom: 8px; color: var(--dark); font-weight: 600;">留言内容</label>
-                    <textarea style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 5px; min-height: 120px;" placeholder="请输入您的留言"></textarea>
+                    <textarea style="width: 100%; padding: 12px; background: #f5f9fd; border: 1px solid var(--border); border-radius: 8px; min-height: 120px; color: var(--dark);" placeholder="请输入您的留言"></textarea>
                 </div>
-                <button type="submit" style="background: var(--primary); color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: 600;">提交咨询</button>
+                <button type="submit" style="background: var(--accent); color: white; border: none; padding: 14px; border-radius: 30px; cursor: pointer; font-weight: 600; transition: all 0.3s; box-shadow: 0 5px 15px rgba(255, 120, 70, 0.3);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 20px rgba(255, 120, 70, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(255, 120, 70, 0.3)';">提交咨询</button>
             </form>
             <div style="margin-top: 40px; text-align: center;">
                 <p style="color: var(--secondary); margin-bottom: 15px;">或通过以下方式联系我们：</p>
                 <div style="display: flex; justify-content: center; gap: 20px;">
-                    <a href="tel:400-123-4567" style="color: var(--primary); text-decoration: none;">📞 400-123-4567</a>
-                    <a href="mailto:contact@training.com" style="color: var(--primary); text-decoration: none;">✉️ contact@training.com</a>
+                    <a href="tel:400-123-4567" style="color: var(--accent); text-decoration: none; padding: 10px 15px; background: #f5f9fd; border-radius: 30px; transition: all 0.3s;" onmouseover="this.style.background='#ecf0f1'; this.style.transform='translateY(-3px)';" onmouseout="this.style.background='#f5f9fd'; this.style.transform='translateY(0)';">📞 400-123-4567</a>
+                    <a href="mailto:contact@training.com" style="color: var(--accent); text-decoration: none; padding: 10px 15px; background: #f5f9fd; border-radius: 30px; transition: all 0.3s;" onmouseover="this.style.background='#ecf0f1'; this.style.transform='translateY(-3px)';" onmouseout="this.style.background='#f5f9fd'; this.style.transform='translateY(0)';">✉️ contact@training.com</a>
                 </div>
             </div>
         </div>
