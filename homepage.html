@@ -708,6 +708,165 @@
         .add-campus:hover {
             transform: scale(1.2);
         }
+
+        .coach-card .student-list {
+            min-height: 140px;
+            max-height: 180px;
+            overflow-y: auto;
+            column-gap: 10px;
+            padding-right: 5px;
+        }
+
+        .coach-card .student-list > div {
+            break-inside: avoid;
+            page-break-inside: avoid;
+            margin-bottom: 4px;
+        }
+
+        /* 学员条目悬停效果 */
+        div[style*="display: flex"][style*="padding: 3px 5px"]:hover {
+            background-color: rgba(52, 152, 219, 0.07);
+            transition: background-color 0.2s;
+        }
+
+        /* 确保滚动条样式美观 */
+        .coach-card .student-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .coach-card .student-list::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 3px;
+        }
+
+        .coach-card .student-list::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 3px;
+        }
+
+        .coach-card .student-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        /* 概览统计数据条样式 */
+        .stats-bar {
+            display: flex;
+            background: linear-gradient(120deg, #f8f9fa, #ffffff, #f8f9fa);
+            background-size: 200% 100%;
+            border-radius: 10px;
+            padding: 12px 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #f1f1f1;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            position: relative;
+            min-width: 120px;
+            flex: 1;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .stat-item:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .stat-content {
+            text-align: center;
+            width: 100%;
+        }
+
+        .stat-icon {
+            margin-bottom: 3px;
+            font-size: 16px;
+            color: #3498db;
+            opacity: 0.8;
+            background-color: rgba(52, 152, 219, 0.1);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin: 0 auto 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .stat-item:hover .stat-icon {
+            transform: scale(1.1);
+            background-color: rgba(52, 152, 219, 0.2);
+        }
+
+        .stat-number {
+            font-size: 22px;
+            font-weight: 700;
+            color: #3498db;
+            transition: color 0.2s;
+        }
+
+        .stat-item:hover .stat-number {
+            color: #2980b9;
+        }
+
+        .stat-unit {
+            font-size: 14px;
+            color: #888;
+            font-weight: normal;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #777;
+            margin-top: 2px;
+        }
+
+        .stat-divider {
+            position: absolute;
+            right: 0;
+            top: 20%;
+            bottom: 20%;
+            width: 1px;
+            background-color: rgba(0,0,0,0.06);
+        }
+
+        /* 脉冲动画效果 */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.1); }
+            70% { box-shadow: 0 0 0 4px rgba(52, 152, 219, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
+        }
+
+        .stats-bar {
+            animation: pulse 3s infinite;
+            background: linear-gradient(120deg, #f8f9fa, #ffffff, #f8f9fa);
+            background-size: 200% 100%;
+        }
+
+        /* 根据数据类型设置不同图标颜色 */
+        .stat-item:nth-child(1) .stat-icon { color: #3498db; background-color: rgba(52, 152, 219, 0.1); }
+        .stat-item:nth-child(2) .stat-icon { color: #2ecc71; background-color: rgba(46, 204, 113, 0.1); }
+        .stat-item:nth-child(3) .stat-icon { color: #e74c3c; background-color: rgba(231, 76, 60, 0.1); }
+        .stat-item:nth-child(4) .stat-icon { color: #f39c12; background-color: rgba(243, 156, 18, 0.1); }
+        .stat-item:nth-child(5) .stat-icon { color: #9b59b6; background-color: rgba(155, 89, 182, 0.1); }
+        .stat-item:nth-child(6) .stat-icon { color: #16a085; background-color: rgba(22, 160, 133, 0.1); }
+        .stat-item:nth-child(7) .stat-icon { color: #c0392b; background-color: rgba(192, 57, 43, 0.1); }
+        .stat-item:nth-child(8) .stat-icon { color: #e74c3c; background-color: rgba(231, 76, 60, 0.1); }
+
+        .stat-item:nth-child(1) .stat-number { color: #3498db; }
+        .stat-item:nth-child(2) .stat-number { color: #2ecc71; }
+        .stat-item:nth-child(3) .stat-number { color: #e74c3c; }
+        .stat-item:nth-child(4) .stat-number { color: #f39c12; }
+        .stat-item:nth-child(5) .stat-number { color: #9b59b6; }
+        .stat-item:nth-child(6) .stat-number { color: #16a085; }
+        .stat-item:nth-child(7) .stat-number { color: #c0392b; }
+        .stat-item:nth-child(8) .stat-number { color: #e74c3c; }
     </style>
 </head>
 <body>
@@ -789,6 +948,288 @@
                         <div class="campus-status-badge">正常运营中</div>
                     </div>
 
+                    <!-- 今日概览 -->
+                    <div class="dashboard-card" id="today-overview-card">
+                        <div class="card-header">
+                            <div class="card-title">今日数据</div>
+                            <div>
+                                <span class="drag-handle" draggable="true">☰</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="stats-bar">
+                                <div class="stat-item">
+                                    <div class="stat-content">
+                                        <div class="stat-number">3<span class="stat-unit">个</span></div>
+                                        <div class="stat-label">上课老师</div>
+                                    </div>
+                                    <div class="stat-divider"></div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-content">
+                                        <div class="stat-number">3<span class="stat-unit">个</span></div>
+                                        <div class="stat-label">上课班级</div>
+                                    </div>
+                                    <div class="stat-divider"></div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-content">
+                                        <div class="stat-number">11<span class="stat-unit">人</span></div>
+                                        <div class="stat-label">上课学员</div>
+                                    </div>
+                                    <div class="stat-divider"></div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-content">
+                                        <div class="stat-number">11<span class="stat-unit">次</span></div>
+                                        <div class="stat-label">打卡次数</div>
+                                    </div>
+                                    <div class="stat-divider"></div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-content">
+                                        <div class="stat-number">11<span class="stat-unit">个</span></div>
+                                        <div class="stat-label">消耗课时</div>
+                                    </div>
+                                    <div class="stat-divider"></div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-content">
+                                        <div class="stat-number">3<span class="stat-unit">人</span></div>
+                                        <div class="stat-label">请假人数</div>
+                                    </div>
+                                    <div class="stat-divider"></div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-content">
+                                        <div class="stat-number">950<span class="stat-unit">元</span></div>
+                                        <div class="stat-label">老师课酬</div>
+                                    </div>
+                                    <div class="stat-divider"></div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-content">
+                                        <div class="stat-number">2,902<span class="stat-unit">元</span></div>
+                                        <div class="stat-label">消耗费用</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 5px;">
+                                <div id="class-dimension-view">
+                                    <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                                        <!-- 杨大冬课程卡片标题样式 -->
+                                        <div class="coach-card" style="flex: 1; min-width: 300px; background-color: white; color: #333; padding: 12px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); border-top: 3px solid #3498db;">
+                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px dashed rgba(0,0,0,0.1); padding-bottom: 8px; padding-top: 5px; background-color: rgba(52, 152, 219, 0.05); border-radius: 4px; position: relative;">
+                                                <div style="font-size: 18px; font-weight: 600; color: #34495e; text-align: center; width: 100%;">杨大冬课程</div>
+                                                <span style="font-size: 12px; color: #777; font-weight: 500; position: absolute; right: 10px;">1对1-杨教练</span>
+                                            </div>
+                                            <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+                                                <span>课时：<b>8</b> | 课酬：<b>¥300</b> | 销课金额：<b style="color: #3498db;">¥1,056.60</b></span>
+                                            </div>
+                                            <div style="font-size: 12px; background-color: #f8f9fa; border-radius: 4px; padding: 8px; min-height: 140px; max-height: 180px; overflow-y: auto;">
+                                                <div style="column-count: 2; column-gap: 10px;">
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>张小明 (15:30-16:30)</span>
+                                                        <span style="color: #28a745; font-size: 11px;">已完成</span>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>李华 (16:40-17:40)</span>
+                                                        <span style="color: #28a745; font-size: 11px;">已完成</span>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>王芳 (18:00-19:00)</span>
+                                                        <span style="color: #28a745; font-size: 11px;">已完成</span>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>赵强 (19:10-20:10)</span>
+                                                        <span style="color: #28a745; font-size: 11px;">已完成</span>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>刘洋 (10:00-11:00)</span>
+                                                        <span style="color: #28a745; font-size: 11px;">已完成</span>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>周明 (11:10-12:10)</span>
+                                                        <span style="color: #dc3545; font-size: 11px;">请假</span>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>郑伟 (12:20-13:20)</span>
+                                                        <span style="color: #28a745; font-size: 11px;">已完成</span>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>黄霞 (13:30-14:30)</span>
+                                                        <span style="color: #28a745; font-size: 11px;">已完成</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 苗寒青课程卡片标题样式 -->
+                                        <div class="coach-card" style="flex: 1; min-width: 300px; background-color: white; color: #333; padding: 12px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); border-top: 3px solid #2ecc71;">
+                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px dashed rgba(0,0,0,0.1); padding-bottom: 8px; padding-top: 5px; background-color: rgba(46, 204, 113, 0.05); border-radius: 4px; position: relative;">
+                                                <div style="font-size: 18px; font-weight: 600; color: #34495e; text-align: center; width: 100%;">苗寒青课程</div>
+                                                <span style="font-size: 12px; color: #777; font-weight: 500; position: absolute; right: 10px;">1对1-苗教练</span>
+                                            </div>
+                                            <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+                                                <span>课时：<b>3</b> | 课酬：<b>¥270</b> | 销课金额：<b style="color: #2ecc71;">¥824.60</b></span>
+                                            </div>
+                                            <div style="font-size: 12px; background-color: #f8f9fa; border-radius: 4px; padding: 8px; min-height: 140px; max-height: 180px; overflow-y: auto;">
+                                                <div style="column-count: 1; column-gap: 10px;">
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>刘明 (10:00-11:00)</span>
+                                                        <span style="color: #28a745; font-size: 11px;">已完成</span>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>郑华 (11:10-12:10)</span>
+                                                        <span style="color: #dc3545; font-size: 11px;">请假</span>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>周丽 (14:00-15:00)</span>
+                                                        <span style="color: #28a745; font-size: 11px;">已完成</span>
+                                                    </div>
+                                                    <!-- 添加空行以确保高度足够 -->
+                                                    <div style="height: 5px;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="coach-card" style="flex: 1; min-width: 300px; background-color: white; color: #333; padding: 12px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); border-top: 3px solid #f39c12;">
+                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px dashed rgba(0,0,0,0.1); padding-bottom: 8px; padding-top: 5px; background-color: rgba(243, 156, 18, 0.05); border-radius: 4px; position: relative;">
+                                                <div style="font-size: 18px; font-weight: 600; color: #34495e; text-align: center; width: 100%;">武文册课程</div>
+                                                <span style="font-size: 12px; color: #777; font-weight: 500; position: absolute; right: 10px;">1对1-武教练</span>
+                                            </div>
+                                            <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+                                                <span>课时：<b>7</b> | 课酬：<b>¥380</b> | 销课金额：<b style="color: #f39c12;">¥1,021.10</b></span>
+                                            </div>
+                                            <div style="font-size: 12px; background-color: #f8f9fa; border-radius: 4px; padding: 8px; min-height: 140px; max-height: 180px; overflow-y: auto;">
+                                                <div style="column-count: 2; column-gap: 10px;">
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>陈刚 (13:00-14:00)</span>
+                                                        <span style="color: #28a745; font-size: 11px;">已完成</span>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>吴婷 (14:10-15:10)</span>
+                                                        <span style="color: #28a745; font-size: 11px;">已完成</span>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>黄伟 (15:20-16:20)</span>
+                                                        <span style="color: #28a745; font-size: 11px;">已完成</span>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>杨洁 (16:30-17:30)</span>
+                                                        <span style="color: #28a745; font-size: 11px;">已完成</span>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>王鑫 (9:00-10:00)</span>
+                                                        <span style="color: #28a745; font-size: 11px;">已完成</span>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>赵丽 (10:10-11:10)</span>
+                                                        <span style="color: #dc3545; font-size: 11px;">请假</span>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; break-inside: avoid; padding: 3px 5px; border-radius: 3px;">
+                                                        <span>张飞 (11:20-12:20)</span>
+                                                        <span style="color: #28a745; font-size: 11px;">已完成</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 今日上课学员 -->
+                    <div class="card" id="today-card">
+                        <div class="card-header">
+                            <div class="card-title">今日上课学员
+                                <span style="margin-left: 15px; font-size: 14px; font-weight: normal;">
+                                    <button class="action-btn action-btn-secondary" style="padding: 2px 8px;"><i>✓</i> 批量打卡</button>
+                                </span>
+                            </div>
+                            <div>
+                                <span class="drag-handle" draggable="true">☰</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40px;">
+                                            <input type="checkbox" id="selectAll">
+                                        </th>
+                                        <th>学员姓名</th>
+                                        <th>时间</th>
+                                        <th>教练</th>
+                                        <th>剩余课时</th>
+                                        <th>课程类型</th>
+                                        <th>销课金额</th>
+                                        <th>剩余金额</th>
+                                        <th>状态</th>
+                                        <th style="width: 300px; text-align: center;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="checkbox" class="select-item" data-status="unchecked"></td>
+                                        <td>张小明</td>
+                                        <td>14:00-16:00</td>
+                                        <td>李教练</td>
+                                        <td>12/24</td>
+                                        <td><span class="badge" style="background-color: #d4edda; color: #28a745;">固定课程</span></td>
+                                        <td>-</td>
+                                        <td>¥2,400</td>
+                                        <td><span class="badge badge-warning status" data-status="unchecked">未打卡</span></td>
+                                        <td class="actions" style="text-align: center;">
+                                            <div style="display: flex; align-items: center; justify-content: center; flex-wrap: nowrap;">
+                                                <button class="action-btn action-btn-warning leave" style="width: 90px; white-space: nowrap;"><i>📅</i> 请假</button>
+                                                <button class="action-btn action-btn-primary check-in" style="width: 90px; white-space: nowrap;"><i>✓</i> 打卡</button>
+                                                <button class="action-btn action-btn-light" style="width: 90px; white-space: nowrap;"><i>👁️</i> 详情</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="select-item" data-status="checked" disabled></td>
+                                        <td>李华</td>
+                                        <td>10:00-11:00</td>
+                                        <td>王教练</td>
+                                        <td>15/30</td>
+                                        <td><span class="badge" style="background-color: #cfe2ff; color: #0d6efd;">临时约课</span></td>
+                                        <td>¥180</td>
+                                        <td>¥2,700</td>
+                                        <td><span class="badge badge-success status" data-status="checked">已打卡</span></td>
+                                        <td class="actions" style="text-align: center;">
+                                            <div style="display: flex; align-items: center; justify-content: center; flex-wrap: nowrap;">
+                                                <div style="width: 90px;"></div>
+                                                <div style="width: 90px;"></div>
+                                                <button class="action-btn action-btn-light" style="width: 90px; white-space: nowrap;"><i>👁️</i> 详情</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" class="select-item" data-status="leave" disabled></td>
+                                        <td>王芳</td>
+                                        <td>16:00-17:00</td>
+                                        <td>张教练</td>
+                                        <td>8/20</td>
+                                        <td><span class="badge" style="background-color: #d4edda; color: #28a745;">固定课程</span></td>
+                                        <td>-</td>
+                                        <td>¥1,600</td>
+                                        <td><span class="badge badge-leave status" data-status="leave">已请假</span></td>
+                                        <td class="actions" style="text-align: center;">
+                                            <div style="display: flex; align-items: center; justify-content: center; flex-wrap: nowrap;">
+                                                <div style="width: 90px;"></div>
+                                                <button class="action-btn action-btn-primary check-in" style="width: 90px; white-space: nowrap;"><i>✓</i> 打卡</button>
+                                                <button class="action-btn action-btn-light" style="width: 90px; white-space: nowrap;"><i>👁️</i> 详情</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                     <!-- 仪表盘统计 -->
                     <div class="dashboard-card" id="dashboard-card">
                         <div class="card-header">
@@ -868,88 +1309,6 @@
                         </div>
                     </div>
 
-                    <!-- 今日上课学员 -->
-                    <div class="card" id="today-card">
-                        <div class="card-header">
-                            <div class="card-title">今日上课学员
-                                <span style="margin-left: 15px; font-size: 14px; font-weight: normal;">
-                                    <button class="action-btn action-btn-secondary" style="padding: 2px 8px;"><i>✓</i> 批量打卡</button>
-                                </span>
-                            </div>
-                            <div>
-                                <span class="drag-handle" draggable="true">☰</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 40px;">
-                                            <input type="checkbox" id="selectAll">
-                                        </th>
-                                        <th>学员姓名</th>
-                                        <th>时间</th>
-                                        <th>教练</th>
-                                        <th>剩余课时</th>
-                                        <th>课程类型</th>
-                                        <th>状态</th>
-                                        <th style="width: 300px; text-align: center;">操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="checkbox" class="select-item" data-status="unchecked"></td>
-                                        <td>张小明</td>
-                                        <td>14:00-16:00</td>
-                                        <td>李教练</td>
-                                        <td>12/24</td>
-                                        <td><span class="badge" style="background-color: #d4edda; color: #28a745;">固定课程</span></td>
-                                        <td><span class="badge badge-warning status" data-status="unchecked">未打卡</span></td>
-                                        <td class="actions" style="text-align: center;">
-                                            <div style="display: flex; align-items: center; justify-content: center; flex-wrap: nowrap;">
-                                                <button class="action-btn action-btn-warning leave" style="width: 90px; white-space: nowrap;"><i>📅</i> 请假</button>
-                                                <button class="action-btn action-btn-primary check-in" style="width: 90px; white-space: nowrap;"><i>✓</i> 打卡</button>
-                                                <button class="action-btn action-btn-light" style="width: 90px; white-space: nowrap;"><i>👁️</i> 详情</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="select-item" data-status="checked" disabled></td>
-                                        <td>李华</td>
-                                        <td>10:00-11:00</td>
-                                        <td>王教练</td>
-                                        <td>15/30</td>
-                                        <td><span class="badge" style="background-color: #cfe2ff; color: #0d6efd;">临时约课</span></td>
-                                        <td><span class="badge badge-success status" data-status="checked">已打卡</span></td>
-                                        <td class="actions" style="text-align: center;">
-                                            <div style="display: flex; align-items: center; justify-content: center; flex-wrap: nowrap;">
-                                                <div style="width: 90px;"></div>
-                                                <div style="width: 90px;"></div>
-                                                <button class="action-btn action-btn-light" style="width: 90px; white-space: nowrap;"><i>👁️</i> 详情</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="select-item" data-status="leave" disabled></td>
-                                        <td>王芳</td>
-                                        <td>16:00-17:00</td>
-                                        <td>张教练</td>
-                                        <td>8/20</td>
-                                        <td><span class="badge" style="background-color: #d4edda; color: #28a745;">固定课程</span></td>
-                                        <td><span class="badge badge-leave status" data-status="leave">已请假</span></td>
-                                        <td class="actions" style="text-align: center;">
-                                            <div style="display: flex; align-items: center; justify-content: center; flex-wrap: nowrap;">
-                                                <div style="width: 90px;"></div>
-                                                <button class="action-btn action-btn-primary check-in" style="width: 90px; white-space: nowrap;"><i>✓</i> 打卡</button>
-                                                <button class="action-btn action-btn-light" style="width: 90px; white-space: nowrap;"><i>👁️</i> 详情</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
                     <!-- 教练员课时统计 -->
                     <div class="dashboard-card" id="coach-stats-card">
                         <div class="card-header">
@@ -983,11 +1342,11 @@
                                                 李教练
                                             </div>
                                         </td>
-                                        <td>24</td>
-                                        <td>8</td>
-                                        <td>120</td>
-                                        <td>全职</td>
-                                        <td>2,880</td>
+                                        <td style="text-align: center;">24 <span style="font-size: 12px; color: #777;">(¥2,880)</span></td>
+                                        <td style="text-align: center;">8 <span style="font-size: 12px; color: #777;">(¥960)</span></td>
+                                        <td style="text-align: center;">120</td>
+                                        <td style="text-align: center;">全职</td>
+                                        <td style="text-align: center;">2,880</td>
                                     </tr>
                                     <tr class="coach-data week-data" style="text-align: center;">
                                         <td>
@@ -996,11 +1355,11 @@
                                                 王教练
                                             </div>
                                         </td>
-                                        <td>18</td>
-                                        <td>10</td>
-                                        <td>100.5</td>
-                                        <td>全职</td>
-                                        <td>1,800</td>
+                                        <td style="text-align: center;">18 <span style="font-size: 12px; color: #777;">(¥1,809)</span></td>
+                                        <td style="text-align: center;">10 <span style="font-size: 12px; color: #777;">(¥1,005)</span></td>
+                                        <td style="text-align: center;">100.5</td>
+                                        <td style="text-align: center;">全职</td>
+                                        <td style="text-align: center;">1,800</td>
                                     </tr>
                                     <tr class="coach-data week-data" style="text-align: center;">
                                         <td>
@@ -1009,11 +1368,11 @@
                                                 张教练
                                             </div>
                                         </td>
-                                        <td>16</td>
-                                        <td>12</td>
-                                        <td>110.50</td>
-                                        <td>兼职</td>
-                                        <td>1,760</td>
+                                        <td style="text-align: center;">16 <span style="font-size: 12px; color: #777;">(¥1,768)</span></td>
+                                        <td style="text-align: center;">12 <span style="font-size: 12px; color: #777;">(¥1,326)</span></td>
+                                        <td style="text-align: center;">110.50</td>
+                                        <td style="text-align: center;">兼职</td>
+                                        <td style="text-align: center;">1,760</td>
                                     </tr>
                                     <tr class="coach-data week-data" style="text-align: center;">
                                         <td>
@@ -1022,11 +1381,11 @@
                                                 刘教练
                                             </div>
                                         </td>
-                                        <td>14</td>
-                                        <td>7</td>
-                                        <td>130.123</td>
-                                        <td>兼职</td>
-                                        <td>1,820</td>
+                                        <td style="text-align: center;">14 <span style="font-size: 12px; color: #777;">(¥1,821.72)</span></td>
+                                        <td style="text-align: center;">7 <span style="font-size: 12px; color: #777;">(¥910.86)</span></td>
+                                        <td style="text-align: center;">130.123</td>
+                                        <td style="text-align: center;">兼职</td>
+                                        <td style="text-align: center;">1,820</td>
                                     </tr>
                                     
                                     <!-- 本月数据 -->
@@ -1037,11 +1396,11 @@
                                                 李教练
                                             </div>
                                         </td>
-                                        <td>86</td>
-                                        <td>14</td>
-                                        <td>120</td>
-                                        <td>全职</td>
-                                        <td>10,320</td>
+                                        <td style="text-align: center;">86 <span style="font-size: 12px; color: #777;">(¥10,320)</span></td>
+                                        <td style="text-align: center;">14 <span style="font-size: 12px; color: #777;">(¥1,680)</span></td>
+                                        <td style="text-align: center;">120</td>
+                                        <td style="text-align: center;">全职</td>
+                                        <td style="text-align: center;">10,320</td>
                                     </tr>
                                     <tr class="coach-data month-data" style="display: none; text-align: center;">
                                         <td>
@@ -1050,11 +1409,11 @@
                                                 王教练
                                             </div>
                                         </td>
-                                        <td>62</td>
-                                        <td>18</td>
-                                        <td>100</td>
-                                        <td>全职</td>
-                                        <td>6,200</td>
+                                        <td style="text-align: center;">62 <span style="font-size: 12px; color: #777;">(¥6,200)</span></td>
+                                        <td style="text-align: center;">18 <span style="font-size: 12px; color: #777;">(¥1,800)</span></td>
+                                        <td style="text-align: center;">100</td>
+                                        <td style="text-align: center;">全职</td>
+                                        <td style="text-align: center;">6,200</td>
                                     </tr>
                                     <tr class="coach-data month-data" style="display: none; text-align: center;">
                                         <td>
@@ -1063,11 +1422,11 @@
                                                 张教练
                                             </div>
                                         </td>
-                                        <td>54</td>
-                                        <td>16</td>
-                                        <td>110</td>
-                                        <td>兼职</td>
-                                        <td>5,940</td>
+                                        <td style="text-align: center;">54 <span style="font-size: 12px; color: #777;">(¥5,940)</span></td>
+                                        <td style="text-align: center;">16 <span style="font-size: 12px; color: #777;">(¥1,760)</span></td>
+                                        <td style="text-align: center;">110</td>
+                                        <td style="text-align: center;">兼职</td>
+                                        <td style="text-align: center;">5,940</td>
                                     </tr>
                                     <tr class="coach-data month-data" style="display: none; text-align: center;">
                                         <td>
@@ -1076,29 +1435,29 @@
                                                 刘教练
                                             </div>
                                         </td>
-                                        <td>48</td>
-                                        <td>12</td>
-                                        <td>130</td>
-                                        <td>兼职</td>
-                                        <td>6,240</td>
+                                        <td style="text-align: center;">48 <span style="font-size: 12px; color: #777;">(¥6,240)</span></td>
+                                        <td style="text-align: center;">12 <span style="font-size: 12px; color: #777;">(¥1,560)</span></td>
+                                        <td style="text-align: center;">130</td>
+                                        <td style="text-align: center;">兼职</td>
+                                        <td style="text-align: center;">6,240</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr class="coach-data week-data" style="font-weight: 600; background-color: #f8f9fa; text-align: center;">
                                         <td>本周合计</td>
-                                        <td>72</td>
-                                        <td>37</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>8,260</td>
+                                        <td style="text-align: center;">72 <span style="font-size: 12px; color: #777;">(¥8,260)</span></td>
+                                        <td style="text-align: center;">37 <span style="font-size: 12px; color: #777;">(¥4,200)</span></td>
+                                        <td style="text-align: center;">-</td>
+                                        <td style="text-align: center;">-</td>
+                                        <td style="text-align: center;">8,260</td>
                                     </tr>
                                     <tr class="coach-data month-data" style="font-weight: 600; background-color: #f8f9fa; display: none; text-align: center;">
                                         <td>本月合计</td>
-                                        <td>250</td>
-                                        <td>60</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>28,700</td>
+                                        <td style="text-align: center;">250 <span style="font-size: 12px; color: #777;">(¥28,700)</span></td>
+                                        <td style="text-align: center;">60 <span style="font-size: 12px; color: #777;">(¥6,800)</span></td>
+                                        <td style="text-align: center;">-</td>
+                                        <td style="text-align: center;">-</td>
+                                        <td style="text-align: center;">28,700</td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -1670,6 +2029,119 @@
                     }
                 });
             }
+            
+            // 确保今日概览卡片也可以拖拽
+            const todayOverviewCard = document.getElementById('today-overview-card');
+            if (todayOverviewCard) {
+                const handle = todayOverviewCard.querySelector('.drag-handle');
+                if (handle) {
+                    handle.addEventListener('dragstart', (e) => {
+                        todayOverviewCard.classList.add('dragging');
+                        e.dataTransfer.setData('text/plain', 'today-overview-card');
+                    });
+                    
+                    todayOverviewCard.addEventListener('dragend', () => {
+                        todayOverviewCard.classList.remove('dragging');
+                    });
+                }
+                
+                // 根据学员数量自动设置列数
+                const studentLists = todayOverviewCard ? todayOverviewCard.querySelectorAll('.card-body .background-color\\:rgba\\(255\\,255\\,255\\,0\\.4\\) > div') : [];
+                
+                // 扩展处理所有教练卡片
+                const allCoachCards = document.querySelectorAll('.coach-card');
+                allCoachCards.forEach(card => {
+                    const coachStudentList = card.querySelector('.card-body .background-color\\:rgba\\(255\\,255\\,255\\,0\\.4\\) > div');
+                    if (coachStudentList) {
+                        // 添加样式类以应用CSS样式
+                        coachStudentList.classList.add('student-list');
+                        
+                        // 设置最小高度以确保至少能显示5行学员信息
+                        coachStudentList.style.minHeight = "140px";
+                        coachStudentList.style.maxHeight = "180px";
+                        coachStudentList.style.overflowY = "auto";
+                        
+                        // 更精确地计算学生条目数量
+                        const studentEntries = coachStudentList.querySelectorAll('div[style*="display: flex"], div.student-entry');
+                        const studentCount = studentEntries.length;
+                        console.log(`Coach card has ${studentCount} students`);
+                        
+                        if (studentCount > 5) {
+                            coachStudentList.style.columnCount = "2";
+                            coachStudentList.style.columnGap = "10px";
+                            console.log('Setting to two columns');
+                        } else {
+                            coachStudentList.style.columnCount = "1";
+                            console.log('Setting to one column');
+                        }
+                    }
+                });
+                
+                studentLists.forEach(list => {
+                    const studentCount = list.querySelectorAll('div[style*="display: flex"]').length;
+                    if (studentCount > 5) {
+                        list.style.columnCount = "2";
+                        list.style.columnGap = "10px";
+                    } else {
+                        list.style.columnCount = "1";
+                    }
+                });
+            }
+
+                // 观察学员列表变化，动态调整列数
+                const observeStudentLists = () => {
+                    const observer = new MutationObserver((mutations) => {
+                        mutations.forEach((mutation) => {
+                            if (mutation.type === 'childList') {
+                                const studentList = mutation.target;
+                                
+                                // 使用相同的改进方法计算学生数量
+                                const studentEntries = studentList.querySelectorAll('div[style*="display: flex"], div.student-entry');
+                                const studentCount = studentEntries.length;
+                                
+                                if (studentCount > 5) {
+                                    studentList.style.columnCount = "2";
+                                    studentList.style.columnGap = "10px";
+                                } else {
+                                    studentList.style.columnCount = "1";
+                                }
+                            }
+                        });
+                    });
+
+                    // 观察所有教练卡片的学员列表
+                    studentLists.forEach(list => {
+                        observer.observe(list, { childList: true, subtree: true });
+                    });
+                    
+                    // 也观察所有教练卡片的学员列表
+                    allCoachCards.forEach(card => {
+                        const coachStudentList = card.querySelector('.card-body .background-color\\:rgba\\(255\\,255\\,255\\,0\\.4\\) > div');
+                        if (coachStudentList) {
+                            observer.observe(coachStudentList, { childList: true, subtree: true });
+                        }
+                    });
+                };
+
+                observeStudentLists();
+
+                // 为教练卡片添加悬停动画效果
+                document.querySelectorAll('.coach-card').forEach(card => {
+                    // 添加过渡效果
+                    card.style.transition = 'transform 0.2s, box-shadow 0.2s';
+                    
+                    // 添加鼠标悬停事件
+                    card.addEventListener('mouseenter', () => {
+                        card.style.transform = 'translateY(-2px)';
+                        card.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+                    });
+                    
+                    // 添加鼠标离开事件
+                    card.addEventListener('mouseleave', () => {
+                        card.style.transform = 'translateY(0)';
+                        card.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.05)';
+                    });
+                });
         });
     </script>
 </body>
